@@ -14,4 +14,11 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports: 
-    here
+    tidyr,
+    here,
+    dplyr,
+    boot,
+    gt,
+    ggplo2,
+    gee,
+    geepack
