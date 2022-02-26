@@ -4,7 +4,8 @@ Version: 0.0.0.9000
 Authors@R: 
     person("François", "Lefebvre", , "flefebvre01@hotmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Description: Data and funcitons used to study Fundamentals of Causal Inference
+ by Babette Brumback.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: True
@@ -18,7 +19,7 @@ Imports:
     here,
     dplyr,
     boot,
+    ggplot2,
     gt,
-    ggplo2,
     gee,
     geepack
