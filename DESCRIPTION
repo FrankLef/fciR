@@ -1,6 +1,6 @@
 Package: fciR
 Title: Data and functions used with Fundamentals of Causal Inference by Babette Brumback
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: 
     person("François", "Lefebvre", , "flefebvre01@hotmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID"))
@@ -23,3 +23,5 @@ Imports:
     gt,
     gee,
     geepack
+Depends: 
+    R (>= 2.10)

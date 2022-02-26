@@ -33,9 +33,7 @@ boot_lmod <- function(data, formula = Y ~ `T` + A + H,
 
   out <- run_boot(data = data, statistic = estimator, R = R, conf = conf)
 
-  out <- invlogit_effects(out)
-
-  out
+  invlogit_effects(out)
 }
 
 #' @rdname boot_lmod
