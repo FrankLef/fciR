@@ -13,6 +13,7 @@
 #' @importFrom stats coef glm plogis coef glm
 #'
 #' @return Vector of summarized results
+#' @export
 boot_lmod <- function(data, formula = Y ~ `T` + A + H,
                      cond = Y ~ `T` + A + H,
                      R = 1000, conf = 0.95) {
