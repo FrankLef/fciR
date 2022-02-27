@@ -12,7 +12,9 @@
 #' @return List with percentage of bad and good.
 #'
 #' @examples
-#' sim_intervals(nsim = 10, n = 10)
+#' \dontrun{
+#' sim_intervals()
+#' }
 #' @export
 sim_intervals <- function(nsim = 1e4, n = 1e4) {
   # get the statistics from the 2 samplings

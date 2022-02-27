@@ -25,6 +25,7 @@ Imports:
     geepack,
     glue,
     tidyselect,
-    rlang
+    rlang,
+    MonteCarlo
 Depends: 
     R (>= 2.10)

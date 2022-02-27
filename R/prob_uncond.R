@@ -16,6 +16,7 @@
 #' @param conf Confidence interval
 #'
 #' @return Dataframe of summarized results
+#' @export
 prob_uncond <- function(data, formula = Y ~ `T`, R = 1000, conf = 0.95) {
 
   # Extract variable names from the formula

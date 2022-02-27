@@ -24,7 +24,9 @@ Simulate a sampling distribution.
 Simulate a sampling distribution using base R. Section 2.4.
 }
 \examples{
-sim_intervals(nsim = 10, n = 10)
+\dontrun{
+sim_intervals()
+}
 \dontrun{
 sim()
 }

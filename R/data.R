@@ -127,3 +127,36 @@
 #' }
 "cogdat"
 
+
+#' Table 3.2
+#'
+#' See chapter 3.
+#'
+#' @docType data
+#'
+#' @format Dataframe with 6 rows and 5 variables.
+#' \describe{
+#'   \item{estimator}{name of estimator}
+#'   \item{est}{estimate}
+#'   \item{conf}{confidence interval width}
+#'   \item{lci}{lower confidence interval}
+#'   \item{uci}{upper confidence interval}
+#' }
+"fci_tbl_03_02"
+
+#' Table 4.2
+#'
+#' See chapter 4.
+#'
+#' @docType data
+#'
+#' @format Dataframe with 18 rows and 6 variables.
+#' \describe{
+#'   \item{estimator}{name of estimator}
+#'   \item{group}{grouping variable}
+#'   \item{est}{estimate}
+#'   \item{conf}{confidence interval width}
+#'   \item{lci}{lower confidence interval}
+#'   \item{uci}{upper confidence interval}
+#' }
+"fci_tbl_04_02"

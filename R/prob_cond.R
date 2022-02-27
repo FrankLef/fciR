@@ -17,6 +17,7 @@
 #' @param conf Confidence interval.
 #'
 #' @return Dataframe of effect measures.
+#' @export
 prob_cond <- function(data, formula = Y ~ `T` + A + H,
                   cond0 = Y ~ A + H,
                   cond1 = Y ~ `T` + A + H,
