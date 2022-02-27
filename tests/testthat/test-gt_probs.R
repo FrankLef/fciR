@@ -1,6 +1,6 @@
 test_that("gt_probs", {
-  data(fci_dag01)
-  df <- fci_dag01 %>%
+  data(fci_tbl_05_01)
+  df <- fci_tbl_05_01 %>%
     dplyr::group_by(A, Y0, Y1, Y) %>%
     dplyr::count(name = "prob") %>%
     dplyr::ungroup() %>%

@@ -1,4 +1,4 @@
-#' Simulate DAG # 1
+#' Simulate DAG # 1. Table 5.1.
 #'
 #' @param n Simulation size.
 #' @param seed Integer,s seed.

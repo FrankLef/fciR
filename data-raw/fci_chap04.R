@@ -1,6 +1,6 @@
 #' Create data for table 4.2
 #'
-#' @return
+#' @return Dataframe
 fci_tbl_04_02 <- function() {
   data.frame(
     estimator = c("EYT0", "EYT0", "EYT1", "EYT1", "RD", "RD",

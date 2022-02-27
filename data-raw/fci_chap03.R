@@ -1,6 +1,6 @@
 #' Create data for table 3.2
 #'
-#' @return
+#' @return Dataframe
 fci_tbl_03_02 <- function() {
   data <- data.frame(
     name = c("P0", "P1", "RD", "logRR", "RR*", "OR"),

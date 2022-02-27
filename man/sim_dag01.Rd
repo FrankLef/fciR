@@ -2,7 +2,7 @@
 % Please edit documentation in R/sim_dag01.R
 \name{sim_dag01}
 \alias{sim_dag01}
-\title{Simulate DAG # 1}
+\title{Simulate DAG # 1. Table 5.1.}
 \usage{
 sim_dag01(n = 1000, seed = 111)
 }
@@ -15,7 +15,7 @@ sim_dag01(n = 1000, seed = 111)
 Dataframe
 }
 \description{
-Simulate DAG # 1
+Simulate DAG # 1. Table 5.1.
 }
 \examples{
 \dontrun{
