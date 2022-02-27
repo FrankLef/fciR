@@ -18,7 +18,7 @@
 #'
 #' @return Dataframe of effect measures.
 #' @export
-prob_cond <- function(data, formula = Y ~ `T` + A + H,
+meas_effect_cond <- function(data, formula = Y ~ `T` + A + H,
                   cond0 = Y ~ A + H,
                   cond1 = Y ~ `T` + A + H,
                   family = c("binomial", "poisson", "gaussian"),
@@ -50,6 +50,6 @@ prob_cond <- function(data, formula = Y ~ `T` + A + H,
   effect_exp(out)  # exponentiate effect measures
 }
 
-#' @rdname prob_cond
+#' @rdname meas_effect_cond
 #' @export
-bootc <- prob_cond
+bootc <- meas_effect_cond

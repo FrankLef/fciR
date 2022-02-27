@@ -66,6 +66,21 @@
 #' }
 "mortality_long"
 
+#' RECOVERY trial of dexamethasone COVID-10 Collaborative Group
+#'
+#' See section beginning of chapter 4.
+#'
+#' @docType data
+#'
+#' @format Dataframe with 8 rows and 4 variables.
+#' \describe{
+#'   \item{M}{1 = invasive mechanical ventilation prior to treatment}
+#'   \item{T}{1 = dexamethasone}
+#'   \item{Y}{1 = mortality}
+#'   \item{n}{number of observations}
+#' }
+"recovery"
+
 
 #' Admissions data from the NCES IPEDS 2018-2019 provisionally.
 #'

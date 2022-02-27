@@ -15,9 +15,11 @@
 #' @param R Number of bootstrap replicates.
 #' @param conf Confidence interval
 #'
+#' @importFrom tidyr separate
+#'
 #' @return Dataframe of summarized results
 #' @export
-prob_uncond <- function(data, formula = Y ~ `T`, R = 1000, conf = 0.95) {
+meas_effect_uncond <- function(data, formula = Y ~ `T`, R = 1000, conf = 0.95) {
 
   # Extract variable names from the formula
   fvars <- formula2vars(formula)
@@ -61,6 +63,6 @@ prob_uncond <- function(data, formula = Y ~ `T`, R = 1000, conf = 0.95) {
 }
 
 
-#' @rdname prob_uncond
+#' @rdname meas_effect_uncond
 #' @export
-bootu <- prob_uncond
+bootu <- meas_effect_uncond

@@ -18,5 +18,5 @@ data_mortality <- function() {
   out
 }
 
-mortality <- data_mortality()
-usethis::use_data(mortality, overwrite = TRUE)
+# mortality <- data_mortality()
+# usethis::use_data(mortality, overwrite = TRUE)
