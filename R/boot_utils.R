@@ -164,7 +164,7 @@ run_boot <- function(data, statistic, R = 1000, conf = 0.95, ...) {
 #' @return Dataframe of converted effects measures.
 #' @export
 exp_effects <- function(data,
-                        vars = c("RR" = "logRR","RR*"  = "logRR*",
+                        vars = c("RR" = "logRR", "RR*"  = "logRR*",
                                  "OR" = "logOR")) {
   is_matched <- vars %in% data$name
   if (any(is_matched)) {

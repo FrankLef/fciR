@@ -25,7 +25,7 @@ test_that("calc_effect_measures", {
   expect_identical(out, target)
 
   out <- calc_effect_measures(val0, val1, log = FALSE)
-  print(out)
+
   target <- c("val0" = 0.25, "val1" = 0.5, "RD" = val1 - val0,
               "RR" = 2, "RR*" = 1.5, "OR" = 3)
   expect_identical(out, target)
