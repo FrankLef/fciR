@@ -17,7 +17,7 @@
 #' @param conf Confidence interval.
 #'
 #' @return Dataframe of effect measures.
-boot_cond <- function(data, formula = Y ~ `T` + A + H,
+prob_cond <- function(data, formula = Y ~ `T` + A + H,
                   cond0 = Y ~ A + H,
                   cond1 = Y ~ `T` + A + H,
                   family = c("binomial", "poisson", "gaussian"),
@@ -41,14 +41,14 @@ boot_cond <- function(data, formula = Y ~ `T` + A + H,
     P1 <- plogis(xbeta1)  # plogis is the inverse of logit
 
     # calculate effect measures
-    calc_effect_measures(val0 = P0, val1 = P1)
+    effect_measures(val0 = P0, val1 = P1)
   }
 
-  out <- run_boot(data = data, statistic = estimator, R = R, conf = conf)
+  out <- boot_run(data = data, statistic = estimator, R = R, conf = conf)
 
-  exp_effects(out)  # exponentiate effect measures
+  effect_exp(out)  # exponentiate effect measures
 }
 
-#' @rdname boot_cond
+#' @rdname prob_cond
 #' @export
-bootc <- boot_cond
+bootc <- prob_cond

@@ -14,7 +14,7 @@
 #'
 #' @return Vector of summarized results
 #' @export
-boot_lmod <- function(data, formula = Y ~ `T` + A + H,
+prob_lmod <- function(data, formula = Y ~ `T` + A + H,
                      cond = Y ~ `T` + A + H,
                      R = 1000, conf = 0.95) {
   # extract the variable names form the formula
@@ -31,11 +31,11 @@ boot_lmod <- function(data, formula = Y ~ `T` + A + H,
     c("logitP" = unname(p))
   }
 
-  out <- run_boot(data = data, statistic = estimator, R = R, conf = conf)
+  out <- boot_run(data = data, statistic = estimator, R = R, conf = conf)
 
-  invlogit_effects(out)
+  effect_expit(out)
 }
 
-#' @rdname boot_lmod
+#' @rdname prob_lmod
 #' @export
-lmodboot <- boot_lmod
+lmodboot <- prob_lmod

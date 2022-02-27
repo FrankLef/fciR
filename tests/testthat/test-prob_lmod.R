@@ -1,8 +1,8 @@
-test_that("lmodboot", {
+test_that("prob_lmod", {
   data("whatifdat")
   data <- whatifdat
 
-  out <- boot_lmod(data, formula = Y ~ `T` + A + H,
+  out <- prob_lmod(data, formula = Y ~ `T` + A + H,
                   cond = Y ~ `T` + A + H,
                   R = 500, conf = 0.95)
   expect_true(abs(out["est"] - 0.60596) < 0.03)

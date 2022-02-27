@@ -16,7 +16,7 @@
 #' @param conf Confidence interval
 #'
 #' @return Dataframe of summarized results
-boot_uncond <- function(data, formula = Y ~ `T`, R = 1000, conf = 0.95) {
+prob_uncond <- function(data, formula = Y ~ `T`, R = 1000, conf = 0.95) {
 
   # Extract variable names from the formula
   fvars <- formula2vars(formula)
@@ -54,12 +54,12 @@ boot_uncond <- function(data, formula = Y ~ `T`, R = 1000, conf = 0.95) {
     out
   }
 
-  out <- run_boot(data = data, statistic = estimator, R = R, conf = conf)
+  out <- boot_run(data = data, statistic = estimator, R = R, conf = conf)
 
-  exp_effects(out)
+  effect_exp(out)
 }
 
 
-#' @rdname boot_uncond
+#' @rdname prob_uncond
 #' @export
-bootu <- boot_uncond
+bootu <- prob_uncond
