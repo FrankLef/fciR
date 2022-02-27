@@ -143,7 +143,7 @@
 "cogdat"
 
 
-#' Table 3.2
+#' Table 3.2 data
 #'
 #' See chapter 3.
 #'
@@ -159,7 +159,7 @@
 #' }
 "fci_tbl_03_02"
 
-#' Table 4.2
+#' Table 4.2 data
 #'
 #' See chapter 4.
 #'
@@ -175,3 +175,18 @@
 #'   \item{uci}{upper confidence interval}
 #' }
 "fci_tbl_04_02"
+
+#' Table 5.1 data.
+#'
+#' See section 5.2..
+#'
+#' @docType data
+#'
+#' @format Dataframe with 1000 rows and 4 variables.
+#' \describe{
+#'   \item{A}{exposure}
+#'   \item{Y0}{potential outcome 0}
+#'   \item{Y1}{potential outcome 1}
+#'   \item{Y}{outcome}
+#' }
+"fci_dag01"

@@ -13,6 +13,7 @@
 #' @param conf Confidence interval
 #'
 #' @return Dataframe of summarized results
+#' @export
 meas_effect_modif <- function(data, formula = Y ~ `T` + M, R = 1000, conf = 0.95) {
 
   # extract the variables names from the formula

@@ -26,6 +26,8 @@ Imports:
     glue,
     tidyselect,
     rlang,
-    MonteCarlo
+    MonteCarlo,
+    ggdag,
+    dagitty
 Depends: 
     R (>= 2.10)

@@ -38,7 +38,8 @@ gt_measures_colgrp <- function(df, conf = df$conf[1], var_grp = "group",
     mutate_at(.vars = c("est", "lci", "uci"), .funs = format) %>%
     # mutate(across(.cols = c("est", "lci", "uci"), .fns = trimws)) %>%
     mutate_at(.vars = c("est", "lci", "uci"), .funs = trimws) %>%
-    rename(Estimate = .data[["est"]]) %>%
+    rename(Estimator = .data[["estimator"]],
+           Estimate = .data[["est"]]) %>%
     unite(col = "CI", .data[["lci"]], .data[["uci"]], sep = ", ") %>%
     mutate(CI = paste0("(", .data[["CI"]], ")")) %>%
     mutate(Estimate = as.character(.data[["Estimate"]])) %>%
