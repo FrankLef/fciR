@@ -1,21 +1,3 @@
-#' Admissions data from the NCES IPEDS 2018-2019 provisionally.
-#'
-#' See section 1.2.2 for details. Admissions data collected in the Fall 2018.
-#'
-#' @docType data
-#'
-#' @format Dataframe with 1217 rows and 3 variables.
-#' \describe{
-#'   \item{selective}{1 = institution admitted less than 50% of applicants}
-#'   \item{female}{1 = more than 69% of students admitted were women}
-#'   \item{highmathsat}{1 = average of the 25th and 75th precentiles of SAT was
-#'   higher than 600}
-#' }
-#'
-#' @source \url{nces.ed.gov}
-#'
-"nces"
-
 #' What-If study (Cook et al (2019))
 #'
 #' See section 1.2.3.1 for details.
@@ -49,6 +31,60 @@
 #' }
 #'
 "doublewhatifdat"
+
+#' Mortality Rates by Age and Country
+#'
+#' See section 1.2.1. Mortality rates by age group in the US and China in
+#' 2019.
+#'
+#' @docType data
+#'
+#' @format Dataframe with 4 rows and 5 variables.
+#' \describe{
+#'   \item{T}{1 = US, 0 = China}
+#'   \item{H}{1 = > 65 years old}
+#'   \item{deaths}{nb of deaths}
+#'   \item{population}{size of population}
+#'   \item{Y}{Mortality Rate = deaths / population}
+#' }
+"mortality"
+
+#' Mortality Rates by Age and Country in long format.
+#'
+#' See section 1.2.1. Mortality rates by age group in the US and China in
+#' 2019.
+#'
+#' @docType data
+#'
+#' @format Dataframe with 4 rows and 5 variables.
+#' \describe{
+#'   \item{T}{1 = US, 0 = China}
+#'   \item{H}{1 = > 65 years old}
+#'   \item{Y}{ 1 = deaths proportion, 0 = living proportion}
+#'   \item{population}{size of population}
+#'   \item{p}{proportion}
+#' }
+"mortality_long"
+
+
+#' Admissions data from the NCES IPEDS 2018-2019 provisionally.
+#'
+#' See section 1.2.2 for details. Admissions data collected in the Fall 2018.
+#'
+#' @docType data
+#'
+#' @format Dataframe with 1217 rows and 3 variables.
+#' \describe{
+#'   \item{selective}{1 = institution admitted less than 50% of applicants}
+#'   \item{female}{1 = more than 69% of students admitted were women}
+#'   \item{highmathsat}{1 = average of the 25th and 75th precentiles of SAT was
+#'   higher than 600}
+#' }
+#'
+#' @source \url{nces.ed.gov}
+#'
+"nces"
+
 
 #' Dataset from 2018 GSS
 #'
@@ -91,36 +127,3 @@
 #' }
 "cogdat"
 
-#' Mortality Rates by Age and Country
-#'
-#' See section 1.2.1. Mortality rates by age group in the US and China in
-#' 2019.
-#'
-#' @docType data
-#'
-#' @format Dataframe with 4 rows and 5 variables.
-#' \describe{
-#'   \item{T}{1 = US, 0 = China}
-#'   \item{H}{1 = > 65 years old}
-#'   \item{deaths}{nb of deaths}
-#'   \item{population}{size of population}
-#'   \item{Y}{Mortality Rate = deaths / population}
-#' }
-"mortality"
-
-#' Mortality Rates by Age and Country in long format.
-#'
-#' See section 1.2.1. Mortality rates by age group in the US and China in
-#' 2019.
-#'
-#' @docType data
-#'
-#' @format Dataframe with 4 rows and 5 variables.
-#' \describe{
-#'   \item{T}{1 = US, 0 = China}
-#'   \item{H}{1 = > 65 years old}
-#'   \item{Y}{ 1 = deaths proportion, 0 = living proportion}
-#'   \item{population}{size of population}
-#'   \item{p}{proportion}
-#' }
-"mortality_long"

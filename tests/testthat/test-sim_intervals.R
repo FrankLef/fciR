@@ -6,5 +6,5 @@ test_that("sim_intervals", {
   test <- lapply(test, function(x) round(x, 2))
 
   check <- abs(out[[1]] - test[[1]]) + abs(out[[2]] - test[[2]])
-  expect_true(check < 0.03)
+  expect_true(check < 0.05)
 })
