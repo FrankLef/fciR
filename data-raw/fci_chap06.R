@@ -55,5 +55,5 @@ fci_tbl_06_09 <- function() {
     uci = c(0.471, 0.380, 0.069, 1.23))
 }
 
-fci_tbl_06_09 <- fci_tbl_06_09()
-usethis::use_data(fci_tbl_06_09, overwrite = TRUE)
+# fci_tbl_06_09 <- fci_tbl_06_09()
+# usethis::use_data(fci_tbl_06_09, overwrite = TRUE)

@@ -109,3 +109,21 @@
 #'   \item{uci}{upper confidence interval}
 #' }
 "fci_tbl_06_09"
+
+#' Table 7.2 data
+#'
+#' See chapter 7, section 7.2.
+#'
+#' @docType data
+#'
+#' @format Dataframe with 13 rows and 7 variables.
+#' \describe{
+#'   \item{method}{method of estimation}
+#'   \item{name}{name of estimator}
+#'   \item{Truth}{true value}
+#'   \item{est}{estimate}
+#'   \item{conf}{confidence interval width}
+#'   \item{lci}{lower confidence interval}
+#'   \item{uci}{upper confidence interval}
+#' }
+"fci_tbl_07_02"
