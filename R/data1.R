@@ -164,3 +164,31 @@
 #'   \item{Y}{1 = patient surviving at two years}
 #' }
 "cogdat"
+
+#' University of Florida Sepsis and Critical Illness (2017)
+#'
+#' See exercise 1 of chapter 4.
+#'
+#' @docType data
+#'
+#' @format Dataframe with 1190 rows and 4 variables.
+#' \describe{
+#'   \item{gt65}{1 = greater than 65 years of age}
+#'   \item{shock}{1 = presence of septic shock at study entry}
+#'   \item{zubrod45}{1 = Zubrod score of 4 or 5 one year after study entry}
+#' }
+"sepsis"
+
+#' University of Florida Sepsis and Critical Illness (2017)
+#'
+#' See exercise 1 of chapter 4.
+#'
+#' @docType data
+#'
+#' @format Dataframe with 1190 rows and 4 variables.
+#' \describe{
+#'   \item{shock}{1 = presence of septic shock at study entry}
+#'   \item{zubrodbase}{1 = Zubrod score of 3 or 4 at baseline}
+#'   \item{zubrod1yr}{1 = Zubrod score of 4 or 5 one year after study entry}
+#' }
+"sepsisb"
