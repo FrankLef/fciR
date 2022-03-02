@@ -16,7 +16,7 @@ gt_probs(df, digits = 3, title, subtitle)
 \item{subtitle}{Subtitle of the table}
 }
 \value{
-A gt object create by the \code{gt} package
+A \code{gt_tbl} object
 }
 \description{
 Create table of probabilities with \code{gt} package.

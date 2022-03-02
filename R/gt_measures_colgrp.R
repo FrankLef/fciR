@@ -20,7 +20,7 @@
 #'  tab_spanner_delim cell_borders cells_body px
 #' @importFrom rlang .data
 #'
-#' @return A gt object create by the \code{gt} package
+#' @return A \code{gt_tbl} object
 #' @export
 gt_measures_colgrp <- function(df, conf = df$conf[1], var_grp = "group",
                                digits = 3,

@@ -16,7 +16,7 @@
 #' @importFrom gt cols_label tab_footnote cells_column_labels
 #' @importFrom rlang .data
 #'
-#' @return A gt object create by the \code{gt} package
+#' @return A \code{gt_tbl} object
 #' @export
 gt_measures <- function(df, conf = df$conf[1], digits = 3,
                         title = "Title", subtitle = "Subtitle") {

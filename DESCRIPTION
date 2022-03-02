@@ -29,6 +29,7 @@ Imports:
     MonteCarlo,
     ggdag,
     dagitty,
-    Formula
+    Formula,
+    cli
 Depends: 
     R (>= 2.10)

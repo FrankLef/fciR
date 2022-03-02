@@ -27,7 +27,7 @@ gt_measures_colgrp(
 \item{subtitle}{Subtitle of the table.}
 }
 \value{
-A gt object create by the \code{gt} package
+A \code{gt_tbl} object
 }
 \description{
 Create a table of effect-measure modifications with their CI.

@@ -18,7 +18,7 @@
 #' @importFrom gt cols_label tab_footnote tab_options
 #' @importFrom rlang .data
 #'
-#' @return A gt object create by the \code{gt} package
+#' @return A \code{gt_tbl} object
 #' @export
 gt_measures_rowgrp <- function(df, rowgroup = "rowgroup", rowname = "rowname",
                                conf = df$conf[1], digits = 3,

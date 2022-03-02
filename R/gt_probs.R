@@ -13,7 +13,7 @@
 #' @importFrom dplyr %>%
 #' @importFrom gt gt fmt_number
 #'
-#' @return A gt object create by the \code{gt} package
+#' @return A \code{gt_tbl} object
 #' @export
 gt_probs <- function(df, digits = 3, title, subtitle) {
   df %>%

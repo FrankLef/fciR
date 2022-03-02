@@ -1,6 +1,15 @@
-parse_frm <- function(frm) {
+#' Parse and validate formula for estimate.
+#'
+#' @param frm String or formula to parse
+#'
+#' @importFrom rlang abort format_error_bullets
+#'
+#' @return Object of class \code{Formula}
+#' @export
+frm_parse <- function(frm) {
 
-  check <- inherits(try(Formula::as.Formula(frm), silent = TRUE), what = "Formula")
+  check <- inherits(try(Formula::as.Formula(frm), silent = TRUE),
+                    what = "Formula")
   if (check) {
     frm <- Formula::as.Formula(frm)
     frm_len <- length(frm)
@@ -12,22 +21,30 @@ parse_frm <- function(frm) {
     msg <- paste(msg_head, rlang::format_error_bullets(msg_body), sep = "\n")
     rlang::abort(
       message = msg,
-      class = "parse_frm_error1")
+      class = "frm_parse_error1")
   }
 
-
-  # verify the formula as a whole also validate its length
-  # and return the deparse of the formula to process with regex
-  frm <- parse_frm_check(frm)
+  # verify the formula as a whole
+  frm <- frm_parse_check(frm)
 
   # very the formula pattern with regex
-  frm <- parse_frm_rgx(frm)
+  frm <- frm_parse_rgx(frm)
 
+  # this is important for what is coming
   stopifnot(length(frm)[1] == 1, length(frm)[2] >= 1)
   frm
 }
 
-parse_frm_check <- function(frm) {
+
+#' Validate formula as a whole.
+#'
+#' @param frm String or formula to parse
+#'
+#' @importFrom rlang abort format_error_bullets
+#'
+#' @return Object of class \code{Formula}
+#' @export
+frm_parse_check <- function(frm) {
 
   frm_text <- deparse(frm)
   frm_text <- gsub(" ", replacement = "", x = frm_text)
@@ -42,7 +59,7 @@ parse_frm_check <- function(frm) {
     msg <- paste(msg_head, rlang::format_error_bullets(msg_body), sep = "\n")
     rlang::abort(
       message = msg,
-      class = "parse_frm_check_error1")
+      class = "frm_parse_check_error1")
   }
 
 
@@ -55,13 +72,22 @@ parse_frm_check <- function(frm) {
     msg <- paste(msg_head, rlang::format_error_bullets(msg_body), sep = "\n")
     rlang::abort(
       message = msg,
-      class = "parse_frm_check_error2")
+      class = "frm_parse_check_error2")
   }
 
   frm
 }
 
-parse_frm_rgx <- function(frm, extras = FALSE) {
+
+#' Validate formula's text patterns
+#'
+#' @param frm String or formula to parse
+#'
+#' @importFrom rlang abort format_error_bullets
+#'
+#' @return Object of class \code{Formula}
+#' @export
+frm_parse_rgx <- function(frm) {
 
   # deparse and remove white spaces
   frm_text <- deparse(frm)
@@ -84,13 +110,19 @@ parse_frm_rgx <- function(frm, extras = FALSE) {
     msg <- paste(msg_head, rlang::format_error_bullets(msg_body), sep = "\n")
     rlang::abort(
       message = msg,
-      class = "parse_frm_rgx_error1")
+      class = "frm_parse_rgx_error1")
   }
 
   # validate the extras
   if (frm_n > 1) {
+    # the formulas
     frm_extras <- the_frm[2:frm_n]
-    patrn <- "cond[(][A-Za-z]+=[0-1][)]|do[(].+=[0-1][)]"
+
+    # the regex pattern
+    patrn_func <- "(cond|do)"
+    patrn_val <- "[(][[:alnum:]]+=[[:digit:]]+[)]"
+    patrn <- paste0(patrn_func, patrn_val)
+
     check <- length(grep(pattern = patrn, x = frm_extras))
     # length of check must be the same as length of extras
     # the difference is the nb of unmatched items
@@ -98,11 +130,11 @@ parse_frm_rgx <- function(frm, extras = FALSE) {
     if (check != 0) {
       msg <- sprintf("At least 1 extra formula is invalid.")
       msg_head <- cli::col_yellow(msg)
-      msg_body <- c("i" = sprintf("%d extra invalid extra formulas.", check))
+      msg_body <- c("i" = sprintf("%d invalid extra formulas.", check))
       msg <- paste(msg_head, rlang::format_error_bullets(msg_body), sep = "\n")
       rlang::abort(
         message = msg,
-        class = "parse_frm_rgx_error2")
+        class = "frm_parse_rgx_error2")
     }
   }
 
