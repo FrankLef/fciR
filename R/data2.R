@@ -110,6 +110,23 @@
 #' }
 "fci_tbl_06_09"
 
+#' Table 6.3 and 6.14 data
+#'
+#' See chapter 6, section 6.3.
+#'
+#' @docType data
+#'
+#' @format Dataframe with 4 rows and 5 variables.
+#' \describe{
+#'   \item{ss}{nb ofcovariates}
+#'   \item{estimator}{estimate}
+#'   \item{description}{description of estimator}
+#'   \item{mean}{mean}
+#'   \item{sd}{standard deviation}
+#'   \item{pva}{p-value}
+#' }
+"fci_tbl_06_13"
+
 #' Table 7.2 data
 #'
 #' See chapter 7, section 7.2.
