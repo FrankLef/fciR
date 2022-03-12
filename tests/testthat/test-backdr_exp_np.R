@@ -34,7 +34,7 @@ test_that("backdr_exp_np: With ATT", {
   ids <- match(target$name, out$name, nomatch = 0L)
   check <- sum(abs(out$est[ids] - target$est))
   # print(check)
-  expect_lt(check, 0.065)
+  expect_lt(check, 0.01)
 })
 
 test_that("backdr_exp_bb", {

@@ -67,7 +67,16 @@ backdr_exp_np <- function(data, outcome, exposure, confound, att = FALSE,
     } else {
       EY <- EY %>%
         mutate(s = (1 - {{exposure}}) * {{outcome}} * eH / (e0 * (1 - eH)) +
-                 {{exposure}} * {{outcome}} / eH)
+                 {{exposure}} * {{outcome}} / eH )
+      # E(Y|T=1) is estimated as before
+      # see very last paragraph of section 6.2.1
+      EYT <- summ %>%
+        filter({{exposure}} == 1) %>%
+        group_by({{outcome}}) %>%
+        summarize(n = sum(.data$n)) %>%
+        mutate(prob = .data$n / sum(.data$n)) %>%
+        summarize(EYT = sum({{outcome}} * .data$prob)) %>%
+        pull(EYT)
     }
 
     # Estimate the value of the potential outcome
@@ -77,19 +86,8 @@ backdr_exp_np <- function(data, outcome, exposure, confound, att = FALSE,
       arrange({{exposure}}) %>%
       pull(EY)
 
-
-    # EY <- summ %>%
-    #   mutate(eH = (1 - {{confound}}) * eH0 + {{confound}} * eH1,
-    #          s =
-    #            (1 - {{exposure}}) * {{outcome}} / (1 - eH) +
-    #            {{exposure}} * {{outcome}} / eH) %>%
-    #   # # adjust for ATT when required
-    #   mutate(s = ifelse(att & {{exposure}} == 0,
-    #                     {{outcome}} * eH / (e0 * (1 - eH)), s)) %>%
-    #   group_by({{exposure}}) %>%
-    #   summarize(EY = sum(s * freq)) %>%
-    #   arrange({{exposure}}) %>%
-    #   pull(EY)
+    # if ATT, compute E(Y|T=1) as before
+    if (att) EY[2] <- EYT
 
     EY0 <- EY[1]
     EY1 <- EY[2]
