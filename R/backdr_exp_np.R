@@ -6,6 +6,117 @@
 #' section 6.2.
 #'
 #' @param data Dataframe
+#' @param outcome Outcome variable
+#' @param exposure Exposure variable
+#' @param confound Confound variable
+#' @param att if \code{FALSE} calculate the standardized (unconfounded)
+#' causal effect. If \code{TRUE} calculate the average effect of treatment
+#' on the treated.
+#' @param R Number of bootstrap replicates.
+#' @param conf Confidence interval.
+#'
+#' @importFrom dplyr count group_by ungroup mutate summarise filter pull near
+#' @importFrom rlang .data
+#'
+#' @return Estimate using exposure-model standardization.
+#' @export
+backdr_exp_np <- function(data, outcome, exposure, confound, att = FALSE,
+                          R = 1000, conf = 0.95) {
+
+  estimator <- function(data, ids) {
+    dat <- data[ids, ]
+
+    # get the summarized data
+    summ <- dat %>%
+      count({{outcome}}, {{exposure}}, {{confound}}, name = "n") %>%
+      mutate(freq = n / sum(n))
+    stopifnot(dplyr::near(sum(summ$freq), 1))
+
+    # compute e(H=0) and e(H=1)
+    eH <- summ %>%
+      group_by({{exposure}}, {{confound}}) %>%
+      summarize(n = sum(n)) %>%
+      group_by({{confound}}) %>%
+      mutate(prob = n / sum(n)) %>%
+      filter({{exposure}} == 1) %>%
+      arrange({{confound}}) %>%
+      pull(.data$prob)
+    eH
+    stopifnot(all(eH > .Machine$double.eps^0.5))
+    eH0 <- eH[1]
+    eH1 <- eH[2]
+
+    # compute the E(T) when ATT is required
+    e0 <- 1  # when no ATT we use 1 so it has no effect on calculations
+    if (att) {
+      e0 <- summ %>%
+        filter({{exposure}} == 1) %>%
+        summarize(sum(.data$freq)) %>%
+        pull()
+    }
+
+    # create the  eH variable
+    EY <- summ %>%
+      mutate(eH = (1 - {{confound}}) * eH0 + {{confound}} * eH1)
+
+    # compute the summand of the estimating equations
+    if (!att) {
+      EY <- EY %>%
+        mutate(s = (1 - {{exposure}}) * {{outcome}} / (1 - eH) +
+                 {{exposure}} * {{outcome}} / eH)
+    } else {
+      EY <- EY %>%
+        mutate(s = (1 - {{exposure}}) * {{outcome}} * eH / (e0 * (1 - eH)) +
+                 {{exposure}} * {{outcome}} / eH)
+    }
+
+    # Estimate the value of the potential outcome
+    EY <- EY %>%
+      group_by({{exposure}}) %>%
+      summarize(EY = sum(.data$s * .data$freq)) %>%
+      arrange({{exposure}}) %>%
+      pull(EY)
+
+
+    # EY <- summ %>%
+    #   mutate(eH = (1 - {{confound}}) * eH0 + {{confound}} * eH1,
+    #          s =
+    #            (1 - {{exposure}}) * {{outcome}} / (1 - eH) +
+    #            {{exposure}} * {{outcome}} / eH) %>%
+    #   # # adjust for ATT when required
+    #   mutate(s = ifelse(att & {{exposure}} == 0,
+    #                     {{outcome}} * eH / (e0 * (1 - eH)), s)) %>%
+    #   group_by({{exposure}}) %>%
+    #   summarize(EY = sum(s * freq)) %>%
+    #   arrange({{exposure}}) %>%
+    #   pull(EY)
+
+    EY0 <- EY[1]
+    EY1 <- EY[2]
+
+    # estimate the effect measures
+    effect_measures(val0 = EY0, val1 = EY1)
+  }
+
+  out <- boot_run(data = data, statistic = estimator, R = R, conf = conf)
+
+  # exponentiate the log values
+  effect_exp(data = out)
+}
+
+#' @rdname backdr_exp_np
+#' @export
+calc_exposure <- backdr_exp_np
+
+
+#' Compute standardized averages using exposure modeling, non-parametric
+#'
+#' Compute standardized averages using exposure modeling, non-parametric.
+#'
+#' Compute standardized averages using exposure modeling as described in
+#' section 6.2.
+#'
+#' @param data Dataframe
 #' @param formula Formula, must be in the format \code{Y ~ `T` + H}, i.e.
 #' only 1 covariate H.
 #' @param weights String. Name of the columns with the weights that will
@@ -14,7 +125,7 @@
 #' @return List with 3 elements: EY1, EY0, EY0T1. See section 6.2.
 #' for more details.
 #' @export
-backdr_exp_np <- function(data, formula = Y ~ `T` + H, weights = "n") {
+backdr_exp_bb <- function(data, formula = Y ~ `T` + H, weights = "n") {
 
   # extract the variables names from the formula
   fvars <- formula2vars(formula)
@@ -49,7 +160,3 @@ backdr_exp_np <- function(data, formula = Y ~ `T` + H, weights = "n") {
 
   list("EY1" = EY1, "EY0" = EY0, "EY0T1" = EY0T1)
 }
-
-#' @rdname backdr_exp_np
-#' @export
-calc_exposure <- backdr_exp_np

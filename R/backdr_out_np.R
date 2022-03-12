@@ -15,7 +15,7 @@
 #' @param R Number of bootstrap replicates.
 #' @param conf Confidence interval.
 #'
-#' @importFrom dplyr count group_by ungroup mutate summarise filter pull
+#' @importFrom dplyr count group_by ungroup mutate summarise filter pull near
 #' @importFrom rlang .data enquo quo_name
 #'
 #' @return Estimate using outcome-model standardization.
@@ -25,30 +25,34 @@ backdr_out_np <- function(data, outcome, exposure, confound, att = FALSE,
 
   estimator <- function(data, ids) {
     dat <- data[ids, ]
-    # compute the frequencies
+    # get the summarized data
     summ <- dat %>%
       count({{outcome}}, {{exposure}}, {{confound}}, name = "n") %>%
       mutate(freq = n / sum(n))
+    stopifnot(dplyr::near(sum(summ$freq), 1))
 
     # the expected value of the outcome given the exposure and confounds
     EYcond <- summ %>%
       group_by({{exposure}}, {{confound}}) %>%
       summarise(EYcond = weighted.mean(x = {{outcome}}, w = n))
 
-    # the probabilities of the confound
+
+    # the confound distribution
     if (!att) {
       PH <- summ %>%
         group_by({{confound}}) %>%
         summarize(prob = sum(.data$freq))
+      # print(PH)
     } else {
-      PH <- dat %>%
+      PH <- summ %>%
         filter({{exposure}} == 1) %>%
-        count({{confound}}, name = "n") %>%
-        mutate(prob = n / sum(n))
+        group_by({{confound}}) %>%
+        summarize(n = sum(n)) %>%
+        mutate(prob = .data$n / sum(.data$n))
     }
 
     # multiply the conditional expectation by the confound probabilities
-    cnf <- enquo(confound)  # this line create an enquo variable
+    cnf <- enquo(confound)  # the variable name used to join the tables
     EY <- dplyr::inner_join(EYcond, PH, by = quo_name(cnf)) %>%
       mutate(EY = EYcond * .data$prob) %>%
       group_by({{exposure}}) %>%

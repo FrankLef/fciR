@@ -5,22 +5,45 @@
 \alias{calc_exposure}
 \title{Compute standardized averages using exposure modeling, non-parametric}
 \usage{
-backdr_exp_np(data, formula = Y ~ T + H, weights = "n")
+backdr_exp_np(
+  data,
+  outcome,
+  exposure,
+  confound,
+  att = FALSE,
+  R = 1000,
+  conf = 0.95
+)
 
-calc_exposure(data, formula = Y ~ T + H, weights = "n")
+calc_exposure(
+  data,
+  outcome,
+  exposure,
+  confound,
+  att = FALSE,
+  R = 1000,
+  conf = 0.95
+)
 }
 \arguments{
 \item{data}{Dataframe}
 
-\item{formula}{Formula, must be in the format \code{Y ~ `T` + H}, i.e.
-only 1 covariate H.}
+\item{outcome}{Outcome variable}
 
-\item{weights}{String. Name of the columns with the weights that will
-be used to create probabilities summing up to 1.}
+\item{exposure}{Exposure variable}
+
+\item{confound}{Confound variable}
+
+\item{att}{if \code{FALSE} calculate the standardized (unconfounded)
+causal effect. If \code{TRUE} calculate the average effect of treatment
+on the treated.}
+
+\item{R}{Number of bootstrap replicates.}
+
+\item{conf}{Confidence interval.}
 }
 \value{
-List with 3 elements: EY1, EY0, EY0T1. See section 6.2.
-for more details.
+Estimate using exposure-model standardization.
 }
 \description{
 Compute standardized averages using exposure modeling, non-parametric.
