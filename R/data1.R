@@ -181,7 +181,7 @@
 
 #' University of Florida Sepsis and Critical Illness (2017)
 #'
-#' See exercise 1 of chapter 4.
+#' See exercise 1 of chapter 7.
 #'
 #' @docType data
 #'

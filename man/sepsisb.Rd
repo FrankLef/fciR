@@ -16,6 +16,6 @@ Dataframe with 1190 rows and 4 variables.
 sepsisb
 }
 \description{
-See exercise 1 of chapter 4.
+See exercise 1 of chapter 7.
 }
 \keyword{datasets}
