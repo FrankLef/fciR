@@ -36,9 +36,16 @@ backdr_out_np <- function(data, outcome, exposure, confound, att = FALSE,
       summarise(EYcond = weighted.mean(x = {{outcome}}, w = n))
 
     # the probabilities of the confound
-    PH <- summ %>%
-      group_by({{confound}}) %>%
-      summarize(prob = sum(.data$freq))
+    if (!att) {
+      PH <- summ %>%
+        group_by({{confound}}) %>%
+        summarize(prob = sum(.data$freq))
+    } else {
+      PH <- dat %>%
+        filter({{exposure}} == 1) %>%
+        count({{confound}}, name = "n") %>%
+        mutate(prob = n / sum(n))
+    }
 
     # multiply the conditional expectation by the confound probabilities
     cnf <- enquo(confound)  # this line create an enquo variable
