@@ -1,7 +1,9 @@
 test_that("did_logistic", {
   data(doublewhatifdat)
   df <- doublewhatifdat
-  out <- did_logistic(df, formula = Y ~ A, varsY = c("VL0", "VL1"), R = 50)
+  out <- did_logistic(df, outcomes = c("VL0", "VL1"), outcome = "Y",
+                      treatment = "A",
+                      names_to = "var", timevar = "time", R = 50)
 
   data(fci_tbl_07_02)
   target <- fci_tbl_07_02

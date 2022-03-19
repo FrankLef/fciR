@@ -6,8 +6,11 @@
 \usage{
 did_logistic(
   data,
-  formula = Y ~ A,
-  varsY = c("VL0", "VL1"),
+  outcomes = c("Y0", "Y1"),
+  outcome = "Y",
+  treatment = "T",
+  names_to = "var",
+  timevar = "time",
   R = 1000,
   conf = 0.95
 )
@@ -15,10 +18,15 @@ did_logistic(
 \arguments{
 \item{data}{Dataframe of raw data.}
 
-\item{formula}{Formula in format \code{Y ~ A} where \code{A}
-is the exposure.}
+\item{outcomes}{Character vector of base and final variables.}
 
-\item{varsY}{Names of the outcome variables.}
+\item{outcome}{Name that will be used for the single outcome variable.}
+
+\item{treatment}{Name of the treatment variable.}
+
+\item{names_to}{Name that will be used for the name variable.}
+
+\item{timevar}{Name that will be used for the time variable.}
 
 \item{R}{Number of bootstrap replicates. Default is 1000.}
 
@@ -32,4 +40,7 @@ Compute the DiD Estimator with a logistic model.
 }
 \details{
 the DiD Estimator using the scripts from section 7.2, p. 141-142.
+}
+\seealso{
+did_longer
 }

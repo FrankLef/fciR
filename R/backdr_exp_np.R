@@ -47,7 +47,7 @@ backdr_exp_np <- function(data, outcome, exposure, confound, att = FALSE,
     eH1 <- eH[2]
 
     # compute the E(T) when ATT is required
-    e0 <- 1  # when no ATT we use 1 so it has no effect on calculations
+    e0 <- NA_real_
     if (att) {
       e0 <- summ %>%
         filter({{exposure}} == 1) %>%
@@ -68,15 +68,15 @@ backdr_exp_np <- function(data, outcome, exposure, confound, att = FALSE,
       EY <- EY %>%
         mutate(s = (1 - {{exposure}}) * {{outcome}} * eH / (e0 * (1 - eH)) +
                  {{exposure}} * {{outcome}} / eH )
-      # E(Y|T=1) is estimated as before
+      # E(Y(1)|T=1) = E(Y|T=1) is estimated as before
       # see very last paragraph of section 6.2.1
-      EYT <- summ %>%
+      EYT1 <- summ %>%
         filter({{exposure}} == 1) %>%
         group_by({{outcome}}) %>%
         summarize(n = sum(.data$n)) %>%
         mutate(prob = .data$n / sum(.data$n)) %>%
-        summarize(EYT = sum({{outcome}} * .data$prob)) %>%
-        pull(EYT)
+        summarize(EYT1 = sum({{outcome}} * .data$prob)) %>%
+        pull(EYT1)
     }
 
     # Estimate the value of the potential outcome
@@ -86,11 +86,9 @@ backdr_exp_np <- function(data, outcome, exposure, confound, att = FALSE,
       arrange({{exposure}}) %>%
       pull(EY)
 
-    # if ATT, compute E(Y|T=1) as before
-    if (att) EY[2] <- EYT
-
     EY0 <- EY[1]
     EY1 <- EY[2]
+    if (att) EY1 <- EYT1  # if ATT, compute E(Y|T=1) as before
 
     # estimate the effect measures
     effect_measures(val0 = EY0, val1 = EY1)

@@ -32,8 +32,8 @@ Compute standardized estimates with parametric exposure model.
 The standardized estimates are computed using the exposure model.
 This method requires 2 different formulas which are created from the
 arguments \code{formula}. The 2 formulas created are for the exposure model
-and another one for the weighted linear model. lso \code{T} must always be
-binary, if not it can be made binary "one can first recode the data so that
-T = 1 when it is previously equaled, and T = 0 when it previously equaled
-any value other than t", p. 113.
+and another one for the weighted linear model. Also \code{T}, i.e. the
+exposure, must always be binary, if not it can be made binary
+"one can first recode the data so that T = 1 when it is previously equaled,
+and T = 0 when it previously equaled any value other than t", p. 113.
 }

@@ -39,5 +39,5 @@ Standardized estimates via outcome modeling, non-parametric.
 }
 \details{
 The standardized estimates are computed using the non-parametric outcome
-model. The calculations are performed parametricaly without regression.
+model. The calculations are performed without regression.
 }

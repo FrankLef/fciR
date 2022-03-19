@@ -11,6 +11,6 @@ test_that("backdr_exp_gee", {
     check <- sum(abs(out$est[ids] - target$est))
   }
 
-  skip_if(is_skip, "Skip backdr_exp_gee to reduce processing time.")
+  skip_if(is_skip, "Skip to save time.")
   expect_lt(check, 0.01)
 })

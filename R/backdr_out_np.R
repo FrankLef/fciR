@@ -3,7 +3,7 @@
 #' Standardized estimates via outcome modeling, non-parametric.
 #'
 #' The standardized estimates are computed using the non-parametric outcome
-#' model. The calculations are performed parametricaly without regression.
+#' model. The calculations are performed without regression.
 #'
 #' @param data Dataframe of raw data.
 #' @param outcome Outcome variable
@@ -29,7 +29,7 @@ backdr_out_np <- function(data, outcome, exposure, confound, att = FALSE,
     summ <- dat %>%
       count({{outcome}}, {{exposure}}, {{confound}}, name = "n") %>%
       mutate(freq = n / sum(n))
-    stopifnot(dplyr::near(sum(summ$freq), 1))
+    stopifnot(near(sum(summ$freq), 1))
 
     # the expected value of the outcome given the exposure and confounds
     EYcond <- summ %>%
