@@ -12,7 +12,8 @@
 #' @param names_to Name that will be used for the name variable.
 #'
 #' @importFrom rlang .data :=
-#' @importFrom tidyr pivot_longer all_of
+#' @importFrom tidyr pivot_longer
+#' @importFrom tidyselect all_of
 #' @importFrom dplyr if_else
 #'
 #' @seealso did_linear did_loglinear did_logistic
