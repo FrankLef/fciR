@@ -5,28 +5,32 @@
 \alias{boot}
 \title{Compute estimates of the association measures for 2 strata}
 \usage{
-meas_effect_modif(data, formula = Y ~ T + M, R = 1000, conf = 0.95)
+meas_effect_modif(
+  data,
+  outcome.name = "Y",
+  exposure.name = "T",
+  modifier.name = "M"
+)
 
-boot(data, formula = Y ~ T + M, R = 1000, conf = 0.95)
+boot(data, outcome.name = "Y", exposure.name = "T", modifier.name = "M")
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
 
-\item{formula}{Formula in format \code{Y ~ `T` + M}}
+\item{outcome.name}{Name of outcome variable.}
 
-\item{R}{Number of bootstrap replicates.}
+\item{exposure.name}{Name of exposure variable.}
 
-\item{conf}{Confidence interval}
+\item{modifier.name}{Name of modifier variable.}
 }
 \value{
-Dataframe of summarized results
+Numeric vector of summarized results.
 }
 \description{
 Compute estimates of the association measures for 2 strata.
 }
 \details{
-IMPORTANT:
-The formula must always be in form Y ~ \code{T} + M, that is with only
-2 predictors: T as the treatment variable and M as the modifier
-variable
+The formula must always be in form \code{Y ~ `T` + M}, that is with only
+2 predictors: \code{T} as the treatment variable and \code{M} as the modifier
+variable.
 }

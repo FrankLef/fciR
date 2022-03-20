@@ -11,7 +11,7 @@ test_that("meas_effect_uncond", {
               "logRR" = 0.022884294, "logRR*" = 0.010834342,
               "logOR" = 0.033718636)
 
-  expect_identical(names(out), c("P0", "P1", "RD", "logRR", "logRR*", "logOR"))
+  expect_identical(names(out), names(target))
   expect_lt(sum(abs(out - target)), 1e-6)
 })
 

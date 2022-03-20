@@ -2,6 +2,68 @@
 #'
 #' Compute estimates of the association measures for 2 strata.
 #'
+#' The formula must always be in form \code{Y ~ `T` + M}, that is with only
+#' 2 predictors: \code{T} as the treatment variable and \code{M} as the modifier
+#' variable.
+#'
+#' @param data Dataframe of raw data.
+#' @param outcome.name Name of outcome variable.
+#' @param exposure.name Name of exposure variable.
+#' @param modifier.name Name of modifier variable.
+#'
+#' @importFrom formulaic create.formula
+#'
+#' @return Numeric vector of summarized results.
+#' @export
+meas_effect_modif <- function(data, outcome.name = "Y", exposure.name = "T",
+                              modifier.name = "M") {
+
+
+  # estimate the expected potential outcomes
+  Y_condT0_condM0 <- data[, exposure.name] == 0 & data[, modifier.name] == 0
+  EYT0.M0 <- mean(data[Y_condT0_condM0, outcome.name])
+  Y_condT0_condM1 <- data[, exposure.name] == 0 & data[, modifier.name] == 1
+  EYT0.M1 <- mean(data[Y_condT0_condM1, outcome.name])
+  Y_condT1_condM0 <- data[, exposure.name] == 1 & data[, modifier.name] == 0
+  EYT1.M0 <- mean(data[Y_condT1_condM0, outcome.name])
+  Y_condT1_condM1 <- data[, exposure.name] == 1 & data[, modifier.name] == 1
+  EYT1.M1 <- mean(data[Y_condT1_condM1, outcome.name])
+
+  # estimate the effect measures
+  RD.M0 <- EYT1.M0 - EYT0.M0
+  RD.M1 <- EYT1.M1 - EYT0.M1
+  logRR.M0 <- log(EYT1.M0 / EYT0.M0)
+  logRR.M1 <- log(EYT1.M1 / EYT0.M1)
+  logRRstar.M0 <- log((1 - EYT0.M0) / (1 - EYT1.M0))
+  logRRstar.M1 <- log((1 - EYT0.M1) / (1 - EYT1.M1))
+  logOR.M0 <- logRR.M0 + logRRstar.M0
+  logOR.M1 <- logRR.M1 + logRRstar.M1
+  # the effect measure difference
+  EYT0.diff <- EYT0.M1 - EYT0.M0
+  EYT1.diff <- EYT1.M1 - EYT1.M0
+  RD.diff <- RD.M1 - RD.M0
+  logRR.diff <- logRR.M1 - logRR.M0
+  logRRstar.diff <- logRRstar.M1 - logRRstar.M0
+  logOR.diff <- logOR.M1 - logOR.M0
+
+  out <- c("EYT0.M0" = EYT0.M0, "EYT0.M1" = EYT0.M1, "EYT1.M0" = EYT1.M0,
+           "EYT1.M1" = EYT1.M1, "RD.M0" = RD.M0, "RD.M1" = RD.M1,
+           "logRR.M0" = logRR.M0, "logRR.M1" = logRR.M1, "logRR*.M0" = logRRstar.M0,
+           "logRR*.M1" = logRRstar.M1, "logOR.M0" = logOR.M0, "logOR.M1" = logOR.M1,
+           "EYT0.diff" = EYT0.diff, "EYT1.diff" = EYT1.diff,
+           "RD.diff" = RD.diff, "logRR.diff" = logRR.diff, "logRR*.diff" = logRRstar.diff,
+           "logOR.diff" = logOR.diff)
+  out
+}
+
+#' @rdname meas_effect_modif
+#' @export
+boot <- meas_effect_modif
+
+#' Compute estimates of the association measures for 2 strata
+#'
+#' Compute estimates of the association measures for 2 strata.
+#'
 #' IMPORTANT:
 #'  The formula must always be in form Y ~ `T` + M, that is with only
 #'  2 predictors: T as the treatment variable and M as the modifier
@@ -14,7 +76,7 @@
 #'
 #' @return Dataframe of summarized results
 #' @export
-meas_effect_modif <- function(data, formula = Y ~ `T` + M, R = 1000, conf = 0.95) {
+meas_effect_modifX <- function(data, formula = Y ~ `T` + M, R = 1000, conf = 0.95) {
 
   # extract the variables names from the formula
   fvars <- formula2vars(formula)
@@ -69,6 +131,3 @@ meas_effect_modif <- function(data, formula = Y ~ `T` + M, R = 1000, conf = 0.95
     separate(col = "name", into = c("estimator", "group"), sep = "[.]")
 }
 
-#' @rdname meas_effect_modif
-#' @export
-boot <- meas_effect_modif

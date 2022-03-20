@@ -17,7 +17,7 @@
 #'
 #' @importFrom formulaic create.formula
 #'
-#' @return Numeric vector of summarized results
+#' @return Numeric vector of summarized results.
 #' @export
 meas_effect_cond <- function(data, outcome.name = "Y", exposure.name = "T",
                              confound.names = c("A", "H"),

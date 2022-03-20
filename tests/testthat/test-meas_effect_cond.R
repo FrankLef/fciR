@@ -4,15 +4,15 @@ test_that("meas_effect_cond", {
 
   out <- meas_effect_cond(data, outcome.name = "Y", exposure.name = "T",
                           confound.names = c("A", "H"))
-  cat("\n")
-  print(out)
-  cat("\n")
+  # cat("\n")
+  # print(out)
+  # cat("\n")
 
   target <- c("P0" = 0.65830834, "P1" = 0.60595808, "RD" = -0.05235026,
               "logRR" = -0.08286261, "logRR*" = -0.14254854,
               "logOR" = -0.22541115)
 
-  expect_identical(names(out), c("P0", "P1", "RD", "logRR", "logRR*", "logOR"))
+  expect_identical(names(out), names(target))
   expect_lt(sum(abs(out - target)), 1e-6)
 })
 
@@ -28,10 +28,6 @@ test_that("meas_effect_cond: Boot", {
   # print(out)
   # cat("\n")
 
-  target <- c("P0" = 0.65830834, "P1" = 0.60595808, "RD" = -0.05235026,
-              "logRR" = -0.08286261, "logRR*" = -0.14254854,
-              "logOR" = -0.22541115)
-
   target <- data.frame(
     name = c("P0", "P1", "RD", "RR", "RR*", "OR"),
     est = c(0.65830834, 0.60595808, -0.05235026,
@@ -42,7 +38,7 @@ test_that("meas_effect_cond: Boot", {
     uci = c(0.8368685, 0.7784991, 0.1444611,
             1.2755695, 1.5653375, 1.9685380))
 
-  # skip("Deprecated")
+  skip("Deprecated")
   expect_identical(dim(out), c(6L, 5L))
   expect_lt(sum(abs(out$est - target$est)), 0.01)
   expect_lt(sum(abs(out$conf - target$conf)), 0.01)

@@ -34,7 +34,7 @@ bootc(
 \code{c("binomial", "poisson", "gaussian")}. Default is \code{binomial}.}
 }
 \value{
-Numeric vector of summarized results
+Numeric vector of summarized results.
 }
 \description{
 Compute estimates of the conditional association measures.
