@@ -29,6 +29,7 @@ boot_est <- function(data, func, R = 1000, conf = 0.95,
 
   out <- boot_run(data = data, statistic = estimator, R = R, conf = conf)
 
+  # inverse transform the result
   effect_inv(data = out, inv = inv, vars = vars)
 }
 

@@ -7,41 +7,34 @@
 \usage{
 meas_effect_cond(
   data,
-  formula = Y ~ T + A + H,
-  cond0 = Y ~ A + H,
-  cond1 = Y ~ T + A + H,
-  family = c("binomial", "poisson", "gaussian"),
-  R = 1000,
-  conf = 0.95
+  outcome.name = "Y",
+  exposure.name = "T",
+  confound.names = c("A", "H"),
+  family = c("binomial", "poisson", "gaussian")
 )
 
 bootc(
   data,
-  formula = Y ~ T + A + H,
-  cond0 = Y ~ A + H,
-  cond1 = Y ~ T + A + H,
-  family = c("binomial", "poisson", "gaussian"),
-  R = 1000,
-  conf = 0.95
+  outcome.name = "Y",
+  exposure.name = "T",
+  confound.names = c("A", "H"),
+  family = c("binomial", "poisson", "gaussian")
 )
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
 
-\item{formula}{Formula of linear model.}
+\item{outcome.name}{Name of outcome variable.}
 
-\item{cond0}{Formula of condition 0.}
+\item{exposure.name}{Name of exposure variable.}
 
-\item{cond1}{Formula of condition 1.}
+\item{confound.names}{Character vector of confound variable names.}
 
-\item{family}{Family used by \code{glm}. Default is "binomial".}
-
-\item{R}{Number of bootstrap replicates.}
-
-\item{conf}{Confidence interval.}
+\item{family}{Name of distribution family. Must be in
+\code{c("binomial", "poisson", "gaussian")}. Default is \code{binomial}.}
 }
 \value{
-Dataframe of effect measures.
+Numeric vector of summarized results
 }
 \description{
 Compute estimates of the conditional association measures.

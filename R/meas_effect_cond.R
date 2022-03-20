@@ -9,6 +9,59 @@
 #'            lmodboot.r of chapter 2
 #'
 #' @param data Dataframe of raw data.
+#' @param outcome.name Name of outcome variable.
+#' @param exposure.name Name of exposure variable.
+#' @param confound.names Character vector of confound variable names.
+#' @param family Name of distribution family. Must be in
+#'  \code{c("binomial", "poisson", "gaussian")}. Default is \code{binomial}.
+#'
+#' @importFrom formulaic create.formula
+#'
+#' @return Numeric vector of summarized results
+#' @export
+meas_effect_cond <- function(data, outcome.name = "Y", exposure.name = "T",
+                             confound.names = c("A", "H"),
+                             family = c("binomial", "poisson", "gaussian")) {
+  x0 <- "(Intercept)"  # name of intercept used by lm, glm, etc.
+
+  # the family used by glm
+  family <- match.arg(family)
+
+  # all the input names
+  input.names <- c(exposure.name, confound.names)
+
+  a_formula <- formulaic::create.formula(outcome.name = outcome.name,
+                                         input.names = input.names,
+                                         dat = data)
+
+  coefs <- coef(glm(formula = a_formula, family = family, data = data))
+  # use variables from cond0 and cond1 to identify conditioned variables.
+  xbeta0 <- sum(coefs[c(x0, confound.names)])
+  xbeta1 <- sum(coefs[c(x0, input.names)])
+
+  P0 <- plogis(xbeta0)  # plogis is the inverse of logit
+  P1 <- plogis(xbeta1)  # plogis is the inverse of logit
+
+  # calculate effect measures
+  effect_measures(val0 = P0, val1 = P1)
+}
+
+#' @rdname meas_effect_cond
+#' @export
+bootc <- meas_effect_cond
+
+
+#' Compute estimates of the conditional association measures
+#'
+#' Compute estimates of the conditional association measures.
+#'
+#' Estimate the expected conditional outcomes and the
+#' conditional effect or association measures.
+#' IMPORTANT: This is the function in chapter 3 called lmodboot.r
+#'            It has been renamed bootc.r to avoid conflict with
+#'            lmodboot.r of chapter 2
+#'
+#' @param data Dataframe of raw data.
 #' @param formula Formula of linear model.
 #' @param cond0 Formula of condition 0.
 #' @param cond1 Formula of condition 1.
@@ -18,11 +71,11 @@
 #'
 #' @return Dataframe of effect measures.
 #' @export
-meas_effect_cond <- function(data, formula = Y ~ `T` + A + H,
-                  cond0 = Y ~ A + H,
-                  cond1 = Y ~ `T` + A + H,
-                  family = c("binomial", "poisson", "gaussian"),
-                  R = 1000, conf = 0.95) {
+meas_effect_condX <- function(data, formula = Y ~ `T` + A + H,
+                             cond0 = Y ~ A + H,
+                             cond1 = Y ~ `T` + A + H,
+                             family = c("binomial", "poisson", "gaussian"),
+                             R = 1000, conf = 0.95) {
   # the family used by glm
   family <- match.arg(family)
 
@@ -49,7 +102,3 @@ meas_effect_cond <- function(data, formula = Y ~ `T` + A + H,
 
   effect_exp(out)  # exponentiate effect measures
 }
-
-#' @rdname meas_effect_cond
-#' @export
-bootc <- meas_effect_cond

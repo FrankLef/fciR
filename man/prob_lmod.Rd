@@ -29,7 +29,7 @@ lmodboot(
 \item{condition.names}{Character vector of conditioned variable names.}
 }
 \value{
-Vector of summarized results
+Numeric vector of summarized results
 }
 \description{
 Estimate s sampling distribution by bootstrapping.

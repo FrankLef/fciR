@@ -2,7 +2,7 @@
 #'
 #' Estimate s sampling distribution by bootstrapping.
 #'
-#  Estimate a sampling distribution by bootstrapping using \code{boot::boot()}
+#  Estimate a sampling distribution. See details in chapter 2.
 #'
 #' @param data Dataframe of raw data.
 #' @param outcome.name Name of outcome variable.
@@ -11,10 +11,11 @@
 #'
 #' @importFrom formulaic create.formula
 #'
-#' @return Vector of summarized results
+#' @return Numeric vector of summarized results
 #' @export
 prob_lmod <- function(data, outcome.name = "Y", input.names = c("T", "A", "H"),
                      condition.names = input.names) {
+  stopifnot(all(condition.names %in% input.names))
   x0 <- "(Intercept)"  # name of intercept used by lm, glm, etc.
 
   a_formula <- formulaic::create.formula(outcome.name = outcome.name,

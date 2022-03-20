@@ -13,7 +13,7 @@ test_that("prob_lmod", {
   expect_identical(out, target)
 })
 
-test_that("prob_lmod: boot", {
+test_that("prob_lmod: Boot", {
   data("whatifdat")
   data <- whatifdat
 
