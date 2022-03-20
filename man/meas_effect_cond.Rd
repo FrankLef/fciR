@@ -10,6 +10,7 @@ meas_effect_cond(
   outcome.name = "Y",
   exposure.name = "T",
   confound.names = c("A", "H"),
+  condition.names = confound.names,
   family = c("binomial", "poisson", "gaussian")
 )
 
@@ -18,6 +19,7 @@ bootc(
   outcome.name = "Y",
   exposure.name = "T",
   confound.names = c("A", "H"),
+  condition.names = confound.names,
   family = c("binomial", "poisson", "gaussian")
 )
 }
@@ -30,8 +32,10 @@ bootc(
 
 \item{confound.names}{Character vector of confound variable names.}
 
-\item{family}{Name of distribution family. Must be in
-\code{c("binomial", "poisson", "gaussian")}. Default is \code{binomial}.}
+\item{condition.names}{Character vector of condition variable names.}
+
+\item{family}{Name of distribution. Must be in
+\code{c("binomial", "poisson", "gaussian")}}
 }
 \value{
 Numeric vector of summarized results.

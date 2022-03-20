@@ -18,7 +18,6 @@
 meas_effect_modif <- function(data, outcome.name = "Y", exposure.name = "T",
                               modifier.name = "M") {
 
-
   # estimate the expected potential outcomes
   Y_condT0_condM0 <- data[, exposure.name] == 0 & data[, modifier.name] == 0
   EYT0.M0 <- mean(data[Y_condT0_condM0, outcome.name])

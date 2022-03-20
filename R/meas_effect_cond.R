@@ -3,17 +3,16 @@
 #' Compute estimates of the conditional association measures.
 #'
 #' Estimate the expected conditional outcomes and the
-#' conditional effect or association measures.
-#' IMPORTANT: This is the function in chapter 3 called lmodboot.r
-#'            It has been renamed bootc.r to avoid conflict with
-#'            lmodboot.r of chapter 2
+#' conditional effect or association measures. See exercise 3 of chapter 3
+#' for a full example on how to use this function.
 #'
 #' @param data Dataframe of raw data.
 #' @param outcome.name Name of outcome variable.
 #' @param exposure.name Name of exposure variable.
 #' @param confound.names Character vector of confound variable names.
-#' @param family Name of distribution family. Must be in
-#'  \code{c("binomial", "poisson", "gaussian")}. Default is \code{binomial}.
+#' @param condition.names Character vector of condition variable names.
+#' @param family Name of distribution. Must be in
+#'  \code{c("binomial", "poisson", "gaussian")}
 #'
 #' @importFrom formulaic create.formula
 #'
@@ -21,10 +20,11 @@
 #' @export
 meas_effect_cond <- function(data, outcome.name = "Y", exposure.name = "T",
                              confound.names = c("A", "H"),
+                             condition.names = confound.names,
                              family = c("binomial", "poisson", "gaussian")) {
+  stopifnot(all(condition.names %in% confound.names))
   x0 <- "(Intercept)"  # name of intercept used by lm, glm, etc.
 
-  # the family used by glm
   family <- match.arg(family)
 
   # all the input names
@@ -36,11 +36,19 @@ meas_effect_cond <- function(data, outcome.name = "Y", exposure.name = "T",
 
   coefs <- coef(glm(formula = a_formula, family = family, data = data))
   # use variables from cond0 and cond1 to identify conditioned variables.
-  xbeta0 <- sum(coefs[c(x0, confound.names)])
-  xbeta1 <- sum(coefs[c(x0, input.names)])
+  xbeta0 <- sum(coefs[c(x0, condition.names)])
+  xbeta1 <- sum(coefs[c(x0, exposure.name, condition.names)])
 
-  P0 <- plogis(xbeta0)  # plogis is the inverse of logit
-  P1 <- plogis(xbeta1)  # plogis is the inverse of logit
+  P0 <- xbeta0
+  P1 <- xbeta1
+
+  if (family == "binomial") {
+    P0 <- plogis(P0)  # plogis is the inverse of logit
+    P1 <- plogis(P1)  # plogis is the inverse of logit
+  } else if (family == "poisson") {
+    P0 <- exp(P0)
+    P1 <- exp(P1)
+  }
 
   # calculate effect measures
   effect_measures(val0 = P0, val1 = P1)

@@ -34,17 +34,16 @@ test_that("meas_effect_modif: Boot", {
                   inv = "exp", vars = vars,
                   outcome.name = "Y", exposure.name = "T",
                   modifier.name = "M")
-  # out_id <- paste(out$estimator, out$group)
-  cat("\n")
-  print(out)
-  cat("\n")
+  # cat("\n")
+  # print(out)
+  # cat("\n")
 
   data(fci_tbl_04_02)
   target <- fci_tbl_04_02
   target_id <- paste(target$estimator, target$group, sep = ".")
-  cat("\n")
-  print(target)
-  cat("\n")
+  # cat("\n")
+  # print(target)
+  # cat("\n")
 
   ids <- match(target_id, out$name)
   check <- sum(abs(out$est[ids] - target$est))
