@@ -219,6 +219,13 @@
       "Repository": "CRAN",
       "Hash": "22d2afac8432f195aabdf417ce42fdf4"
     },
+    "data.table": {
+      "Package": "data.table",
+      "Version": "1.14.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "36b67b5adf57b292923f5659f5f0c853"
+    },
     "desc": {
       "Package": "desc",
       "Version": "1.4.0",
@@ -288,6 +295,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "81c3244cab67468aac4c60550832655d"
+    },
+    "formulaic": {
+      "Package": "formulaic",
+      "Version": "0.0.8",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "f65a5c5900688355b1874b56327bdf3f"
     },
     "fs": {
       "Package": "fs",

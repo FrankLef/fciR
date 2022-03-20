@@ -15,7 +15,7 @@ boot_run(data, statistic, R = 1000, conf = 0.95, ...)
 
 \item{conf}{Confidence interval width. Default is 0.95.}
 
-\item{...}{Other named arguments for \code{statistics}.}
+\item{...}{Other named arguments for \code{statistic}.}
 }
 \value{
 Dataframe of estimates with CI.
@@ -25,5 +25,10 @@ Bootstrap and generate a dataframe of estimates with CI.
 }
 \details{
 Generate a dataframe of estimates with the columns
-\code{c("est", "conf", "lci", "uci")}.
+\code{c("est", "conf", "lci", "uci")}. The \code{boot::boot} function is used
+for bootstraping and the function \code{boot::boot.ci} is used to compute the
+confidence interval.
+}
+\seealso{
+boot::boot boot::boot.ci
 }

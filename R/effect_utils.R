@@ -73,6 +73,39 @@ effect_measures <- function(val0, val1, log = TRUE) {
 }
 
 
+#' Apply an inverse function to effect measures
+#'
+#' Apply an inverse function to effect measures.
+#'
+#' Apply an inverse function to the effect measures. The names of the
+#' transformed variables are also change accordingly.
+#'
+#' @param data Numeric vector to transform.
+#' @param inv Name of the inverse function. Must be in
+#' \code{c("exp", "expit", "none")}. default is \code{exp}.
+#' @param vars Character vector identifying the variables.
+#'
+#' @seealso effect_exp effect_expit
+#'
+#' @return Inversed transform of input.
+#' @export
+effect_inv <- function(data, inv = c("exp", "expit", "none"), vars) {
+  inv <- match.arg(inv)
+
+  if (inv == "exp") {
+    out <- effect_exp(data = data, vars = vars)
+  } else if (inv == "expit") {
+    out <- effect_expit(data = data, vars = vars)
+  } else if (inv == "none") {
+    out <- identity(data)
+  } else {
+    msg <- sprintf("%s is an invalid inverse function choice.", inv)
+    stop(msg)
+  }
+
+  out
+}
+
 #' Exponentiate the effect measures
 #'
 #' Exponentiate the effect measures.
@@ -80,14 +113,14 @@ effect_measures <- function(val0, val1, log = TRUE) {
 #' Exponentiate each selected measure in the dataframe and replace its name
 #' accordingly.
 #'
-#' @param data Dataframe.
+#' @param data Dataframe.╪
 #' @param vars Character() of measure names.
 #'
 #' @return Dataframe of converted effects measures.
 #' @export
 effect_exp <- function(data,
-                        vars = c("RR" = "logRR", "RR*"  = "logRR*",
-                                 "OR" = "logOR")) {
+                      vars = c("RR" = "logRR", "RR*"  = "logRR*",
+                               "OR" = "logOR")) {
   is_matched <- vars %in% data$name
   if (any(is_matched)) {
     # nomatch = 0 to exclude unmatched items

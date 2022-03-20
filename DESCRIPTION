@@ -30,6 +30,7 @@ Imports:
     ggdag,
     dagitty,
     Formula,
-    cli
+    cli,
+    formulaic
 Depends: 
     R (>= 2.10)

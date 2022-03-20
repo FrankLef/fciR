@@ -7,7 +7,7 @@
 effect_exp(data, vars = c(RR = "logRR", `RR*` = "logRR*", OR = "logOR"))
 }
 \arguments{
-\item{data}{Dataframe.}
+\item{data}{Dataframe.╪}
 
 \item{vars}{Character() of measure names.}
 }

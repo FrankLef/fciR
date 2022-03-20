@@ -7,30 +7,26 @@
 \usage{
 prob_lmod(
   data,
-  formula = Y ~ T + A + H,
-  cond = Y ~ T + A + H,
-  R = 1000,
-  conf = 0.95
+  outcome.name = "Y",
+  input.names = c("T", "A", "H"),
+  condition.names = input.names
 )
 
 lmodboot(
   data,
-  formula = Y ~ T + A + H,
-  cond = Y ~ T + A + H,
-  R = 1000,
-  conf = 0.95
+  outcome.name = "Y",
+  input.names = c("T", "A", "H"),
+  condition.names = input.names
 )
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
 
-\item{formula}{Formula of linear model.}
+\item{outcome.name}{Name of outcome variable.}
 
-\item{cond}{Formula of condition.}
+\item{input.names}{Character vector of input variable names.}
 
-\item{R}{Number of bootstrap replicates.}
-
-\item{conf}{Confidence interval}
+\item{condition.names}{Character vector of conditioned variable names.}
 }
 \value{
 Vector of summarized results

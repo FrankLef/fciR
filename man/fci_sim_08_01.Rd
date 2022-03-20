@@ -3,7 +3,7 @@
 \docType{data}
 \name{fci_sim_08_01}
 \alias{fci_sim_08_01}
-\title{Simulation 8.1 data}
+\title{Simulation 8.1}
 \format{
 Dataframe with 13 rows and 7 variables.
 \describe{

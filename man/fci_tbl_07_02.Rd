@@ -3,7 +3,7 @@
 \docType{data}
 \name{fci_tbl_07_02}
 \alias{fci_tbl_07_02}
-\title{Table 7.2 data}
+\title{Table 7.2}
 \format{
 Dataframe with 13 rows and 7 variables.
 \describe{

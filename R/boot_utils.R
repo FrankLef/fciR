@@ -1,15 +1,53 @@
+#' Get estimate and CI using a function as input
+#'
+#' Get estimate and CI using a function as input.
+#'
+#' Boostrap with a function and extra arguments as input. The function is called
+#' \code{statistic} to remain constant with \code{boot::boot}.
+#'
+#' @inheritParams boot_run
+#' @param func Function used to compute the estimate.
+#' @param inv Choice of inverse function to apply to the effect measure
+#'  \code{exp} will exponentiate the result (Default), \code{expit} will apply
+#'  the inverse logit and \code{none} will do nothing (identity function).
+#' @param vars Names of effects variables used for inverse transform by
+#'  \code{effect_inv}.
+#' @param ... Other named arguments for \code{func}.
+#'
+#' @return Dataframe of estimates with CI.
+#' @export
+boot_est <- function(data, func, R = 1000, conf = 0.95,
+                     inv = c("exp", "expit", "none"),
+                     vars = c("RR" = "logRR", "RR*"  = "logRR*", "OR" = "logOR"),
+                     ...) {
+  inv <- match.arg(inv)
+
+  estimator <- function(data, ids) {
+    dat <- data[ids, ]
+    func(dat, ...)
+  }
+
+  out <- boot_run(data = data, statistic = estimator, R = R, conf = conf)
+
+  effect_inv(data = out, inv = inv, vars = vars)
+}
+
 #' Bootstrap and generate a dataframe of estimates with CI
 #'
 #' Bootstrap and generate a dataframe of estimates with CI.
 #'
 #' Generate a dataframe of estimates with the columns
-#' \code{c("est", "conf", "lci", "uci")}.
+#' \code{c("est", "conf", "lci", "uci")}. The \code{boot::boot} function is used
+#' for bootstraping and the function \code{boot::boot.ci} is used to compute the
+#' confidence interval.
 #'
 #' @param data Dataframe of raw data.
 #' @param statistic Function applied to data by bootstrapping.
 #' @param R Number of bootstrap replicates. Default is 1000.
 #' @param conf Confidence interval width. Default is 0.95.
-#' @param ... Other named arguments for \code{statistics}.
+#' @param ... Other named arguments for \code{statistic}.
+#'
+#' @seealso boot::boot boot::boot.ci
 #'
 #' @return Dataframe of estimates with CI.
 #' @export
