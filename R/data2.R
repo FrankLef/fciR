@@ -1,4 +1,4 @@
-#' Table 3.2 data
+#' Table 3.2
 #'
 #' See chapter 3.
 #'
@@ -14,7 +14,7 @@
 #' }
 "fci_tbl_03_02"
 
-#' Table 4.2 data
+#' Table 4.2
 #'
 #' See chapter 4.
 #'
@@ -31,7 +31,7 @@
 #' }
 "fci_tbl_04_02"
 
-#' Table 5.1 data.
+#' Table 5.1
 #'
 #' See section 5.2..
 #'
@@ -46,7 +46,7 @@
 #' }
 "fci_tbl_05_01"
 
-#' Table 6.1 data
+#' Table 6.1
 #'
 #' See chapter 6.
 #'
@@ -62,7 +62,7 @@
 #' }
 "fci_tbl_06_01"
 
-#' Table 6.4 data
+#' Table 6.4
 #'
 #' See chapter 6.
 #'
@@ -78,7 +78,7 @@
 #' }
 "fci_tbl_06_04"
 
-#' Table 6.7 data
+#' Table 6.7
 #'
 #' See chapter 6.
 #'
@@ -94,7 +94,7 @@
 #' }
 "fci_tbl_06_07"
 
-#' Table 6.9 data
+#' Table 6.9
 #'
 #' See chapter 6.
 #'
@@ -110,7 +110,7 @@
 #' }
 "fci_tbl_06_09"
 
-#' Table 6.3 and 6.14 data
+#' Table 6.3 and 6.14
 #'
 #' See chapter 6, section 6.3.
 #'
@@ -127,7 +127,7 @@
 #' }
 "fci_tbl_06_13"
 
-#' Table 7.2 data
+#' Table 7.2
 #'
 #' See chapter 7, section 7.2.
 #'
@@ -144,3 +144,20 @@
 #'   \item{uci}{upper confidence interval}
 #' }
 "fci_tbl_07_02"
+
+
+#' Simulation 8.1
+#'
+#' See chapter 8, section 8.3.
+#'
+#' @docType data
+#'
+#' @format Dataframe with 13 rows and 7 variables.
+#' \describe{
+#'   \item{A}{Exposure}
+#'   \item{S}{Surrogate marker}
+#'   \item{Y}{Outcome}
+#'   \item{Ydot0}{Potential outcome Y(., S(0))}
+#'   \item{Ydot1}{Potential outcome Y(., S(1))}
+#' }
+"fci_sim_08_01"
