@@ -10,17 +10,18 @@
 #' @param inv Choice of inverse function to apply to the effect measure
 #'  \code{exp} will exponentiate the result (Default), \code{expit} will apply
 #'  the inverse logit and \code{none} will do nothing (identity function).
-#' @param vars Names of effects variables used for inverse transform by
-#'  \code{effect_inv}.
+#' @param evars String. Should one of \code{c("standard", "modifier", "logit")}.
+#' Default value is \code{"standard"}.
 #' @param ... Other named arguments for \code{func}.
 #'
 #' @return Dataframe of estimates with CI.
 #' @export
 boot_est <- function(data, func, R = 1000, conf = 0.95,
                      inv = c("exp", "expit", "none"),
-                     vars = c("RR" = "logRR", "RR*"  = "logRR*", "OR" = "logOR"),
+                     evars = c("standard", "modifier", "logit"),
                      ...) {
   inv <- match.arg(inv)
+  evars <- match.arg(evars)
 
   estimator <- function(data, ids) {
     dat <- data[ids, ]
@@ -30,6 +31,7 @@ boot_est <- function(data, func, R = 1000, conf = 0.95,
   out <- boot_run(data = data, statistic = estimator, R = R, conf = conf)
 
   # inverse transform the result
+  vars <- effect_vars(evars = evars)
   effect_inv(data = out, inv = inv, vars = vars)
 }
 

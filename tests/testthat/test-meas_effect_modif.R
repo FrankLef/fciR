@@ -25,13 +25,9 @@ test_that("meas_effect_modif: Boot", {
   data(recovery)
   df <- recovery
 
-  vars <- c("RR.M0" = "logRR.M0", "RR.M1" = "logRR.M1", "RR.diff"  = "logRR.diff",
-            "RR*.M0"  = "logRR*.M0", "RR*.M1"  = "logRR*.M1", "RR*.diff" = "logRR*.diff",
-            "OR.M0" = "logOR.M0", "OR.M1" = "logOR.M1", "OR.diff" = "logOR.diff")
-
   out <- boot_est(data = recovery, func = meas_effect_modif,
                   R = 100, conf = 0.95,
-                  inv = "exp", vars = vars,
+                  inv = "exp", evars = "modifier",
                   outcome.name = "Y", exposure.name = "T",
                   modifier.name = "M")
   # cat("\n")
@@ -47,22 +43,5 @@ test_that("meas_effect_modif: Boot", {
 
   ids <- match(target_id, out$name)
   check <- sum(abs(out$est[ids] - target$est))
-  expect_lt(check, 0.01)
-})
-
-
-test_that("meas_effect_modifX", {
-  data(recovery)
-  df <- recovery
-  out <- meas_effect_modifX(recovery, formula = Y ~ `T` + M, R = 100)
-  out_id <- paste(out$estimator, out$group)
-
-  data(fci_tbl_04_02)
-  target <- fci_tbl_04_02
-  target_id <- paste(target$estimator, target$group)
-
-  ids <- match(target_id, out_id)
-  check <- sum(abs(out$est[ids] - target$est))
-  skip("Deprecated")
   expect_lt(check, 0.01)
 })

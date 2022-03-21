@@ -7,30 +7,31 @@
 \usage{
 backdr_out(
   data,
-  formula = Y ~ T + H,
-  family = c("binomial", "poisson", "gaussian"),
-  R = 1000,
-  conf = 0.95
+  outcome.name = "Y",
+  exposure.name = "T",
+  confound.names = c("A", "H"),
+  family = c("binomial", "poisson", "gaussian")
 )
 
 standout(
   data,
-  formula = Y ~ T + H,
-  family = c("binomial", "poisson", "gaussian"),
-  R = 1000,
-  conf = 0.95
+  outcome.name = "Y",
+  exposure.name = "T",
+  confound.names = c("A", "H"),
+  family = c("binomial", "poisson", "gaussian")
 )
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
 
-\item{formula}{Formula in format \code{Y ~ T + ...} see details above.}
+\item{outcome.name}{Name of outcome variable.}
 
-\item{family}{Character. Name of the distribution. Default is "binomial".}
+\item{exposure.name}{Name of exposure variable.}
 
-\item{R}{Number of bootstrap replicates.}
+\item{confound.names}{Character vector of confound variable names.}
 
-\item{conf}{Confidence interval.}
+\item{family}{Name of distribution. Must be in
+\code{c("binomial", "poisson", "gaussian")}.}
 }
 \value{
 Estimate using outcome-model standardization
@@ -39,7 +40,6 @@ Estimate using outcome-model standardization
 Compute standardized estimates with parametric outcome model.
 }
 \details{
-The standardized estimates are computed using the outcome model.
-IMPORTANT: The formula must be in the format \code{Y ~ T + ...} where T
-is the exposure.
+The standardized estimates are computed using the outcome model. See chapter
+6 for details.
 }

@@ -7,30 +7,31 @@
 \usage{
 backdr_dr(
   data,
-  formula = Y ~ T + H,
-  family = c("binomial", "poisson", "gaussian"),
-  R = 1000,
-  conf = 0.95
+  outcome.name = "Y",
+  exposure.name = "T",
+  confound.names = c("A", "H"),
+  family = c("binomial", "poisson", "gaussian")
 )
 
 standdr(
   data,
-  formula = Y ~ T + H,
-  family = c("binomial", "poisson", "gaussian"),
-  R = 1000,
-  conf = 0.95
+  outcome.name = "Y",
+  exposure.name = "T",
+  confound.names = c("A", "H"),
+  family = c("binomial", "poisson", "gaussian")
 )
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
 
-\item{formula}{Formula in format \code{Y ~ T + ...} see details above.}
+\item{outcome.name}{Name of outcome variable.}
 
-\item{family}{Character. Name of the distribution. Default is "binomial".}
+\item{exposure.name}{Name of exposure variable.}
 
-\item{R}{Number of bootstrap replicates.}
+\item{confound.names}{Character vector of confound variable names.}
 
-\item{conf}{Confidence interval.}
+\item{family}{Name of distribution. Must be in
+\code{c("binomial", "poisson", "gaussian")}.}
 }
 \value{
 Dataframe of estimates

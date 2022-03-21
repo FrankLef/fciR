@@ -72,6 +72,39 @@ effect_measures <- function(val0, val1, log = TRUE) {
   c(vals, out)
 }
 
+#' Create charatcer vector of measure names and their inverse
+#'
+#' Create charatcer vector of measure names and their inverse.
+#'
+#' Create charatcer vector of measure names and their inverse to be used with
+#' the output of effect measures and the inverse functions.
+#'
+#' @param evars String. Should one of \code{c("standard", "modifier", "logit")}.
+#' Default value is \code{"standard"}.
+#'
+#' @return Named character vector.
+#' @export
+effect_vars <- function(evars = c("standard", "modifier", "logit")) {
+  evars <- match.arg(evars)
+
+  switch(evars,
+         "standard" = {
+           c("RR" = "logRR", "RR*"  = "logRR*", "OR" = "logOR")
+           },
+         "modifier" = {
+           c("RR.M0" = "logRR.M0", "RR.M1" = "logRR.M1", "RR.diff"  = "logRR.diff",
+             "RR*.M0"  = "logRR*.M0", "RR*.M1"  = "logRR*.M1", "RR*.diff" = "logRR*.diff",
+             "OR.M0" = "logOR.M0", "OR.M1" = "logOR.M1", "OR.diff" = "logOR.diff")
+         },
+         "logit" = {
+           c("P" = "logitP")
+         },
+         {
+           msg <- sprintf("%s is an invalid evars choice.", evars)
+           stop(msg)
+         })
+  }
+
 
 #' Apply an inverse function to effect measures
 #'
@@ -143,6 +176,8 @@ effect_exp <- function(data,
 #'
 #' @param data Dataframe.
 #' @param vars Character() of measure names.
+#'
+#' @importFrom stats plogis
 #'
 #' @return Dataframe of converted effects measures.
 #' @export

@@ -10,7 +10,7 @@ boot_est(
   R = 1000,
   conf = 0.95,
   inv = c("exp", "expit", "none"),
-  vars = c(RR = "logRR", `RR*` = "logRR*", OR = "logOR"),
+  evars = c("standard", "modifier", "logit"),
   ...
 )
 }
@@ -27,8 +27,8 @@ boot_est(
 \code{exp} will exponentiate the result (Default), \code{expit} will apply
 the inverse logit and \code{none} will do nothing (identity function).}
 
-\item{vars}{Names of effects variables used for inverse transform by
-\code{effect_inv}.}
+\item{evars}{String. Should one of \code{c("standard", "modifier", "logit")}.
+Default value is \code{"standard"}.}
 
 \item{...}{Other named arguments for \code{func}.}
 }

@@ -10,6 +10,81 @@
 #' "one can first recode the data so that T = 1 when it is previously equaled,
 #' and T = 0 when it previously equaled any value other than t", p. 113.
 #'
+#' @inheritParams backdr_out
+#' @param att if \code{FALSE} calculate the standardized (unconfounded)
+#' causal effect. If \code{TRUE} calculate the average effect of treatment
+#' on the treated.
+#'
+#' @importFrom formulaic create.formula
+#' @importFrom stats glm fitted predict
+#'
+#' @return Dataframe of estimates using exposure-model standardization
+#' @export
+backdr_exp <- function(data, outcome.name = "Y", exposure.name = "T",
+                       confound.names = "H", att = FALSE) {
+  x0 <- "(Intercept)"  # name of intercept used by lm, glm, etc.
+
+  # exposure model formula
+  eformula <- formulaic::create.formula(outcome.name = exposure.name,
+                                        input.names = confound.names,
+                                        dat = data)
+
+  # weighted linear model formula
+  lformula <- formulaic::create.formula(outcome.name = outcome.name,
+                                        input.names = exposure.name,
+                                        dat = data)
+
+  # estimate the parametric exposure model
+  # NOTE: fitted() is the same as using predict(..., type = "response")
+  #       BUT fitted only use the ORIGINAL data, there is no newdata.
+  eH <- fitted(glm(formula = eformula, family = "binomial", data = data))
+  stopifnot(all(!dplyr::near(eH, 0)))  # e must not equal zero
+
+  # compute the E(T) when ATT is required
+  e0 <- NA_real_
+  if (att) {
+    e0 <- sum(data[, exposure.name] == 1) / nrow(data)
+  }
+
+
+  # compute the weights
+  datT <- data[, exposure.name]
+  if (!att) {
+    data$W <- datT * (1 / eH) + (1 - datT) * (1 / (1 - eH))
+  } else {
+    data$W <- datT * (1 / eH) + (1 - datT) * (eH / (e0 * (1 - eH)))
+    condT1 <- data[, exposure.name] == 1
+    EYT1 <- mean(data[condT1, outcome.name])
+  }
+
+  # fit the weighted linear model
+  coefs <- coef(glm(formula = lformula, data = data, weights = W))
+
+  # estimate the expected potential outcome
+  EY0 <- coefs[x0]
+  EY1 <- sum(coefs)
+  if (att) EY1 <- EYT1  # use att values if required
+
+  # estimate the effect measures
+  effect_measures(EY0, EY1)
+}
+
+#' @rdname backdr_exp
+#' @export
+standexp <- backdr_exp
+
+#' Compute standardized estimates with parametric exposure model
+#'
+#' Compute standardized estimates with parametric exposure model.
+#'
+#' The standardized estimates are computed using the exposure model.
+#' This method requires 2 different formulas which are created from the
+#' arguments \code{formula}. The 2 formulas created are for the exposure model
+#' and another one for the weighted linear model. Also \code{T}, i.e. the
+#' exposure, must always be binary, if not it can be made binary
+#' "one can first recode the data so that T = 1 when it is previously equaled,
+#' and T = 0 when it previously equaled any value other than t", p. 113.
+#'
 #' @param data Dataframe of raw data.
 #' @param formula Formula must be in the form \code{Y ~ `T` + ...}
 #' @param att if \code{FALSE} calculate the standardized (unconfounded)
@@ -22,7 +97,7 @@
 #'
 #' @return Dataframe of estimates using exposure-model standardization
 #' @export
-backdr_exp <- function(data, formula = Y ~ `T` + H, att = FALSE,
+backdr_expX <- function(data, formula = Y ~ `T` + H, att = FALSE,
                        R = 1000, conf = 0.95) {
 
   # extract the variables names from the formula
@@ -77,7 +152,3 @@ backdr_exp <- function(data, formula = Y ~ `T` + H, att = FALSE,
   # exponentiate the log values
   effect_exp(data = out)
 }
-
-#' @rdname backdr_exp
-#' @export
-standexp <- backdr_exp

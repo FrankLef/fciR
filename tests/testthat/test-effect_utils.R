@@ -15,6 +15,24 @@ test_that("effect_measures", {
   expect_identical(out, target)
 })
 
+test_that("effect_vars", {
+  out <- effect_vars()
+  target <- c("RR" = "logRR", "RR*"  = "logRR*", "OR" = "logOR")
+  expect_identical(out, target)
+
+  out <- effect_vars("modifier")
+  target <- c("RR.M0" = "logRR.M0", "RR.M1" = "logRR.M1",
+              "RR.diff"  = "logRR.diff", "RR*.M0"  = "logRR*.M0",
+              "RR*.M1"  = "logRR*.M1", "RR*.diff" = "logRR*.diff",
+              "OR.M0" = "logOR.M0", "OR.M1" = "logOR.M1",
+              "OR.diff" = "logOR.diff")
+  expect_identical(out, target)
+
+  out <- effect_vars("logit")
+  target <- c("P" = "logitP")
+  expect_identical(out, target)
+})
+
 
 test_that("effect_exp", {
   val0 <- 0.25

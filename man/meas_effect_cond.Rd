@@ -35,7 +35,7 @@ bootc(
 \item{condition.names}{Character vector of condition variable names.}
 
 \item{family}{Name of distribution. Must be in
-\code{c("binomial", "poisson", "gaussian")}}
+\code{c("binomial", "poisson", "gaussian")}.}
 }
 \value{
 Numeric vector of summarized results.
@@ -45,8 +45,6 @@ Compute estimates of the conditional association measures.
 }
 \details{
 Estimate the expected conditional outcomes and the
-conditional effect or association measures.
-IMPORTANT: This is the function in chapter 3 called lmodboot.r
-It has been renamed bootc.r to avoid conflict with
-lmodboot.r of chapter 2
+conditional effect or association measures. See exercise 3 of chapter 3
+for a full example on how to use this function.
 }
