@@ -1,20 +1,23 @@
 test_that("did_loglinear", {
+  ids <- c("EY0A1")
+
   data(doublewhatifdat)
-  df <- doublewhatifdat
-  out <- did_loglinear(df, outcomes = c("VL0", "VL1"), outcome = "Y",
-                    treatment = "A",
-                    names_to = "var", timevar = "time",
-                    R = 50)
+  out <- did_linear(doublewhatifdat, outcome.name = "VL1", exposure.name = "A",
+                    confound.names = "VL0",
+                    names_to = "var", timevar = "time")
+  out <- out[ids]
+  # cat("\n")
+  # print(out)
+  # cat("\n")
 
   data(fci_tbl_07_02)
   target <- fci_tbl_07_02
   target <- target[target$method == "Loglinear", ]
+  target <- target$est[target$name %in% ids]
+  # cat("\n")
+  # print(target)
+  # cat("\n")
 
-  ids <- match(target$name, out$name, nomatch = 0L)
-
-  # cat("\n", "Out: ", print(out$est[ids]), "\n")
-  # cat("\n", "Target: ", print(target$est), "\n")
-
-  check <- sum(abs(out$est[ids] - target$est))
+  check <- sum(abs(out - target))
   expect_lt(check, 0.01)
 })

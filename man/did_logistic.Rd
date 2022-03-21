@@ -6,31 +6,25 @@
 \usage{
 did_logistic(
   data,
-  outcomes = c("Y0", "Y1"),
-  outcome = "Y",
-  treatment = "T",
+  outcome.name = "Y1",
+  exposure.name = "T",
+  confound.names = "Y0",
   names_to = "var",
-  timevar = "time",
-  R = 1000,
-  conf = 0.95
+  timevar = "time"
 )
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
 
-\item{outcomes}{Character vector of base and final variables.}
+\item{outcome.name}{Name of final outcome.}
 
-\item{outcome}{Name that will be used for the single outcome variable.}
+\item{exposure.name}{Name of exposure variable.}
 
-\item{treatment}{Name of the treatment variable.}
+\item{confound.names}{Name of baseline outcome (confound).}
 
 \item{names_to}{Name that will be used for the name variable.}
 
 \item{timevar}{Name that will be used for the time variable.}
-
-\item{R}{Number of bootstrap replicates. Default is 1000.}
-
-\item{conf}{Confidence interval. Default is 0.95.}
 }
 \value{
 Estimates using the difference in differences.

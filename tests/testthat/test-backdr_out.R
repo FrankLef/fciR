@@ -34,19 +34,3 @@ test_that("backdr_out: Boot", {
   check <- sum(abs(out$est[ids] - target$est))
   expect_lt(check, 0.01)
 })
-
-
-
-
-test_that("backdr_outX", {
-  data(whatif2dat)
-  out <- backdr_outX(whatif2dat, formula = vl4 ~ A + lvlcont0)
-
-  data(fci_tbl_06_07)
-  target <- fci_tbl_06_07
-
-  ids <- match(target$name, out$name, nomatch = 0L)
-  check <- sum(abs(out$est[ids] - target$est))
-  skip("Deprecated")
-  expect_lt(check, 0.01)
-})

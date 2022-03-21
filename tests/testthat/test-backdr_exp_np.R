@@ -73,45 +73,6 @@ test_that("backdr_exp_bb: Boot", {
   expect_lt(check, 1e-6)
 })
 
-test_that("backdr_exp_npX", {
-  data(whatifdat)
-  out <- backdr_exp_npX(whatifdat, outcome = Y, exposure = A, confound = H,
-                       R = 200)
-  # cat("\n")
-  # print(out)
-  # cat("\n")
-
-  data(fci_tbl_06_01)
-  target <- fci_tbl_06_01
-  # cat("\n")
-  # print(target)
-  # cat("\n")
-
-  ids <- match(target$name, out$name, nomatch = 0L)
-  check <- sum(abs(out$est[ids] - target$est))
-  skip("Deprecated")
-  expect_lt(check, 0.01)
-})
-
-test_that("backdr_exp_npX: With ATT", {
-  data(whatifdat)
-  out <- backdr_exp_npX(whatifdat, outcome = Y, exposure = A, confound = H,
-                       att = TRUE, R = 200)
-  # cat("\n")
-  # print(out)
-  # cat("\n")
-
-  data(fci_tbl_06_04)
-  target <- fci_tbl_06_04
-  # cat("\n")
-  # print(target)
-  # cat("\n")
-
-  ids <- match(target$name, out$name, nomatch = 0L)
-  check <- sum(abs(out$est[ids] - target$est))
-  skip("Deprecated")
-  expect_lt(check, 0.01)
-})
 
 test_that("backdr_exp_bbX", {
   data(mortality_long)

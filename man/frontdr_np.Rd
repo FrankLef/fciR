@@ -2,30 +2,26 @@
 % Please edit documentation in R/frontdr.R
 \name{frontdr_np}
 \alias{frontdr_np}
-\title{Estimate and CI using the Front-Door Method}
+\title{Estimate the effect using Front-Door Method}
 \usage{
-frontdr_np(data, outcome, exposure, surrogate, R = 1000, conf = 0.95)
+frontdr_np(data, outcome.name, exposure.name, confound.names)
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
 
-\item{outcome}{Name of outcome variable.}
+\item{outcome.name}{Name of outcome variable.}
 
-\item{exposure}{Name of exposure variable.}
+\item{exposure.name}{Name of exposure variable.}
 
-\item{surrogate}{Name of surrogate variable.}
-
-\item{R}{Number of bootstrap replicates.}
-
-\item{conf}{Confidence interval.}
+\item{confound.names}{Name of surrogate variable.}
 }
 \value{
-Dataframe of estimate and CI using the front-door method.
+Numeric vector.
 }
 \description{
-Estimate and CI using the front-door method.
+Estimate the effect using Front-door method.
 }
 \details{
-Estimate and CI using the front-door method as described in section 8.3
-of chater 8.
+Estimate the effect using Front-door method. See chap. 8, section 8.3
+for details.
 }

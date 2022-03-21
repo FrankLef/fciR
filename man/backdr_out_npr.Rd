@@ -22,15 +22,6 @@ stand(
   interactions = list(c("T", "A")),
   att = FALSE
 )
-
-stand(
-  data,
-  outcome.name = "Y",
-  exposure.name = "T",
-  confound.names = "H",
-  interactions = list(c("T", "A")),
-  att = FALSE
-)
 }
 \arguments{
 \item{data}{Dataframe of raw data.}

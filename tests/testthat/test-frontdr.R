@@ -1,20 +1,10 @@
-test_that("est_frontdr_np", {
-  data(fci_sim_08_01)
-  df <- fci_sim_08_01
-
-  out <- est_frontdr_np(df, outcome = "Y", exposure = "A", surrogate = "S")
-
-  target <- c("EY0" = 0.055847, "EY1" = 0.185367)
-
-  check <- sum(abs(out - target))
-  expect_lt(check, 1e-6)
-})
-
 test_that("frontdr_np", {
-  data(fci_sim_08_01)
-  df <- fci_sim_08_01
+  ids <- c("EY0", "EY1")
 
-  out <- frontdr_np(df, outcome = "Y", exposure = "A", surrogate = "S", R = 100)
+  data(fci_sim_08_01)
+
+  out <- frontdr_np(fci_sim_08_01, outcome.name = "Y", exposure.name = "A",
+                    confound.names = "S")
   # cat("\n")
   # print(out)
   # cat("\n")
@@ -22,8 +12,11 @@ test_that("frontdr_np", {
   target <- data.frame(
     name = c("EY0", "EY1", "RD", "RR", "RR*", "OR"),
     est = c(0.055847, 0.185367, 0.129520, 3.319195, 1.158992, 3.846921))
+  target <- target$est[target$name %in% target]
+  # cat("\n")
+  # print(target)
+  # cat("\n")
 
-  ids <- match(target$name, out$name, nomatch = 0L)
-  check <- sum(abs(out$est[ids] - target$est))
+  check <- sum(abs(out - target))
   expect_lt(check, 1e-6)
 })
