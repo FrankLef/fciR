@@ -31,6 +31,8 @@ Imports:
     dagitty,
     Formula,
     cli,
-    formulaic
+    formulaic,
+    ggthemes,
+    ggrepel
 Depends: 
     R (>= 2.10)

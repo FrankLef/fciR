@@ -3,7 +3,7 @@
 #' Create a plot of effect-measures modifications
 #'
 #' Create a plot of effect-measures modifications. The measures are shoen
-#' as solid lines. The actual effects are shown in dashed lines
+#' as solid lines. The actual effects are shown in dashed lines.
 #'
 #' @param df Dataframe to plot.
 #' @param title Title of the plot.
@@ -14,7 +14,7 @@
 #'  scale_linetype_manual theme_minimal theme labs element_blank
 #' @importFrom rlang .data
 #'
-#' @return A ggplot object
+#' @return A ggplot object.
 #' @export
 ggp_measures_modif <- function(df, title = "Change in effect measures",
                                subtitle = "Effect-Measure Modification and Statistical Interaction") {

@@ -18,12 +18,12 @@ ggp_measures_modif(
 \item{subtitle}{Subtitle of the plot.}
 }
 \value{
-A ggplot object
+A ggplot object.
 }
 \description{
 Create a plot of effect-measures modifications
 }
 \details{
 Create a plot of effect-measures modifications. The measures are shoen
-as solid lines. The actual effects are shown in dashed lines
+as solid lines. The actual effects are shown in dashed lines.
 }
