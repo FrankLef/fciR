@@ -12,7 +12,8 @@
 #'
 #' @return Numeric vector.
 #' @export
-frontdr_np <- function(data, outcome.name, exposure.name, confound.names) {
+frontdr_np <- function(data, outcome.name = "Y", exposure.name = "A",
+                       confound.names = "S") {
   stopifnot(length(confound.names) == 1)
 
   probA1 <- mean(data[, exposure.name])

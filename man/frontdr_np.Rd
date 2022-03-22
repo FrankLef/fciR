@@ -4,7 +4,7 @@
 \alias{frontdr_np}
 \title{Estimate the effect using Front-Door Method}
 \usage{
-frontdr_np(data, outcome.name, exposure.name, confound.names)
+frontdr_np(data, outcome.name = "Y", exposure.name = "A", confound.names = "S")
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
