@@ -4,7 +4,7 @@
 \alias{ggp_measures}
 \title{Plot of effect measures}
 \usage{
-ggp_measures(data, title = "Title", subtitle = "Subtitle")
+ggp_measures(data, title = "Title", subtitle = "Subtitle", digits = 2)
 }
 \arguments{
 \item{data}{Data frame with effect measures.}
@@ -12,9 +12,11 @@ ggp_measures(data, title = "Title", subtitle = "Subtitle")
 \item{title}{Title.}
 
 \item{subtitle}{Subtitle.}
+
+\item{digits}{Number of digits to round off.}
 }
 \value{
-A ggplot object.•
+A ggplot object.
 }
 \description{
 Plot of effect measures.
