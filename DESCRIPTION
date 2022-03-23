@@ -33,6 +33,7 @@ Imports:
     cli,
     formulaic,
     ggthemes,
-    ggrepel
+    ggrepel,
+    magick
 Depends: 
     R (>= 2.10)

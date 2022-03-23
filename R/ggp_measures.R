@@ -8,7 +8,10 @@
 #' @param data Data frame with effect measures.
 #' @param title Title.
 #' @param subtitle Subtitle.
-#' @param digits Number of digits to round off.
+#' @param vline geom_vline specs.
+#' @param pointrange geom_pointrange specs.
+#' @param text geom_text_repel specs.
+#' @param scale_color scale_color_manual color specs.
 #'
 #' @importFrom ggplot2 element_text
 #' @importFrom ggrepel geom_text_repel
@@ -16,31 +19,37 @@
 #' @return A ggplot object.
 #' @export
 ggp_measures <- function(data, title = "Title", subtitle = "Subtitle",
-                         digits = 2) {
+                         vline = list(colors = c("lightseagreen", "violet"),
+                                      linetype = "solid", size = 3, alpha = 0.5),
+                         pointrange = list(size = 1, fatten = 2),
+                         text = list(size = 3, color = "navy", digits = 2),
+                         scale_color = list(zero = "darkgreen", one = "magenta")) {
 
   df <- ggp_measures_df(data)
-  conf <- df$conf[1]
 
   ggplot(df, aes(x = .data[["est"]], xmin = .data[["lci"]],
                   xmax = .data[["uci"]], y = .data[["name"]] ,
                   color = .data[["group"]])) +
-    ggplot2::geom_vline(xintercept = c(0, 1), color = c("lightseagreen", "violet"),
-               linetype = "solid", size = 4, alpha = 0.5) +
-    ggplot2::geom_pointrange(aes(color = .data[["group"]]), fatten = 3, size = 1) +
+    ggplot2::geom_vline(xintercept = c(0, 1), color = vline$colors,
+                        linetype = vline$linetype, size = vline$size, alpha = vline$alpha) +
+    ggplot2::geom_pointrange(aes(color = .data[["group"]]),
+                             size = pointrange$size, fatten = pointrange$fatten) +
     ggrepel::geom_text_repel(aes(x = .data[["est"]], y = .data[["name"]],
-                                 label = round(.data[["est"]], digits)),
-                             size = 4, color = "navy") +
+                                 label = round(.data[["est"]], text$digits)),
+                             size = text$size, color = text$color) +
     ggrepel::geom_text_repel(aes(x = .data[["lci"]], y = .data[["name"]],
-                                 label = round(.data[["lci"]], digits)),
-                             size = 4, color = "navy") +
+                                 label = round(.data[["lci"]], text$digits)),
+                             size = text$size, color = text$color) +
     ggrepel::geom_text_repel(aes(x = .data[["uci"]], y = .data[["name"]],
-                                 label = round(.data[["uci"]], digits)),
-                             size = 4, color = "navy") +
+                                 label = round(.data[["uci"]], text$digits)),
+                             size = text$size, color = text$color) +
     ggplot2::scale_x_continuous(breaks = c(0, 1)) +
-    ggplot2::scale_color_manual(values = c("zero" = "darkgreen", "one" = "magenta"),
+    ggplot2::scale_color_manual(values = c("zero" = scale_color$zero,
+                                           "one" = scale_color$one),
                        guide = "none") +
     ggthemes::theme_hc() +
-    theme(title = ggplot2::element_text(color = "midnightblue")) +
+    theme(title = ggplot2::element_text(color = "midnightblue"),
+          axis.text.y = ggplot2::element_text(color = "navy", face = "bold")) +
     labs(title = title,
          subtitle = subtitle,
          caption = "\U2020 Assuming the treatment cannot harm anyone.",

@@ -4,7 +4,16 @@
 \alias{ggp_measures}
 \title{Plot of effect measures}
 \usage{
-ggp_measures(data, title = "Title", subtitle = "Subtitle", digits = 2)
+ggp_measures(
+  data,
+  title = "Title",
+  subtitle = "Subtitle",
+  vline = list(colors = c("lightseagreen", "violet"), linetype = "solid", size = 4,
+    alpha = 0.5),
+  pointrange = list(size = 1, fatten = 3),
+  text = list(size = 4, color = "navy", digits = 2),
+  scale_color = list(zero = "darkgreen", one = "magenta")
+)
 }
 \arguments{
 \item{data}{Data frame with effect measures.}
@@ -13,7 +22,13 @@ ggp_measures(data, title = "Title", subtitle = "Subtitle", digits = 2)
 
 \item{subtitle}{Subtitle.}
 
-\item{digits}{Number of digits to round off.}
+\item{vline}{geom_vline specs.}
+
+\item{pointrange}{geom_pointrange specs.}
+
+\item{text}{geom_text_repel specs.}
+
+\item{scale_color}{scale_color_manual color specs.}
 }
 \value{
 A ggplot object.
