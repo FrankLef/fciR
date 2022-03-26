@@ -150,33 +150,28 @@ backdr_exp_bb <- function(data, outcome.name = "Y", exposure.name = "T",
 #' Compute standardized averages using exposure modeling as described in
 #' section 6.2.
 #'
-#' @param data Dataframe
-#' @param formula Formula, must be in the format \code{Y ~ `T` + H}, i.e.
-#' only 1 covariate H.
+#' @inheritParams backdr_out
 #' @param weights String. Name of the columns with the weights that will
 #' be used to create probabilities summing up to 1.
 #'
 #' @return List with 3 elements: EY1, EY0, EY0T1. See section 6.2.
 #' for more details.
 #' @export
-backdr_exp_bbX <- function(data, formula = Y ~ `T` + H, weights = "n") {
-
-  # extract the variables names from the formula
-  fvars <- formula2vars(formula)
-  # there can be only one H
-  stopifnot(length(fvars$h) == 1)
+backdr_exp_bbX <- function(data, outcome.name = "Y", exposure.name = "T",
+                           confound.names = "H", weights = "n") {
+  stopifnot(length(confound.names) == 1)
 
   # compute e(H=0)
-  dat0 <- data[data[, fvars$h] == 0, ]
-  eH0 <- sum(dat0[dat0[, fvars$t] == 1, weights]) / sum(dat0[, weights])
+  dat0 <- data[data[, confound.names] == 0, ]
+  eH0 <- sum(dat0[dat0[, exposure.name] == 1, weights]) / sum(dat0[, weights])
   # compute e(H=1)
-  dat1 <- data[data[, fvars$h] == 1, ]
-  eH1 <- sum(dat1[dat1[, fvars$t] == 1, weights]) / sum(dat1[, weights])
+  dat1 <- data[data[, confound.names] == 1, ]
+  eH1 <- sum(dat1[dat1[, exposure.name] == 1, weights]) / sum(dat1[, weights])
   # compute e(H) for all participants
-  eH <- eH0 * (1 - data[, fvars$h]) + eH1 * data[, fvars$h]
+  eH <- eH0 * (1 - data[, confound.names]) + eH1 * data[, confound.names]
   # compute the summands of the estimating equations
-  s1 <- data[, fvars$t] * data[, fvars$y] / eH
-  s0 <- (1 - data[, fvars$t]) * data[, fvars$y] / (1 - eH)
+  s1 <- data[, exposure.name] * data[, outcome.name] / eH
+  s0 <- (1 - data[, exposure.name]) * data[, outcome.name] / (1 - eH)
 
   # estimate the expected values of the potential outcomes
   probs <- data[, weights] / sum(data[, weights])  # the probabilities
@@ -186,9 +181,9 @@ backdr_exp_bbX <- function(data, formula = Y ~ `T` + H, weights = "n") {
 
   # ATT calculations
   # estimate P(T = 1)
-  e0 <- sum(data[, fvars$t] * probs)
+  e0 <- sum(data[, exposure.name] * probs)
   # compute the summands of the estimating equation
-  s <- data[, fvars$y] * (1 - data[, fvars$t]) * eH / (e0 * (1 - eH))
+  s <- data[, outcome.name] * (1 - data[, exposure.name]) * eH / (e0 * (1 - eH))
   # estimate E(Y0|T=1)
   EY0T1 <- sum(s * probs)
 

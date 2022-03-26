@@ -76,7 +76,8 @@ test_that("backdr_exp_bb: Boot", {
 
 test_that("backdr_exp_bbX", {
   data(mortality_long)
-  out <- backdr_exp_bbX(mortality_long, formula = Y ~ `T` + H, weights = "n")
+  out <- backdr_exp_bbX(mortality_long, outcome.name = "Y", exposure.name = "T",
+                        confound.names = "H", weights = "n")
 
   target <- list("EY0" = 0.0078399, "EY1" = 0.0069952, "EY0T1" = 0.010176)
 
@@ -85,3 +86,4 @@ test_that("backdr_exp_bbX", {
   skip("Deprecated")
   expect_lt(check, 1e-6)
 })
+

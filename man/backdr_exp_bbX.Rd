@@ -4,13 +4,22 @@
 \alias{backdr_exp_bbX}
 \title{Compute standardized averages using exposure modeling, non-parametric}
 \usage{
-backdr_exp_bbX(data, formula = Y ~ T + H, weights = "n")
+backdr_exp_bbX(
+  data,
+  outcome.name = "Y",
+  exposure.name = "T",
+  confound.names = "H",
+  weights = "n"
+)
 }
 \arguments{
-\item{data}{Dataframe}
+\item{data}{Dataframe of raw data.}
 
-\item{formula}{Formula, must be in the format \code{Y ~ `T` + H}, i.e.
-only 1 covariate H.}
+\item{outcome.name}{Name of outcome variable.}
+
+\item{exposure.name}{Name of exposure variable.}
+
+\item{confound.names}{Character vector of confound variable names.}
 
 \item{weights}{String. Name of the columns with the weights that will
 be used to create probabilities summing up to 1.}
