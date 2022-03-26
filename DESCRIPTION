@@ -23,17 +23,15 @@ Imports:
     gt,
     gee,
     geepack,
-    glue,
     tidyselect,
     rlang,
     MonteCarlo,
     ggdag,
     dagitty,
-    Formula,
     cli,
     formulaic,
     ggthemes,
     ggrepel,
     magick
-Depends: 
+Depends:
     R (>= 2.10)

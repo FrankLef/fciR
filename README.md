@@ -10,7 +10,10 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 <!-- badges: end -->
 
 `fciR` is a companion package to the book *Fundamentals of Causal
-Inference With R* by Babette A. Brumback, CRC Press 2022.
+Inference With R* by Babette A. Brumback, CRC Press 2022. It is
+important to remember that this package is **not for commercial use** as
+the functions are not designed to be efficient or robust. This package
+is a *learning tool*, not a *working tool*.
 
 ## Installation
 
@@ -32,14 +35,47 @@ The relevant functions and their correspondence in the book are listed
 in the following table. It is important to note thet **all boostrapping
 code are replaced by `fciR::boot_est`**.
 
-|       Reference       | Book       | fciR                 | Description                                                       |
-|:---------------------:|:-----------|:---------------------|:------------------------------------------------------------------|
-|  Section 2.4, p. 33   | lmodboot   | prob\_lmod           | Estimate the unconditional sampling distribution                  |
-|  Section 2.4, p. 34   | lmodboot   | boot\_est            | The bootstrapping code section is replaced by this one            |
-|  Section 3.3, p. 46   | bootu      | meas\_effect\_uncond | Estimate unconditional association measures                       |
-|  Section 3.3, p. 50   | lmodboot   | meas\_effect\_uncond | Estimate conditional association measures                         |
-|  Section 4.1, p. 60   | bootinside | meas\_effect\_modif  | Estimate effect measure with modifications                        |
-|  Section 6.1, p. 101  | stand      | backdr\_out\_npr     | backdoor method via outcome model using non parametric regression |
-| Section 6.1.1, p. 106 | standatt   | backdr\_out\_npr     | same as backdr\_out\_npr but with argument `att=TRUE`             |
-| Section 6.1.2, p. 111 | standout   | backdr\_out          | backdoor via outcome model using parametric method                |
-| Section 6.1.2, p. 112 | standout   | backdr\_out          | Same as previous one but using different parameters               |
+|       Reference       | Book         | fciR                 | Description                                                          |
+|:---------------------:|:-------------|:---------------------|:---------------------------------------------------------------------|
+|  Section 2.4, p. 33   | lmodboot     | prob\_lmod           | Estimate the unconditional sampling distribution                     |
+|  Section 2.4, p. 34   | lmodboot     | boot\_est            | The bootstrapping code section is replaced by this one               |
+|  Section 3.3, p. 46   | bootu        | meas\_effect\_uncond | Estimate unconditional association measures                          |
+|  Section 3.3, p. 50   | lmodboot     | meas\_effect\_uncond | Estimate conditional association measures                            |
+|  Section 4.1, p. 60   | bootinside   | meas\_effect\_modif  | Estimate effect measure with modifications                           |
+|  Section 6.1, p. 101  | stand        | backdr\_out\_npr     | backdoor method via outcome model using non parametric regression    |
+| Section 6.1.1, p. 106 | standatt     | backdr\_out\_npr     | same as backdr\_out\_npr but with `att=TRUE`                         |
+| Section 6.1.2, p. 111 | standout     | backdr\_out          | backdoor via outcome model using parametric method                   |
+| Section 6.1.2, p. 112 | standout     | backdr\_out          | Same as previous one but using different parameters                  |
+|  Section 6.2, p. 114  | mk.mordat    | backdr\_exp\_bb      | Standardization via exposure modeling                                |
+|  Section 6.2, p. 115  | mordat.out   | backdr\_out          | Standardization via outcome modeling                                 |
+| Section 6.2.1, p. 116 | attsem       | backdr\_out          | Standardization via outcome modeling with `att=TRUE`                 |
+| Section 6.2.2, p. 118 | standexp     | backdr\_exp          | Standardization via parametric exposure model                        |
+| Section 6.2.2, p. 119 | exp          | backdr\_exp\_gee     | Standardization via parametric exposure model with `geepack::geeglm` |
+| Section 6.2.2, p. 119 | standep      | backdr\_exp          | Same as above for p. 118                                             |
+|  Section 6.3, p. 125  | badstanddr   | backdr\_dr\_bad      | Misspecified doubly sobust standardization                           |
+|  Section 6.3, p. 127  | simdr        | mc\_standdr          | Monte-Carlo simulation investigating small-sample robustness         |
+|  Section 7.2, p. 141  | didlinear    | did\_linear          | Difference-in-Differences estimator with linear model                |
+|  Section 7.2, p. 141  | didloglinear | did\_loglinear       | Difference-in-Differences estimator with loglinear model             |
+|  Section 7.2, p. 142  | didlogistic  | did\_logistic        | Difference-in-Differences estimator with logistic model              |
+|  Section 7.2, p. 142  | bootdid      | boot\_est            | Same bootstrapping function used everywhere else in the package      |
+|  Section 8.3, p. 153  | frontdoor    | frontdr\_np          | Front-door method non-parametric                                     |
+
+## Packages
+
+The packages used by `fciR` include the usual great ones
+
+|  Package   | Reference                            | Description    |
+|:----------:|:-------------------------------------|:---------------|
+|   dplyr    | [dplyr](https://dplyr.tidyverse.org) | Data wrangling |
+| tidyselect |                                      |                |
+|   rlang    |                                      |                |
+|  ggplot2   |                                      |                |
+
+and several packages used
+
+|  Package   | Reference                                                     | Description  |
+|:----------:|:--------------------------------------------------------------|:-------------|
+|    boor    | [boot](https://cran.rstudio.com/web/packages/boot/index.html) | Boostrapping |
+| MonteCarlo |                                                               |              |
+|   rlang    |                                                               |              |
+|  ggplot2   |                                                               |              |
