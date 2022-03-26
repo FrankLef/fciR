@@ -12,12 +12,13 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 `fciR` is a companion package to the book *Fundamentals of Causal
 Inference With R* by Babette A. Brumback, CRC Press 2022. It is
 important to remember that this package is **not for commercial use** as
-the functions are not designed to be efficient or robust. This package
-is a *learning tool*, not a *working tool*.
+the functions have not been designed specifically to be to be efficient,
+robust or with error checks. This package is a *learning tool*, not a
+*working tool*.
 
 ## Installation
 
-You can install the development version of fciR from
+You can install the development version of `fciR` from
 [GitHub](https://github.com/) with:
 
 ``` r
@@ -32,7 +33,7 @@ The package includes functions replacing the ones appearing in
 naming conventions and helper functions for plots, tables etc.
 
 The relevant functions and their correspondence in the book are listed
-in the following table. It is important to note thet **all boostrapping
+in the following table. It is important to note that **all boostrapping
 code are replaced by `fciR::boot_est`**.
 
 |       Reference       | Book         | fciR                 | Description                                                          |
@@ -64,18 +65,19 @@ code are replaced by `fciR::boot_est`**.
 
 The packages used by `fciR` include the usual great ones
 
-|  Package   | Reference                            | Description    |
-|:----------:|:-------------------------------------|:---------------|
-|   dplyr    | [dplyr](https://dplyr.tidyverse.org) | Data wrangling |
-| tidyselect |                                      |                |
-|   rlang    |                                      |                |
-|  ggplot2   |                                      |                |
+|  Package   | Reference                                  | Description                     |
+|:----------:|:-------------------------------------------|:--------------------------------|
+|   dplyr    | [dplyr](https://dplyr.tidyverse.org)       | Data wrangling                  |
+| tidyselect | [tidyselect](https://tidyselect.r-lib.org) | Select from a set of string     |
+|   rlang    | [rlang](https://rlang.r-lib.org)           | Core R functions with tidyverse |
+|  ggplot2   | [ggplot2](https://ggplot2.tidyverse.org)   | Nice plots                      |
 
-and several packages used
+and several packages used for more specialized tasks
 
-|  Package   | Reference                                                     | Description  |
-|:----------:|:--------------------------------------------------------------|:-------------|
-|    boor    | [boot](https://cran.rstudio.com/web/packages/boot/index.html) | Boostrapping |
-| MonteCarlo |                                                               |              |
-|   rlang    |                                                               |              |
-|  ggplot2   |                                                               |              |
+|  Package   | Reference                                                           | Description                                    |
+|:----------:|:--------------------------------------------------------------------|:-----------------------------------------------|
+|    boot    | [boot](https://cran.rstudio.com/web/packages/boot/index.html)       | Boostrapping                                   |
+| MonteCarlo | [MonteCarlo](https://github.com/FunWithR/MonteCarlo)                | Monte Carlo simulations                        |
+| formulaic  | [formulaic](https://dachosen1.github.io/formulaic/index.html)       | Dynamic creation and quality checks of formula |
+|    gee     | [gee](https://cran.rstudio.com/web/packages/gee/index.html)         | Generalized estimation equation solver         |
+|  geepack   | [geepack](https://cran.rstudio.com/web/packages/geepack/index.html) | Generalized estimation equation package        |
