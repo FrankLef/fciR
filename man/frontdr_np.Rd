@@ -4,24 +4,27 @@
 \alias{frontdr_np}
 \title{Estimate the effect using Front-Door Method}
 \usage{
-frontdr_np(data, outcome.name = "Y", exposure.name = "A", confound.names = "S")
+frontdr_np(data, outcome.name = "Y", exposure.name = "A", surrogate.name = "S")
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
 
 \item{outcome.name}{Name of outcome variable.}
 
-\item{exposure.name}{Name of exposure variable.}
+\item{exposure.name}{Name of exposure variable which is treated as a
+sufficient confounder. See assumption 5 of section 8.2.}
 
-\item{confound.names}{Name of surrogate variable.}
+\item{surrogate.name}{Name of surrogate variable.}
 }
 \value{
-Numeric vector.
+Named numeric vector with effect measures.
 }
 \description{
 Estimate the effect using Front-door method.
 }
 \details{
-Estimate the effect using Front-door method. See chap. 8, section 8.3
-for details.
+Estimate the effect using Front-door method. The exposure variable is used
+as a confounder in the front-door method and thus, it is called
+\code{confound.names} in the arguments, as described by assumption 5
+in section 8.2. See section 8.3 for details on the algorithm.
 }

@@ -12,8 +12,9 @@
 #' @param pointrange geom_pointrange specs.
 #' @param text geom_text_repel specs.
 #' @param scale_color scale_color_manual color specs.
+#' @param text_size text size for title and axis as a factor of base font size.
 #'
-#' @importFrom ggplot2 element_text
+#' @importFrom ggplot2 element_text rel
 #' @importFrom ggrepel geom_text_repel
 #'
 #' @return A ggplot object.
@@ -23,7 +24,8 @@ ggp_measures <- function(data, title = "Title", subtitle = "Subtitle",
                                       linetype = "solid", size = 3, alpha = 0.5),
                          pointrange = list(size = 1, fatten = 2),
                          text = list(size = 3, color = "navy", digits = 2),
-                         scale_color = list(zero = "darkgreen", one = "magenta")) {
+                         scale_color = list(zero = "darkgreen", one = "magenta"),
+                         text_size = list(title = 0.9, y_axis = 0.9)) {
 
   df <- ggp_measures_df(data)
 
@@ -48,8 +50,11 @@ ggp_measures <- function(data, title = "Title", subtitle = "Subtitle",
                                            "one" = scale_color$one),
                        guide = "none") +
     ggthemes::theme_hc() +
-    theme(title = ggplot2::element_text(color = "midnightblue"),
-          axis.text.y = ggplot2::element_text(color = "navy", face = "bold")) +
+    theme(title = ggplot2::element_text(color = "midnightblue",
+                                        size = ggplot2::rel(text_size$title)),
+          axis.text.y =
+            ggplot2::element_text(color = "navy", face = "bold",
+                                  size = ggplot2::rel(text_size$y_axis))) +
     labs(title = title,
          subtitle = subtitle,
          caption = "\U2020 Assuming the treatment cannot harm anyone.",
@@ -60,7 +65,7 @@ ggp_measures <- function(data, title = "Title", subtitle = "Subtitle",
 #'
 #' @param data Data frame to plot.
 #'
-#' @importFrom rlang .data
+#' @importFrom rlang .data abort format_error_bullets
 #' @importFrom dplyr bind_rows
 #'
 #' @seealso ggp_measures
@@ -68,7 +73,16 @@ ggp_measures <- function(data, title = "Title", subtitle = "Subtitle",
 #' @return Data frame.
 ggp_measures_df <- function(data) {
   the_names <- c("RD", "RR", "RR*", "OR")
-  stopifnot(all(the_names %in% data$name))
+
+  check <- sum(the_names %in% data$name)
+  if (check != length(the_names)) {
+    msg_head <- cli::col_yellow("All 4 effect measures must be included.")
+    msg_body <- c("x" = sprintf("Number of effect measures: %d", check))
+    msg <- paste(msg_head, rlang::format_error_bullets(msg_body), sep = "\n")
+    rlang::abort(
+      message = msg,
+      class = "ggp_measures_df_error")
+  }
 
   # filter and order the data
   pos <- match(the_names, data$name, nomatch = 0L)
