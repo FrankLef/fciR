@@ -40,6 +40,7 @@ sim_doublewhatif <- function(n = 1000, seed = 444) {
   data.frame(
     "AD0" = AD0,
     "VL0" = VL0,
+    "U" = U,
     "T" = `T`,
     "A" = A,
     "AD1" = AD1,

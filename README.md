@@ -26,6 +26,12 @@ You can install the development version of `fciR` from
 devtools::install_github("FrankLef/fciR")
 ```
 
+## Aknowledgement
+
+All my thanks to the author, Ms Babette Brumback, for her patience and
+kindness in answering my queries and for all her work in creating this
+so useful book.
+
 ## Overview
 
 The package includes functions replacing the ones appearing in

@@ -9,6 +9,7 @@ Dataframe with 1000 rows and 6 variables.
 \describe{
 \item{AD0}{HIV antiretroviral adherence at time 0}
 \item{VL0}{Viral load at time 1}
+\item{U}{Latent variable of propensity for healthy behavior (U=1)}
 \item{T}{1 = naltrexone}
 \item{A}{1 = reduced drinking}
 \item{AD1}{HIV antiretroviral adherence at time 0}

@@ -9,5 +9,5 @@ test_that("did_longer", {
   # str(out)
   # cat("\n")
 
-  expect_identical(dim(out), c(2000L, 7L))
+  expect_identical(dim(out), c(2000L, 8L))
 })

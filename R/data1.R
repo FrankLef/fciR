@@ -8,8 +8,8 @@
 #' \describe{
 #'   \item{T}{1 = naltrexone, 0 = placebo}
 #'   \item{A}{1 = reduced drinking for prior 30 days}
-#'   \item{H}{1 = unsuppresed HIV load}
-#'   \item{Y}{1 = unsuppresed HIV load at month 4}
+#'   \item{H}{1 = unsuppressed HIV load}
+#'   \item{Y}{1 = unsuppressed HIV load at month 4}
 #' }
 #'
 "whatifdat"
@@ -47,6 +47,7 @@
 #' \describe{
 #'   \item{AD0}{HIV antiretroviral adherence at time 0}
 #'   \item{VL0}{Viral load at time 1}
+#'   \item{U}{Latent variable of propensity for healthy behavior (U=1)}
 #'   \item{T}{1 = naltrexone}
 #'   \item{A}{1 = reduced drinking}
 #'   \item{AD1}{HIV antiretroviral adherence at time 0}
