@@ -161,3 +161,21 @@
 #'   \item{Ydot1}{Potential outcome Y(., S(1))}
 #' }
 "fci_sim_08_01"
+
+#' Table 9.1
+#'
+#' See chapter 9, section 9.3.
+#'
+#' @docType data
+#'
+#' @format Dataframe with 10 rows and 7 variables.
+#' \describe{
+#'   \item{method}{method of estimation}
+#'   \item{name}{name of estimator}
+#'   \item{Truth}{true value}
+#'   \item{est}{estimate}
+#'   \item{conf}{confidence interval width}
+#'   \item{lci}{lower confidence interval}
+#'   \item{uci}{upper confidence interval}
+#' }
+"fci_tbl_09_01"

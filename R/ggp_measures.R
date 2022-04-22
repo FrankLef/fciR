@@ -73,6 +73,8 @@ ggp_measures <- function(data, title = "Title", subtitle = "Subtitle",
 #' @return Data frame.
 ggp_measures_df <- function(data) {
   the_names <- c("RD", "RR", "RR*", "OR")
+  the_groups <- c("RD" = "zero", "RR" = "one", "RR*" = "one",
+                  "OR" = "one", "AF" = "zero", "CP" = "zero")
 
   check <- sum(the_names %in% data$name)
   if (check != length(the_names)) {
@@ -90,8 +92,6 @@ ggp_measures_df <- function(data) {
 
   conf <- df1$conf[1]
 
-  # pdf1 <- data %>%
-  #   filter(.data[["name"]] %in% the_names)
   df2 <- data.frame(
     name = c("AF\U2020", "CP\U2020"),
     est = c(1 - 1 / df1$est[df1$name == "RR"],
@@ -102,6 +102,6 @@ ggp_measures_df <- function(data) {
     uci = c(1 - 1 / df1$uci[df1$name == "RR"],
             1 - 1 / df1$uci[df1$name == "RR*"]))
   df <- bind_rows(df1, df2) %>%
-    mutate(group = c("zero", "one", "one", "one", "zero", "zero"))
+    mutate(group = the_groups)
   df
 }
