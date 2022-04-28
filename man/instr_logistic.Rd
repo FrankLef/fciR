@@ -22,7 +22,7 @@ instr_logistic(
 
 \item{instrument.name}{Name of instrument variable.}
 
-\item{tol}{Positive real number. The tolerance used in the iterations.}
+\item{tol}{Numeric > 0. Tolerance used in estimation.}
 
 \item{niter}{Number of iterations}
 }

@@ -5,7 +5,6 @@
 #' See section 9.3 p. 167-168 for details.
 #'
 #' @inheritParams instr_vars
-#' @param tol Positive real number. The tolerance used in the iterations.
 #' @param niter Number of iterations
 #'
 #' @importFrom formulaic create.formula

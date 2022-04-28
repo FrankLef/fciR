@@ -14,7 +14,7 @@
 #' Default value is \code{"standard"}.
 #' @param ... Other named arguments for \code{func}.
 #'
-#' @return Dataframe of estimates with CI.
+#' @return Dataframe of estimates with confidence interval..
 #' @export
 boot_est <- function(data, func, R = 1000, conf = 0.95,
                      inv = c("exp", "expit", "none"),

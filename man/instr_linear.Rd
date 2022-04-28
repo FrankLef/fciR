@@ -21,8 +21,7 @@ instr_linear(
 
 \item{instrument.name}{Name of instrument variable.}
 
-\item{tol}{Numeric > 0. Tolerance for denominator of IV. When the tolerance
-fails the IV s replaced by \code{NA}}
+\item{tol}{Numeric > 0. Tolerance used in estimation.}
 }
 \value{
 Numeric vector of estimates.

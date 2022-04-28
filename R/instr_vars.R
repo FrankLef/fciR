@@ -3,14 +3,13 @@
 #'
 #' Compute ITT, CACE and ATT from instrument variables.
 #'
-#' See section 9.3 on p. 164 for details.
+#' See section 9.3 on p. 164 for details. When the tolerance is not met, the
 #'
 #' @param data Dataframe of raw data.
 #' @param outcome.name Name of outcome variable.
 #' @param exposure.name Name of exposure variable.
 #' @param instrument.name Name of instrument variable.
-#' @param tol Numeric > 0. Tolerance for denominator of IV. When the tolerance
-#' fails the IV s replaced by \code{NA}
+#' @param tol Numeric > 0. Tolerance used in estimation.
 #'
 #' @return Numeric vector of estimates.
 #' @export

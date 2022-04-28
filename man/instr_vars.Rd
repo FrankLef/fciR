@@ -21,8 +21,7 @@ instr_vars(
 
 \item{instrument.name}{Name of instrument variable.}
 
-\item{tol}{Numeric > 0. Tolerance for denominator of IV. When the tolerance
-fails the IV s replaced by \code{NA}}
+\item{tol}{Numeric > 0. Tolerance used in estimation.}
 }
 \value{
 Numeric vector of estimates.
@@ -31,5 +30,5 @@ Numeric vector of estimates.
 Compute ITT, CACE and ATT from instrument variables.
 }
 \details{
-See section 9.3 on p. 164 for details.
+See section 9.3 on p. 164 for details. When the tolerance is not met, the
 }

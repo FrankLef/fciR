@@ -33,7 +33,7 @@ Default value is \code{"standard"}.}
 \item{...}{Other named arguments for \code{func}.}
 }
 \value{
-Dataframe of estimates with CI.
+Dataframe of estimates with confidence interval..
 }
 \description{
 Get estimate and CI using a function as input.
