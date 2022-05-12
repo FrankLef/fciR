@@ -51,7 +51,8 @@ by `fciR::boot_est`**.
 
 |Reference|Book|fciR|Description|
 |:---:|:---|:---|:---|
-|Section 2.4, p. 33|lmodboot|prob_lmod|Estimate the unconditional sampling distribution|
+|Section 2.4, p. 33|lmodboot|prob_lmod|Estimate the sampling distribution|
+|Section 2.4, p. 33|lmodboot|prob_lmod_td|Estimate the sampling distribution using tidyverse|
 |Section 2.4, p. 34|lmodboot|boot_est|The bootstrapping code section is replaced by this one|
 |Section 3.3, p. 46|bootu|meas_effect_uncond|Estimate unconditional association measures|
 |Section 3.3, p. 50|lmodboot|meas_effect_uncond|Estimate conditional association measures|
@@ -81,9 +82,11 @@ The packages used by `fciR` include the usual great ones
 
 |Package|Reference|Description|
 |:---:|:---|:---|
-|dplyr|[dplyr](https://dplyr.tidyverse.org)|Data wrangling|
-|tidyselect|[tidyselect](https://tidyselect.r-lib.org)|Select from a set of string|
 |rlang|[rlang](https://rlang.r-lib.org)|Core R functions with tidyverse|
+|dplyr|[dplyr](https://dplyr.tidyverse.org)|Data wrangling|
+|tidyr|[tidyr](https://tidyr.tidyverse.org)|Create tidy data|
+|tidyselect|[tidyselect](https://tidyselect.r-lib.org)|Select from a set of string|
+|purrr|[purrr](https://purrr.tidyverse.org)|Functional programming toolkit|
 |ggplot2|[ggplot2](https://ggplot2.tidyverse.org)|Nice plots|
 
 and several packages used for more specialized tasks
@@ -91,6 +94,8 @@ and several packages used for more specialized tasks
 |Package|Reference|Description|
 |:---:|:---|:---|
 |boot|[boot](https://cran.rstudio.com/web/packages/boot/index.html)|Boostrapping|
+|rsample|[rsample](https://rsample.tidymodels.org)|Boostrapping and jackknife|
+|broom|[broom](https://broom.tidymodels.org)|Extract information from models|
 |MonteCarlo|[MonteCarlo](https://github.com/FunWithR/MonteCarlo)|Monte Carlo simulations|
 |formulaic|[formulaic](https://dachosen1.github.io/formulaic/index.html)|Dynamic creation and quality checks of formula|
 |gee|[gee](https://cran.rstudio.com/web/packages/gee/index.html)|Generalized estimation equation solver|

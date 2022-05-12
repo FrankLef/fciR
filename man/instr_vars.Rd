@@ -24,7 +24,7 @@ instr_vars(
 \item{tol}{Numeric > 0. Tolerance used in estimation.}
 }
 \value{
-Numeric vector of estimates.
+Named numeric vector of estimates with ITT and IV (IV=CACE)
 }
 \description{
 Compute ITT, CACE and ATT from instrument variables.

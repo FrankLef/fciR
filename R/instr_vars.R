@@ -11,7 +11,7 @@
 #' @param instrument.name Name of instrument variable.
 #' @param tol Numeric > 0. Tolerance used in estimation.
 #'
-#' @return Numeric vector of estimates.
+#' @return Named numeric vector of estimates with ITT and IV (IV=CACE)
 #' @export
 instr_vars <- function(data, outcome.name = "Y", exposure.name = "A",
                        instrument.name = "T", tol = .Machine$double.eps^0.5) {

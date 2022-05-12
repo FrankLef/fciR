@@ -85,8 +85,8 @@
 #'   \item{T}{1 = US, 0 = China}
 #'   \item{H}{1 = > 65 years old}
 #'   \item{Y}{ 1 = deaths proportion, 0 = living proportion}
-#'   \item{population}{size of population}
-#'   \item{p}{proportion}
+#'   \item{n}{size of population}
+#'   \item{p}{proportion of dead population}
 #' }
 "mortality_long"
 

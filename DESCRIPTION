@@ -35,6 +35,7 @@ Imports:
     magick,
     AER,
     rsample,
-    purrr
+    purrr,
+    broom
 Depends:
     R (>= 2.10)

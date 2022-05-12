@@ -7,11 +7,12 @@ test_that("instr_vars", {
   # print(out)
   # cat("\n")
 
-  target <- c(0.007352941, 0.27777778)
+  target <- c("ITT" = 0.007352941, "IV" = 0.27777778)
   # cat("\n")
   # print(target)
   # cat("\n")
 
   check <- sum(abs(out - target))
   expect_lt(check, 1e-6)
+  expect_identical(names(out), names(target))
 })
