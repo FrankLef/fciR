@@ -11,44 +11,41 @@
 #' Assumptions: We assume that (3.2) holds but not (3.1)
 #' See p. 45 and 46 for more details.
 #' @param data Dataframe of raw data.
-#' @param outcome.name Name of outcome variable.
-#' @param input.names Character vector of input variable names.
+#' @param formula The model formula.
 #'
-#' @importFrom formulaic create.formula
+#' @importFrom rlang f_rhs .data
 #' @importFrom stats glm coef plogis
 #'
 #' @return Numeric vector of summarized results
 #' @export
-meas_effect_uncond <- function(data, outcome.name = "Y", input.names = c("T")) {
+meas_effect_uncond <- function(data, formula = Y ~ `T`) {
 
   x0 <- "(Intercept)"  # name of intercept used by lm, glm, etc.
-
-  a_formula <- formulaic::create.formula(outcome.name = outcome.name,
-                                         input.names = input.names,
-                                         dat = data)
+  outvars <- all.vars(rlang::f_lhs(formula))  # the outcome variable
+  indvars <- all.vars(rlang::f_rhs(formula))  # the independent variables
 
   # estimate the conditional probabilities
-  coefs <- coef(glm(formula = a_formula, family = "gaussian", data = data))
+  coefs <- coef(glm(formula = formula, family = "gaussian", data = data))
   p0 <- coefs[x0]
   p1 <- sum(coefs)
   # estimate the risk difference
   rd <- p1 - p0
 
   # use loglinear model to estimate the log relative risk
-  coefs <- coef(glm(formula = a_formula, family = "poisson", data = data))
-  logrr <- coefs[input.names]
+  coefs <- coef(glm(formula = formula, family = "poisson", data = data))
+  logrr <- coefs[indvars]
 
   # prepare data to estimate the log other relative risk
-  ystar <- 1 - data[, outcome.name]
-  xstar <- 1 - data[, input.names]
+  ystar <- 1 - data[, outvars]
+  xstar <- 1 - data[, indvars]
 
   # use loglinear model to estimate the log other relative risk
   coefs <- coef(glm(ystar ~ xstar, family = "poisson"))
   logrrstar <- coefs[2]
 
   # use logistic model to estimate the log of other risk
-  coefs <- coef(glm(formula = a_formula, family = "binomial", data = data))
-  logor <- coefs[input.names]
+  coefs <- coef(glm(formula = formula, family = "binomial", data = data))
+  logor <- coefs[indvars]
 
   # return the results
   out <- c(p0, p1, rd, logrr, logrrstar, logor)

@@ -2,7 +2,7 @@ test_that("meas_effect_uncond", {
   data("whatifdat")
   data <- whatifdat
 
-  out <- meas_effect_uncond(data, outcome.name = "Y", input.names = "T")
+  out <- meas_effect_uncond(data, formula = Y ~ `T`)
   # cat("\n")
   # print(out)
   # cat("\n")
@@ -21,7 +21,7 @@ test_that("meas_effect_uncond: Boot", {
   data <- whatifdat
 
   out <- boot_est(data, func = meas_effect_uncond, R = 100, conf = 0.95,
-                  outcome.name = "Y", input.names = "T")
+                  formula = Y ~ `T`)
   # cat("\n")
   # print(out)
   # cat("\n")

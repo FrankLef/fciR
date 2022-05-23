@@ -74,3 +74,35 @@ boot_run <- function(data, statistic, R = 1000, conf = 0.95, ...) {
   # add the first column as the names of the results
   data.frame(name = names(boot.out$t0), out)
 }
+
+
+#' Bootstrapping Confidence Intervals with Tidyverse
+#'
+#' Bootstrapping confidence intervals with tidyverse.
+#'
+#' Bootstrapping confidence intervals using the \code{rsample} package.
+#'
+#' @param data Dataframe of raw data.
+#' @param func Function applied to data by bootstrapping.
+#' @param times Number of bootstrap replicates. Default is 1000.
+#' @param alpha Alpha used by percentile to give interval in
+#' \code{c(alpha, 1- alpha)}.
+#' @param ... Additional arguments used by \code{func}.
+#'
+#' @importFrom rsample bootstraps int_pctl analysis
+#' @importFrom purrr map_dfr
+#' @importFrom rlang .data
+#'
+#' @return Dataframe with term, .lower, .estimate, .upper, .alpha, .method
+#' @export
+boot_run_td <- function(data, func, times = 1000, alpha = 0.05, ...) {
+  stopifnot(times >= 1, alpha > 0, alpha < 0.5)
+
+  data |>
+    rsample::bootstraps(times = times, apparent = FALSE) |>
+    mutate(results = purrr::map_dfr(.data[["splits"]], function(x) {
+      dat <- rsample::analysis(x)
+      func(dat, ...)
+    })) |>
+    rsample::int_pctl(.data[["results"]], alpha = alpha)
+}

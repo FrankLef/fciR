@@ -5,28 +5,17 @@
 \alias{lmodboot}
 \title{Estimate s sampling distribution by Bootstrapping}
 \usage{
-prob_lmod(
-  data,
-  outcome.name = "Y",
-  input.names = c("T", "A", "H"),
-  condition.names = input.names
-)
+prob_lmod(data, formula = Y ~ T + A + H, condition.names = NULL)
 
-lmodboot(
-  data,
-  outcome.name = "Y",
-  input.names = c("T", "A", "H"),
-  condition.names = input.names
-)
+lmodboot(data, formula = Y ~ T + A + H, condition.names = NULL)
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
 
-\item{outcome.name}{Name of outcome variable.}
+\item{formula}{The model formula.}
 
-\item{input.names}{Character vector of input variable names.}
-
-\item{condition.names}{Character vector of conditioned variable names.}
+\item{condition.names}{Character vector of conditioned variable names. If
+\code{NULL} all independent variables will be used.}
 }
 \value{
 Numeric vector of summarized results

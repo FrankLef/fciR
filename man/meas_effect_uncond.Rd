@@ -5,16 +5,14 @@
 \alias{bootu}
 \title{Compute estimates of the unconditional association measures}
 \usage{
-meas_effect_uncond(data, outcome.name = "Y", input.names = c("T"))
+meas_effect_uncond(data, formula = Y ~ T)
 
-bootu(data, outcome.name = "Y", input.names = c("T"))
+bootu(data, formula = Y ~ T)
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
 
-\item{outcome.name}{Name of outcome variable.}
-
-\item{input.names}{Character vector of input variable names.}
+\item{formula}{The model formula.}
 }
 \value{
 Numeric vector of summarized results

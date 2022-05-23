@@ -7,32 +7,30 @@
 \usage{
 meas_effect_cond(
   data,
-  outcome.name = "Y",
+  formula = Y ~ T + A + H,
   exposure.name = "T",
-  confound.names = c("A", "H"),
-  condition.names = confound.names,
+  condition.names = NULL,
   family = c("binomial", "poisson", "gaussian")
 )
 
 bootc(
   data,
-  outcome.name = "Y",
+  formula = Y ~ T + A + H,
   exposure.name = "T",
-  confound.names = c("A", "H"),
-  condition.names = confound.names,
+  condition.names = NULL,
   family = c("binomial", "poisson", "gaussian")
 )
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
 
-\item{outcome.name}{Name of outcome variable.}
+\item{formula}{The model formula.}
 
-\item{exposure.name}{Name of exposure variable.}
+\item{exposure.name}{Name of the exposure variable.}
 
-\item{confound.names}{Character vector of confound variable names.}
-
-\item{condition.names}{Character vector of condition variable names.}
+\item{condition.names}{Character vector of conditioned variable names. If
+\code{NULL} all independent variables exclusding the \code{exposure.name}
+will be used.}
 
 \item{family}{Name of distribution. Must be in
 \code{c("binomial", "poisson", "gaussian")}.}

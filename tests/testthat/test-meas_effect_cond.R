@@ -2,10 +2,8 @@ test_that("meas_effect_cond", {
   data("whatifdat")
   data <- whatifdat
 
-  out <- meas_effect_cond(data, outcome.name = "Y",
-                          exposure.name = "T",
-                          confound.names = c("A", "H"),
-                          condition.names = c("H"))
+  out <- meas_effect_cond(data, formula = Y ~ `T` + A + H,
+                          exposure.name = "T", condition.names = "H")
   # cat("\n")
   # print(out)
   # cat("\n")
@@ -16,35 +14,4 @@ test_that("meas_effect_cond", {
 
   expect_identical(names(out), names(target))
   expect_lt(sum(abs(out - target)), 1e-6)
-})
-
-
-test_that("meas_effect_cond: Boot", {
-  data("whatifdat")
-  data <- whatifdat
-
-  out <- boot_est(data, func = meas_effect_cond, R = 100, conf = 0.95,
-                  outcome.name = "Y", exposure.name = "T",
-                  confound.names = c("A", "H"),
-                  condition.names = c("H"))
-  # cat("\n")
-  # print(out)
-  # cat("\n")
-
-  target <- data.frame(
-    name = c("P0", "P1", "RD", "RR", "RR*", "OR"),
-    est = c(0.77214651, 0.73008627, -0.04206024,
-            0.94552816, 0.84417155, 0.79818797),
-    conf = 0.95,
-    lci = c(0.6295037, 0.5829942, -0.1764233,
-            0.7857248, 0.4823648, 0.3833990),
-    uci = c(0.92478949, 0.88452600, 0.08965033,
-            1.13627178, 1.49281056, 1.67680309))
-
-  skip("Deprecated")
-  expect_identical(dim(out), c(6L, 5L))
-  expect_lt(sum(abs(out$est - target$est)), 0.01)
-  expect_lt(sum(abs(out$conf - target$conf)), 0.01)
-  expect_lt(sum(abs(out$lci - target$lci)), 0.5)
-  expect_lt(sum(abs(out$uci - target$uci)), 0.5)
 })
