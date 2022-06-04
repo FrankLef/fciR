@@ -29,21 +29,21 @@ ggp_measures <- function(data, title = "Title", subtitle = "Subtitle",
 
   df <- ggp_measures_df(data)
 
-  ggplot(df, aes(x = .data[["est"]], xmin = .data[["lci"]],
-                  xmax = .data[["uci"]], y = .data[["name"]] ,
+  ggplot(df, aes(x = .data[[".estimate"]], xmin = .data[[".lower"]],
+                  xmax = .data[[".upper"]], y = .data[["term"]] ,
                   color = .data[["group"]])) +
     ggplot2::geom_vline(xintercept = c(0, 1), color = vline$colors,
                         linetype = vline$linetype, size = vline$size, alpha = vline$alpha) +
     ggplot2::geom_pointrange(aes(color = .data[["group"]]),
                              size = pointrange$size, fatten = pointrange$fatten) +
-    ggrepel::geom_text_repel(aes(x = .data[["est"]], y = .data[["name"]],
-                                 label = round(.data[["est"]], text$digits)),
+    ggrepel::geom_text_repel(aes(x = .data[[".estimate"]], y = .data[["term"]],
+                                 label = round(.data[[".estimate"]], text$digits)),
                              size = text$size, color = text$color) +
-    ggrepel::geom_text_repel(aes(x = .data[["lci"]], y = .data[["name"]],
-                                 label = round(.data[["lci"]], text$digits)),
+    ggrepel::geom_text_repel(aes(x = .data[[".lower"]], y = .data[["term"]],
+                                 label = round(.data[[".lower"]], text$digits)),
                              size = text$size, color = text$color) +
-    ggrepel::geom_text_repel(aes(x = .data[["uci"]], y = .data[["name"]],
-                                 label = round(.data[["uci"]], text$digits)),
+    ggrepel::geom_text_repel(aes(x = .data[[".upper"]], y = .data[["term"]],
+                                 label = round(.data[[".upper"]], text$digits)),
                              size = text$size, color = text$color) +
     ggplot2::scale_x_continuous(breaks = c(0, 1)) +
     ggplot2::scale_color_manual(values = c("zero" = scale_color$zero,
@@ -76,7 +76,7 @@ ggp_measures_df <- function(data) {
   the_groups <- c("RD" = "zero", "RR" = "one", "RR*" = "one",
                   "OR" = "one", "AF" = "zero", "CP" = "zero")
 
-  check <- sum(the_names %in% data$name)
+  check <- sum(the_names %in% data$term)
   if (check != length(the_names)) {
     msg_head <- cli::col_yellow("All 4 effect measures must be included.")
     msg_body <- c("x" = sprintf("Number of effect measures: %d", check))
@@ -87,20 +87,20 @@ ggp_measures_df <- function(data) {
   }
 
   # filter and order the data
-  pos <- match(the_names, data$name, nomatch = 0L)
+  pos <- match(the_names, data$term, nomatch = 0L)
   df1 <- data[pos, ]
 
-  conf <- df1$conf[1]
+  conf <- 1 - df1$.alpha[1]
 
   df2 <- data.frame(
-    name = c("AF\U2020", "CP\U2020"),
-    est = c(1 - 1 / df1$est[df1$name == "RR"],
-            1 - 1 / df1$est[df1$name == "RR*"]),
+    term = c("AF\U2020", "CP\U2020"),
+    .estimate = c(1 - 1 / df1$.estimate[df1$term == "RR"],
+            1 - 1 / df1$.estimate[df1$term == "RR*"]),
     conf = conf,
-    lci = c(1 - 1 / df1$lci[df1$name == "RR"],
-            1 - 1 / df1$lci[df1$name == "RR*"]),
-    uci = c(1 - 1 / df1$uci[df1$name == "RR"],
-            1 - 1 / df1$uci[df1$name == "RR*"]))
+    .lower = c(1 - 1 / df1$.lower[df1$term == "RR"],
+            1 - 1 / df1$.lower[df1$term == "RR*"]),
+    .upper = c(1 - 1 / df1$.upper[df1$term == "RR"],
+            1 - 1 / df1$.upper[df1$term == "RR*"]))
   df <- bind_rows(df1, df2) %>%
     mutate(group = the_groups)
   df

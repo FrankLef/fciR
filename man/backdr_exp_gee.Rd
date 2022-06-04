@@ -20,13 +20,13 @@ standexpgee(
 )
 }
 \arguments{
-\item{data}{Dataframe of raw data.}
+\item{data}{Dataframe of data.}
 
 \item{outcome.name}{Name of outcome variable.}
 
 \item{exposure.name}{Name of exposure variable.}
 
-\item{confound.names}{Character vector of confound variable names.}
+\item{confound.names}{Name of confound variable.}
 }
 \value{
 Dataframe of estimates

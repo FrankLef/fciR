@@ -3,7 +3,7 @@ test_that("meas_effect_modif", {
   df <- recovery
   out <- meas_effect_modif(recovery, outcome.name = "Y", exposure.name = "T",
                            modifier.name = "M")
-  # cat("\n")
+  # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")
 
@@ -16,9 +16,19 @@ test_that("meas_effect_modif", {
               "EYT0.diff" = -0.19070017, "EYT1.diff" = -0.05869053,
               "RD.diff" = 0.13200964, "logRR.diff" = 0.20197691,
               "logRR*.diff" = 0.38219488, "logOR.diff" = 0.58417478)
+  target <- data.frame(
+    term = names(target),
+    estimate = unname(target),
+    std.err = NA_real_
+  )
+
+  # cat("\n", "target", "\n")
+  # print(target)
+  # cat("\n")
 
   expect_identical(names(out), names(target))
-  expect_lt(sum(abs(out - target)), 1e-4)
+  expect_identical(out$term, target$term)
+  expect_lt(sum(abs(out$estimate - target$estimate)), 1e-4)
 })
 
 test_that("meas_effect_modif: Boot", {
@@ -26,22 +36,22 @@ test_that("meas_effect_modif: Boot", {
   df <- recovery
 
   out <- boot_est(data = recovery, func = meas_effect_modif,
-                  R = 100, conf = 0.95,
+                  times = 100, alpha = 0.05,
                   inv = "exp", evars = "modifier",
                   outcome.name = "Y", exposure.name = "T",
                   modifier.name = "M")
-  # cat("\n")
+  # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")
 
   data(fci_tbl_04_02)
   target <- fci_tbl_04_02
-  target_id <- paste(target$estimator, target$group, sep = ".")
-  # cat("\n")
+  target_id <- paste(target$term, target$group, sep = ".")
+  # cat("\n", "target", "\n")
   # print(target)
   # cat("\n")
 
-  ids <- match(target_id, out$name)
-  check <- sum(abs(out$est[ids] - target$est))
+  ids <- match(target_id, out$term)
+  check <- sum(abs(out$.estimate[ids] - target$.estimate))
   expect_lt(check, 0.01)
 })

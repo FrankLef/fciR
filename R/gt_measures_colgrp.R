@@ -7,7 +7,6 @@
 #' confidence interval.
 #'
 #' @param df Dataframe of results.
-#' @param conf Numeric, confidence interval.
 #' @param var_grp Name of variable used to group the columns.
 #' @param digits Integer, number of digits to the right of the decimal.
 #' @param title The title of the table.
@@ -22,26 +21,26 @@
 #'
 #' @return A \code{gt_tbl} object
 #' @export
-gt_measures_colgrp <- function(df, conf = df$conf[1], var_grp = "group",
+gt_measures_colgrp <- function(df, var_grp = "group",
                                digits = 3,
                                title = "Title", subtitle = "Subtitle") {
 
   # confidence interval label used in footnote
-  ci_label <- sprintf("%.0f%% confidence interval", 100 * conf)
+  ci_label <- sprintf("%.0f%% confidence interval", 100 * (1 - df$.alpha[1]))
 
   # prepare the dataframe to create the table
   df <- df %>%
-    select(!matches("conf")) %>%
-    # mutate(across(.cols = c("est", "lci", "uci"), .fns = round, digits = digits)) %>%
+    select(!matches("alpha|method")) %>%
+    # mutate(across(.cols = where(is.numeric), .fns = round, digits)) %>%
     dplyr::mutate_if(.predicate = is.numeric, .funs = round, digits = digits) %>%
-    # mutate(across(.cols = c("est", "lci", "uci"), .fns = format)) %>%
-    mutate_at(.vars = c("est", "lci", "uci"), .funs = format) %>%
-    # mutate(across(.cols = c("est", "lci", "uci"), .fns = trimws)) %>%
-    mutate_at(.vars = c("est", "lci", "uci"), .funs = trimws) %>%
-    rename(Estimator = .data[["estimator"]],
-           Estimate = .data[["est"]]) %>%
-    unite(col = "CI", .data[["lci"]], .data[["uci"]], sep = ", ") %>%
-    mutate(CI = paste0("(", .data[["CI"]], ")")) %>%
+    # mutate(across(.cols = c(".estimate", ".lower", ".upper"), .fns = format)) %>%
+    mutate_at(.vars = c(".estimate", ".lower", ".upper"), .funs = format) %>%
+    # mutate(across(.cols = c(".estimate", ".lower", ".upper"), .fns = trimws)) %>%
+    mutate_at(.vars = c(".estimate", ".lower", ".upper"), .funs = trimws) %>%
+    rename(Estimator = .data[["term"]],
+           Estimate = .data[[".estimate"]]) %>%
+    unite(col = "CI", .data[[".lower"]], .data[[".upper"]], sep = ", ") %>%
+    mutate(CI = paste0("(", .data$CI, ")")) %>%
     mutate(Estimate = as.character(.data[["Estimate"]])) %>%
     pivot_longer(cols = c("Estimate", "CI"), names_to = "meas", values_to = "value") %>%
     unite(col = "heading", all_of(var_grp), .data[["meas"]], sep = "_") %>%

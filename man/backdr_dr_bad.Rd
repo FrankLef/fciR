@@ -15,13 +15,13 @@ backdr_dr_bad(
 badstanddr(data, outcome.name = "Y", exposure.name = "T", confound.names = "H")
 }
 \arguments{
-\item{data}{Dataframe of raw data.}
+\item{data}{Dataframe of data.}
 
 \item{outcome.name}{Name of outcome variable.}
 
 \item{exposure.name}{Name of exposure variable.}
 
-\item{confound.names}{Character vector of confound variable names.}
+\item{confound.names}{Name of confound variable.}
 }
 \value{
 Dataframe of estimates

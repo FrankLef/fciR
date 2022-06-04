@@ -26,15 +26,15 @@ test_that("backdr_out: Bootstrapping", {
   out <- boot_est(data = whatif2dat, func = backdr_out,
                   times = 100, alpha = 0.05,
                   formula = vl4 ~ A + lvlcont0, exposure.name ="A")
-  cat("\n")
-  print(out)
-  cat("\n")
+  # cat("\n")
+  # print(out)
+  # cat("\n")
 
   data(fci_tbl_06_07)
   target <- fci_tbl_06_07
-  cat("\n")
-  print(target)
-  cat("\n")
+  # cat("\n")
+  # print(target)
+  # cat("\n")
 
   ids <- match(target$name, out$name, nomatch = 0L)
   check <- sum(abs(out$.estimate[ids] - target$est))

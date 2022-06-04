@@ -6,9 +6,8 @@
 \usage{
 gt_measures_rowgrp(
   df,
-  rowgroup = "rowgroup",
-  rowname = "rowname",
-  conf = df$conf[1],
+  rowgroup = "term",
+  rowname = "model",
   digits = 3,
   title = "Title",
   subtitle = "Subtitle"
@@ -20,8 +19,6 @@ gt_measures_rowgrp(
 \item{rowgroup}{Name of column with row group names.}
 
 \item{rowname}{Name of column with row names.}
-
-\item{conf}{Numeric, confidence interval.}
 
 \item{digits}{Integer, number of digits to the right of the decimal.}
 

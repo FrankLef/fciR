@@ -22,17 +22,15 @@ standout(
 \arguments{
 \item{data}{Dataframe of raw data.}
 
+\item{formula}{Formula representing the model.}
+
 \item{exposure.name}{Name of exposure variable.}
 
 \item{family}{Name of distribution. Must be in
 \code{c("binomial", "poisson", "gaussian")}.}
-
-\item{outcome.name}{Name of outcome variable.}
-
-\item{confound.names}{Character vector of confound variable names.}
 }
 \value{
-Estimate using outcome-model standardization
+Dataframe of estimates using outcome-model standardization
 }
 \description{
 Compute standardized estimates with parametric outcome model.

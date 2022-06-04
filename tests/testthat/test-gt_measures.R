@@ -2,6 +2,9 @@ test_that("gt_measures", {
 
   data(fci_tbl_03_02)
   df <- fci_tbl_03_02
+  # cat("\n")
+  # print(df)
+  # cat("\n")
 
   title <- "Table 3.2"
   subtitle = paste0("4 Association Measures Relating",

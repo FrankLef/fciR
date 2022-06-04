@@ -19,13 +19,9 @@ boot_est <- function(data, func, times = 1000, alpha = 0.05,
                      inv = c("exp", "expit", "none"),
                      evars = c("standard", "modifier", "logit"),
                      ...) {
+  stopifnot(times >= 1, alpha > .Machine$double.eps^0.5, alpha < 0.5)
   inv <- match.arg(inv)
   evars <- match.arg(evars)
-
-  # estimator <- function(data, ids) {
-  #   dat <- data[ids, ]
-  #   func(dat, ...)
-  # }
 
   out <- boot_run(data = data, func = func, times = times, alpha = alpha, ...)
 
@@ -57,6 +53,7 @@ boot_est <- function(data, func, times = 1000, alpha = 0.05,
 boot_run <- function(data, func, times = 1000, alpha = 0.05, ...) {
   stopifnot(times >= 1, alpha > .Machine$double.eps^0.5, alpha < 0.5)
 
+  # the function is for bootstrapping returns a named vector
   boot.func <- function(data, ids, ...) {
     dat <- data[ids, ]
     df <- func(dat, ...)
@@ -68,7 +65,8 @@ boot_run <- function(data, func, times = 1000, alpha = 0.05, ...) {
   # run the bootstrapping
   boot.out <- boot::boot(data = data, statistic = boot.func, R = times, ...)
 
-  the_method <- "norm"  # the method used for intervals
+  # the method used for intervals
+  the_method <- "norm"
 
   # extract the estimated values and confidence intervals from the boot object
   out <- lapply(X = seq_along(boot.out$t0), FUN = function(i) {
@@ -85,13 +83,8 @@ boot_run <- function(data, func, times = 1000, alpha = 0.05, ...) {
     )
   })
 
-  # create the data.frame
-  out <- do.call(rbind, out)
-
-  # cat("\n", "inside boot_run", "\n")
-  # print(out)
-  # cat("\n")
-  out
+  # bind the data.frames together
+  do.call(rbind, out)
 }
 
 
@@ -115,7 +108,7 @@ boot_run <- function(data, func, times = 1000, alpha = 0.05, ...) {
 #' @return Dataframe with term, .lower, .estimate, .upper, .alpha, .method
 #' @export
 boot_run_td <- function(data, func, times = 1000, alpha = 0.05, ...) {
-  stopifnot(times >= 1, alpha > sqrt(.Machine$double.eps), alpha < 0.5)
+  stopifnot(times >= 1, alpha > .Machine$double.eps^0.5, alpha < 0.5)
 
   data |>
     rsample::bootstraps(times = times, apparent = FALSE) |>

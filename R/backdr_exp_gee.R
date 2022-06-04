@@ -8,7 +8,7 @@
 #' arguments \code{formula}. The 2 formulas created are for the exposure model
 #' and another one for the weighted linear model.
 #'
-#' @inheritParams backdr_out
+#' @inheritParams backdr_out_np
 #'
 #' @importFrom formulaic create.formula
 #' @importFrom stats formula lm glm fitted predict

@@ -6,18 +6,16 @@
 #' 6 for details.
 #'
 #' @param data Dataframe of raw data.
-#' @param outcome.name Name of outcome variable.
+#' @param formula Formula representing the model.
 #' @param exposure.name Name of exposure variable.
-#' @param confound.names Character vector of confound variable names.
 #' @param family Name of distribution. Must be in
 #'  \code{c("binomial", "poisson", "gaussian")}.
 #'
-#' @importFrom formulaic create.formula
 #' @importFrom stats lm glm fitted predict
 #'
 #' @seealso effect_measures
 #'
-#' @return Estimate using outcome-model standardization
+#' @return Dataframe of estimates using outcome-model standardization
 #' @export
 backdr_out <- function(data, formula = Y ~ `T` + A + H,
                        exposure.name = "T",
@@ -25,11 +23,6 @@ backdr_out <- function(data, formula = Y ~ `T` + A + H,
   stopifnot(length(exposure.name) == 1)
   x0 <- "(Intercept)"  # name of intercept used by lm, glm, etc.
   family <- match.arg(family)
-
-  # input.names <- c(exposure.name, confound.names)
-  # a_formula <- formulaic::create.formula(outcome.name = outcome.name,
-  #                                        input.names = input.names,
-  #                                        dat = data)
 
   fit <- glm(formula = formula, family = family, data = data)
 
@@ -58,18 +51,12 @@ backdr_out <- function(data, formula = Y ~ `T` + A + H,
 
   # compute the effect measures
   out <- effect_measures(val0 = EY0, val1 = EY1)
-  # cat("\n")
-  # print(out)
-  # cat("\n")
-  out <- data.frame(
+
+  data.frame(
     term = names(out),
     estimate = out,
     std.err = NA_real_
   )
-  # cat("\n")
-  # print(out)
-  # cat("\n")
-  out
 }
 
 #' @rdname backdr_out

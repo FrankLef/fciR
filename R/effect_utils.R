@@ -166,12 +166,12 @@ effect_exp <- function(data,
   is_matched <- vars %in% data$term
   if (any(is_matched)) {
     # nomatch = 0 to exclude unmatched items
-    pos <- match(vars, data$name, nomatch = 0L)
+    pos <- match(vars, data$term, nomatch = 0L)
     within(data, {
+      term[pos] <- names(vars)[is_matched]
       .lower[pos] <- exp(.lower[pos])
       .estimate[pos] <- exp(.estimate[pos])
       .upper[pos] <- exp(.upper[pos])
-      term[pos] <- names(vars)[is_matched]
     })
   }
 }
@@ -196,10 +196,10 @@ effect_expit <- function(data, vars = c("P" = "logitP")) {
     # nomatch = 0 to exclude unmatched items
     pos <- match(vars, data$term, nomatch = 0L)
     within(data, {
+      term[pos] <- names(vars)[is_matched]
       .lower[pos] <- plogis(.lower[pos])
       .estimate[pos] <- plogis(.estimate[pos])
       .upper[pos] <- plogis(.upper[pos])
-      term[pos] <- names(vars)[is_matched]
     })
   }
 }

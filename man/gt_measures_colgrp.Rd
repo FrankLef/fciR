@@ -6,7 +6,6 @@
 \usage{
 gt_measures_colgrp(
   df,
-  conf = df$conf[1],
   var_grp = "group",
   digits = 3,
   title = "Title",
@@ -15,8 +14,6 @@ gt_measures_colgrp(
 }
 \arguments{
 \item{df}{Dataframe of results.}
-
-\item{conf}{Numeric, confidence interval.}
 
 \item{var_grp}{Name of variable used to group the columns.}
 

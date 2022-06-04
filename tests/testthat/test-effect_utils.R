@@ -41,24 +41,40 @@ test_that("effect_vars", {
 test_that("effect_exp", {
   val0 <- 0.25
   val1 <- 0.5
-  est <- c("val0" = val0, "val1" = val1, "RD" = val1 - val0,
-           "logRR" = 0.6931, "logRR*" = 0.4055, "logOR" = 1.0986)
+  est <- c(val0, val1, val1 - val0, 0.6931, 0.4055, 1.0986)
   df <- data.frame(
-    name = c("EY0", "EY1", "RD", "logRR", "logRR*", "logOR"),
-    est = est,
-    lci = est * 0.75,
-    uci = est * 1.25
+    term = c("EY0", "EY1", "RD", "logRR", "logRR*", "logOR"),
+    .lower = est * 0.75,
+    .estimate = est,
+    .upper = est * 1.25,
+    .alpha = 0.05,
+    .method = "norm"
   )
   out <- effect_exp(df)
+  # cat("\n")
+  # print(out)
+  # cat("\n")
 
   target <- df
-  target$name <- c("EY0", "EY1", "RD", "RR", "RR*", "OR")
-  target$est <- c(target$est[1], target$est[2], target$est[3],
-                  exp(target$est[4]), exp(target$est[5]), exp(target$est[6]))
-  target$lci <- c(target$lci[1], target$lci[2], target$lci[3],
-                  exp(target$lci[4]), exp(target$lci[5]), exp(target$lci[6]))
-  target$uci <- c(target$uci[1], target$uci[2], target$uci[3],
-                  exp(target$uci[4]), exp(target$uci[5]), exp(target$uci[6]))
+  target$term <- c("EY0", "EY1", "RD", "RR", "RR*", "OR")
+  target$.estimate <- c(target$.estimate[1],
+                        target$.estimate[2],
+                        target$.estimate[3],
+                        exp(target$.estimate[4]),
+                        exp(target$.estimate[5]),
+                        exp(target$.estimate[6]))
+  target$.lower <- c(target$.lower[1],
+                     target$.lower[2],
+                     target$.lower[3],
+                     exp(target$.lower[4]),
+                     exp(target$.lower[5]),
+                     exp(target$.lower[6]))
+  target$.upper <- c(target$.upper[1],
+                     target$.upper[2],
+                     target$.upper[3],
+                     exp(target$.upper[4]),
+                     exp(target$.upper[5]),
+                     exp(target$.upper[6]))
 
   expect_identical(out, target)
 })

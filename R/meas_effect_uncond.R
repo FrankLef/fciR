@@ -51,7 +51,11 @@ meas_effect_uncond <- function(data, formula = Y ~ `T`) {
   # return the results
   out <- c(p0, p1, rd, logrr, logrrstar, logor)
   names(out) <- c("P0", "P1", "RD", "logRR", "logRR*", "logOR")
-  out
+  data.frame(
+    term = names(out),
+    estimate = unname(out),
+    std.err = NA_real_
+  )
 }
 
 

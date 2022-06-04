@@ -5,7 +5,8 @@
 #' Compute the doubly robust standardized estimates using the code from section
 #' 6.3.
 #'
-#' @inheritParams backdr_out
+#' @inheritParams backdr_out_np
+#' @param family family used for lm fit.
 #'
 #' @importFrom formulaic create.formula
 #' @importFrom stats glm fitted predict

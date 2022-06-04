@@ -5,7 +5,7 @@
 #' Compute the doubly robust standardized estimates using the code from section
 #' 6.3.
 #'
-#' @inheritParams backdr_out
+#' @inheritParams backdr_out_np
 #'
 #' @importFrom formulaic create.formula
 #' @importFrom stats glm fitted predict

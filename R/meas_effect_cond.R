@@ -53,7 +53,12 @@ meas_effect_cond <- function(data, formula = Y ~ `T` + A + H,
   }
 
   # calculate effect measures
-  effect_measures(val0 = P0, val1 = P1)
+  out <- effect_measures(val0 = P0, val1 = P1)
+  data.frame(
+    term = names(out),
+    estimate = unname(out),
+    std.err = NA_real_
+  )
 }
 
 #' @rdname meas_effect_cond

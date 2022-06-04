@@ -1,5 +1,5 @@
 test_that("ggp_format: input check", {
-  expect_error(ggp_format(df, type = "wrong"), class = "ggp_format_error")
+  expect_error(ggp_format(df, type = "wrong"))
 })
 
 test_that("ggp_format: none", {

@@ -5,7 +5,10 @@
 #' The standardized estimates are computed using the non-parametric outcome
 #' model. The calculations are performed without regression.
 #'
-#' @inheritParams backdr_out
+#' @param data Dataframe of data.
+#' @param outcome.name Name of outcome variable.
+#' @param exposure.name Name of exposure variable.
+#' @param confound.names Name of confound variable.
 #' @param att if \code{FALSE} calculate the standardized (unconfounded)
 #' causal effect. If \code{TRUE} calculate the average effect of treatment
 #' on the treated.
@@ -69,7 +72,7 @@ backdr_out_np <- function(data, outcome.name = "Y", exposure.name = "T",
 #' model. IMPORTANT: The formula must be in the format \code{Y ~ T + ...} where the
 #' exposure is in the first position \code{T}.
 #'
-#' @inheritParams backdr_out
+#' @inheritParams backdr_out_np
 #' @param interactions List of character vectors with the interactions.
 #' @param att if \code{FALSE} calculate the standardized (unconfounded)
 #' causal effect. If \code{TRUE} calculate the average effect of treatment

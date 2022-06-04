@@ -6,7 +6,7 @@
 #' are many zeros.  Note that the results don't match exactly those obtained
 #' with outcome-mode or exposure-model standardization.
 #'
-#' @inheritParams backdr_out
+#' @inheritParams backdr_out_np
 #' @param condition.name Character vector of confound variable names.
 #'
 #' @return Estimate using 2-parts standardization

@@ -6,7 +6,7 @@
 #' @return List of argments including \code{data}
 #' @export
 ggp_format <- function(data, type = c("none", "measures_tbl")) {
-  stopifnot(is.character(type), length(type) == 1)
+  type <- match.arg(type)
 
   if (type == "none") {
     out <- data

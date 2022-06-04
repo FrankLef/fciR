@@ -4,18 +4,10 @@
 \alias{gt_measures}
 \title{Create a table of effect measures with their CI}
 \usage{
-gt_measures(
-  df,
-  conf = df$conf[1],
-  digits = 3,
-  title = "Title",
-  subtitle = "Subtitle"
-)
+gt_measures(df, digits = 3, title = "Title", subtitle = "Subtitle")
 }
 \arguments{
 \item{df}{Dataframe of measures.}
-
-\item{conf}{Numeric, confidence interval.}
 
 \item{digits}{Integer, number of digits to the right of the decimal.}
 

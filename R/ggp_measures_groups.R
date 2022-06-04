@@ -33,14 +33,15 @@ ggp_measures_groups <- function(data, group = "method",
   data <- data[data$name %in% the_names, ]
 
   ggplot(data,
-         aes(x = .data[["est"]], xmin = .data[["lci"]], xmax = .data[["uci"]],
-             y = .data[["name"]], color = .data[[group]])) +
+         aes(x = .data[[".estimate"]], xmin = .data[[".lower"]],
+             xmax = .data[[".upper"]],
+             y = .data[["term"]], color = .data[[group]])) +
     ggplot2::geom_pointrange(size = pointrange$size, fatten = pointrange$fatten,
                     position = ggplot2::position_dodge(width = 0.75)) +
     ggplot2::geom_vline(xintercept = c(0, 1), color = vline$colors,
                linetype = vline$linetype, size = vline$size, alpha = vline$alpha) +
-    ggrepel::geom_text_repel(aes(x = .data[["est"]], y = .data[["name"]],
-                                 label = round(.data[["est"]], text$digits)),
+    ggrepel::geom_text_repel(aes(x = .data[[".estimate"]], y = .data[["term"]],
+                                 label = round(.data[[".estimate"]], text$digits)),
                              size = text$size, color = text$color) +
     ggplot2::scale_x_continuous(breaks = c(0, 1)) +
     ggplot2::scale_color_brewer(palette = "Dark2") +

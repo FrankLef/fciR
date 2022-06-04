@@ -52,7 +52,11 @@ meas_effect_modif <- function(data, outcome.name = "Y", exposure.name = "T",
            "EYT0.diff" = EYT0.diff, "EYT1.diff" = EYT1.diff,
            "RD.diff" = RD.diff, "logRR.diff" = logRR.diff, "logRR*.diff" = logRRstar.diff,
            "logOR.diff" = logOR.diff)
-  out
+  data.frame(
+    term = names(out),
+    estimate = unname(out),
+    std.err = NA_real_
+  )
 }
 
 #' @rdname meas_effect_modif

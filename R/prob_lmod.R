@@ -18,11 +18,11 @@
 prob_lmod <- function(data, formula = Y ~ `T` + A + H,
                       condition.names = NULL) {
   # independent variables from the formula
-  fvars <- all.vars(rlang::f_rhs(formula))
+  ind_vars <- all.vars(rlang::f_rhs(formula))
   # if condition.names is NULL then use all independent variables
   # which is the same as saying there is no condition
-  if (is.null(condition.names)) condition.names <- fvars
-  stopifnot(all(condition.names %in% fvars))
+  if (is.null(condition.names)) condition.names <- ind_vars
+  stopifnot(all(condition.names %in% ind_vars))
   # name of intercept used by lm, glm, etc.
   x0 <- "(Intercept)"
 
@@ -64,11 +64,11 @@ lmodboot <- prob_lmod
 prob_lmod_td <- function(data, formula = Y ~ `T` + A + H,
                          condition.names = NULL) {
   # independent variables from the formula
-  fvars <- all.vars(rlang::f_rhs(formula))
+  ind_vars <- all.vars(rlang::f_rhs(formula))
   # if condition.names is NULL then use all independent variables
   # which is the same as saying there is no condition
-  if (is.null(condition.names)) condition.names <- fvars
-  stopifnot(all(condition.names %in% fvars))
+  if (is.null(condition.names)) condition.names <- ind_vars
+  stopifnot(all(condition.names %in% ind_vars))
   # add intercept to conditions
   x0 <- "(Intercept)"  # name of intercept used by lm, glm, etc.
   condition.names <- c(x0, condition.names)
