@@ -3,6 +3,12 @@
 #' Calculate the effect measures.
 #'
 #' Calculate the effect measures and put them in a named numeric() vector.
+#' If \code{log = TRUE} the measures are RD (risk difference),
+#' logRR (log of relative risk), logRR* (log of other relative risk) and
+#' logOR (log of odds ratio). If \code{log = FALSE} the measures are
+#' RD (risk difference), logRR (relative risk),
+#' logRR* (other relative risk) and logOR (odds ratio). See section 3.3 for
+#' more details on these measures.
 #'
 #' @param val0 Numeric, base value
 #' @param val1 Numeric, treated value
@@ -72,15 +78,17 @@ effect_measures <- function(val0, val1, log = TRUE) {
   c(vals, out)
 }
 
-#' Create charatcer vector of measure names and their inverse
+#' Charatcer vector of measure names and their inverse
 #'
-#' Create charatcer vector of measure names and their inverse.
+#' Charatcer vector of measure names and their inverse.
 #'
 #' Create charatcer vector of measure names and their inverse to be used with
 #' the output of effect measures and the inverse functions.
 #'
 #' @param evars String. Should one of \code{c("standard", "modifier", "logit")}.
 #' Default value is \code{"standard"}.
+#'
+#' @seealso effect_measures
 #'
 #' @return Named character vector.
 #' @export
@@ -116,9 +124,10 @@ effect_vars <- function(evars = c("standard", "modifier", "logit")) {
 #' @param data Numeric vector to transform.
 #' @param inv Name of the inverse function. Must be in
 #' \code{c("exp", "expit", "none")}. default is \code{exp}.
-#' @param vars Character vector identifying the variables.
+#' @param vars Character vector identifying the variables. Use the
+#' \code{effect_vars} function to create the character vector.
 #'
-#' @seealso effect_exp effect_expit
+#' @seealso effect_vars effect_exp effect_expit
 #'
 #' @return Inversed transform of input.
 #' @export
@@ -154,15 +163,15 @@ effect_inv <- function(data, inv = c("exp", "expit", "none"), vars) {
 effect_exp <- function(data,
                       vars = c("RR" = "logRR", "RR*"  = "logRR*",
                                "OR" = "logOR")) {
-  is_matched <- vars %in% data$name
+  is_matched <- vars %in% data$term
   if (any(is_matched)) {
     # nomatch = 0 to exclude unmatched items
     pos <- match(vars, data$name, nomatch = 0L)
     within(data, {
-      est[pos] <- exp(est[pos])
-      lci[pos] <- exp(lci[pos])
-      uci[pos] <- exp(uci[pos])
-      name[pos] <- names(vars)[is_matched]
+      .lower[pos] <- exp(.lower[pos])
+      .estimate[pos] <- exp(.estimate[pos])
+      .upper[pos] <- exp(.upper[pos])
+      term[pos] <- names(vars)[is_matched]
     })
   }
 }
@@ -182,15 +191,15 @@ effect_exp <- function(data,
 #' @return Dataframe of converted effects measures.
 #' @export
 effect_expit <- function(data, vars = c("P" = "logitP")) {
-  is_matched <- vars %in% data$name
+  is_matched <- vars %in% data$term
   if (any(is_matched)) {
     # nomatch = 0 to exclude unmatched items
-    pos <- match(vars, data$name, nomatch = 0L)
+    pos <- match(vars, data$term, nomatch = 0L)
     within(data, {
-      est[pos] <- plogis(est[pos])
-      lci[pos] <- plogis(lci[pos])
-      uci[pos] <- plogis(uci[pos])
-      name[pos] <- names(vars)[is_matched]
+      .lower[pos] <- plogis(.lower[pos])
+      .estimate[pos] <- plogis(.estimate[pos])
+      .upper[pos] <- plogis(.upper[pos])
+      term[pos] <- names(vars)[is_matched]
     })
   }
 }

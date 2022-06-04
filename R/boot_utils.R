@@ -6,7 +6,6 @@
 #' \code{statistic} to remain constant with \code{boot::boot}.
 #'
 #' @inheritParams boot_run
-#' @param func Function used to compute the estimate.
 #' @param inv Choice of inverse function to apply to the effect measure
 #'  \code{exp} will exponentiate the result (Default), \code{expit} will apply
 #'  the inverse logit and \code{none} will do nothing (identity function).
@@ -16,21 +15,21 @@
 #'
 #' @return Dataframe of estimates with confidence interval..
 #' @export
-boot_est <- function(data, func, R = 1000, conf = 0.95,
+boot_est <- function(data, func, times = 1000, alpha = 0.05,
                      inv = c("exp", "expit", "none"),
                      evars = c("standard", "modifier", "logit"),
                      ...) {
   inv <- match.arg(inv)
   evars <- match.arg(evars)
 
-  estimator <- function(data, ids) {
-    dat <- data[ids, ]
-    func(dat, ...)
-  }
+  # estimator <- function(data, ids) {
+  #   dat <- data[ids, ]
+  #   func(dat, ...)
+  # }
 
-  out <- boot_run(data = data, statistic = estimator, R = R, conf = conf)
+  out <- boot_run(data = data, func = func, times = times, alpha = alpha, ...)
 
-  # inverse transform the result
+  # compute the 4 effect measures
   vars <- effect_vars(evars = evars)
   effect_inv(data = out, inv = inv, vars = vars)
 }
@@ -45,34 +44,54 @@ boot_est <- function(data, func, R = 1000, conf = 0.95,
 #' confidence interval.
 #'
 #' @param data Dataframe of raw data.
-#' @param statistic Function applied to data by bootstrapping.
-#' @param R Number of bootstrap replicates. Default is 1000.
-#' @param conf Confidence interval width. Default is 0.95.
+#' @param func Function applied to data by bootstrapping.
+#' @param times Number of bootstrap replicates. Default is 1000.
+#' @param alpha Alpha used by percentile to give interval in
+#' \code{c(alpha, 1- alpha)}.
 #' @param ... Other named arguments for \code{statistic}.
 #'
 #' @seealso boot::boot boot::boot.ci
 #'
 #' @return Dataframe of estimates with CI.
 #' @export
-boot_run <- function(data, statistic, R = 1000, conf = 0.95, ...) {
-  stopifnot(R >= 1, conf > 0, conf < 1)
+boot_run <- function(data, func, times = 1000, alpha = 0.05, ...) {
+  stopifnot(times >= 1, alpha > .Machine$double.eps^0.5, alpha < 0.5)
+
+  boot.func <- function(data, ids, ...) {
+    dat <- data[ids, ]
+    df <- func(dat, ...)
+    out <- c(df$estimate)
+    names(out) <- df$term
+    out
+  }
 
   # run the bootstrapping
-  boot.out <- boot::boot(data = data, statistic = statistic, R = R, ...)
+  boot.out <- boot::boot(data = data, statistic = boot.func, R = times, ...)
+
+  the_method <- "norm"  # the method used for intervals
 
   # extract the estimated values and confidence intervals from the boot object
-  out <- sapply(X = seq_along(boot.out$t0), FUN = function(i) {
+  out <- lapply(X = seq_along(boot.out$t0), FUN = function(i) {
     est <- boot.out$t0[i]
-    ci <- boot::boot.ci(boot.out, conf = conf, type = "norm", index = i)$normal
-    out <- c(est, ci)
-    names(out) <- c("est", "conf", "lci", "uci")
-    out
+    ci <- boot::boot.ci(boot.out, conf = 1 - alpha, type = the_method, index = i)
+    ci <- ci$normal
+    data.frame(
+      "term" = names(est),
+      ".lower" = ci[2],
+      ".estimate" = unname(est),
+      ".upper" = ci[3],
+      ".alpha" = alpha,
+      ".method" = the_method
+    )
   })
 
-  # create the dataframe to hold the results
-  out <- data.frame(t(out))
-  # add the first column as the names of the results
-  data.frame(name = names(boot.out$t0), out)
+  # create the data.frame
+  out <- do.call(rbind, out)
+
+  # cat("\n", "inside boot_run", "\n")
+  # print(out)
+  # cat("\n")
+  out
 }
 
 
@@ -96,7 +115,7 @@ boot_run <- function(data, statistic, R = 1000, conf = 0.95, ...) {
 #' @return Dataframe with term, .lower, .estimate, .upper, .alpha, .method
 #' @export
 boot_run_td <- function(data, func, times = 1000, alpha = 0.05, ...) {
-  stopifnot(times >= 1, alpha > 0, alpha < 0.5)
+  stopifnot(times >= 1, alpha > sqrt(.Machine$double.eps), alpha < 0.5)
 
   data |>
     rsample::bootstraps(times = times, apparent = FALSE) |>

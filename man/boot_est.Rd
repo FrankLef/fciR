@@ -7,8 +7,8 @@
 boot_est(
   data,
   func,
-  R = 1000,
-  conf = 0.95,
+  times = 1000,
+  alpha = 0.05,
   inv = c("exp", "expit", "none"),
   evars = c("standard", "modifier", "logit"),
   ...
@@ -17,11 +17,12 @@ boot_est(
 \arguments{
 \item{data}{Dataframe of raw data.}
 
-\item{func}{Function used to compute the estimate.}
+\item{func}{Function applied to data by bootstrapping.}
 
-\item{R}{Number of bootstrap replicates. Default is 1000.}
+\item{times}{Number of bootstrap replicates. Default is 1000.}
 
-\item{conf}{Confidence interval width. Default is 0.95.}
+\item{alpha}{Alpha used by percentile to give interval in
+\code{c(alpha, 1- alpha)}.}
 
 \item{inv}{Choice of inverse function to apply to the effect measure
 \code{exp} will exponentiate the result (Default), \code{expit} will apply

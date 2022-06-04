@@ -29,7 +29,12 @@ prob_lmod <- function(data, formula = Y ~ `T` + A + H,
   coefs <- coef(glm(formula = formula, family = "binomial", data = data))
   coefs <- coefs[c(x0, condition.names)]
   p <- unname(sum(coefs))
-  c("logitP" = p)
+  out <- c("logitP" = p)
+  data.frame(
+    term = names(out),
+    estimate = out,
+    std.err = NA_real_
+  )
 }
 
 

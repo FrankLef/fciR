@@ -23,6 +23,12 @@ Calculate the effect measures.
 }
 \details{
 Calculate the effect measures and put them in a named numeric() vector.
+If \code{log = TRUE} the measures are RD (risk difference),
+logRR (log of relative risk), logRR* (log of other relative risk) and
+logOR (log of odds ratio). If \code{log = FALSE} the measures are
+RD (risk difference), logRR (relative risk),
+logRR* (other relative risk) and logOR (odds ratio). See section 3.3 for
+more details on these measures.
 }
 \examples{
 val0 <- 0.25

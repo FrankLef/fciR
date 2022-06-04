@@ -2,7 +2,7 @@
 % Please edit documentation in R/effect_utils.R
 \name{effect_vars}
 \alias{effect_vars}
-\title{Create charatcer vector of measure names and their inverse}
+\title{Charatcer vector of measure names and their inverse}
 \usage{
 effect_vars(evars = c("standard", "modifier", "logit"))
 }
@@ -14,9 +14,12 @@ Default value is \code{"standard"}.}
 Named character vector.
 }
 \description{
-Create charatcer vector of measure names and their inverse.
+Charatcer vector of measure names and their inverse.
 }
 \details{
 Create charatcer vector of measure names and their inverse to be used with
 the output of effect measures and the inverse functions.
+}
+\seealso{
+effect_measures
 }

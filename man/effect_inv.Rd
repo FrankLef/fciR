@@ -12,7 +12,8 @@ effect_inv(data, inv = c("exp", "expit", "none"), vars)
 \item{inv}{Name of the inverse function. Must be in
 \code{c("exp", "expit", "none")}. default is \code{exp}.}
 
-\item{vars}{Character vector identifying the variables.}
+\item{vars}{Character vector identifying the variables. Use the
+\code{effect_vars} function to create the character vector.}
 }
 \value{
 Inversed transform of input.
@@ -25,5 +26,5 @@ Apply an inverse function to the effect measures. The names of the
 transformed variables are also change accordingly.
 }
 \seealso{
-effect_exp effect_expit
+effect_vars effect_exp effect_expit
 }

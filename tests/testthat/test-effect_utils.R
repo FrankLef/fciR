@@ -16,10 +16,13 @@ test_that("effect_measures", {
 })
 
 test_that("effect_vars", {
+
+  # The standard effect variables
   out <- effect_vars()
   target <- c("RR" = "logRR", "RR*"  = "logRR*", "OR" = "logOR")
   expect_identical(out, target)
 
+  # the effect variables for modifiers
   out <- effect_vars("modifier")
   target <- c("RR.M0" = "logRR.M0", "RR.M1" = "logRR.M1",
               "RR.diff"  = "logRR.diff", "RR*.M0"  = "logRR*.M0",
@@ -28,6 +31,7 @@ test_that("effect_vars", {
               "OR.diff" = "logOR.diff")
   expect_identical(out, target)
 
+  # the effect variable for logitP
   out <- effect_vars("logit")
   target <- c("P" = "logitP")
   expect_identical(out, target)

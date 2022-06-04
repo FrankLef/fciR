@@ -26,6 +26,7 @@ meas_effect_uncond <- function(data, formula = Y ~ `T`) {
 
   # estimate the conditional probabilities
   coefs <- coef(glm(formula = formula, family = "gaussian", data = data))
+
   p0 <- coefs[x0]
   p1 <- sum(coefs)
   # estimate the risk difference

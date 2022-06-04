@@ -4,16 +4,17 @@
 \alias{boot_run}
 \title{Bootstrap and generate a dataframe of estimates with CI}
 \usage{
-boot_run(data, statistic, R = 1000, conf = 0.95, ...)
+boot_run(data, func, times = 1000, alpha = 0.05, ...)
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
 
-\item{statistic}{Function applied to data by bootstrapping.}
+\item{func}{Function applied to data by bootstrapping.}
 
-\item{R}{Number of bootstrap replicates. Default is 1000.}
+\item{times}{Number of bootstrap replicates. Default is 1000.}
 
-\item{conf}{Confidence interval width. Default is 0.95.}
+\item{alpha}{Alpha used by percentile to give interval in
+\code{c(alpha, 1- alpha)}.}
 
 \item{...}{Other named arguments for \code{statistic}.}
 }

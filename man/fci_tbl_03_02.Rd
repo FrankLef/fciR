@@ -5,13 +5,14 @@
 \alias{fci_tbl_03_02}
 \title{Table 3.2}
 \format{
-Dataframe with 6 rows and 5 variables.
+Dataframe with 6 rows and 6 variables.
 \describe{
-\item{estimator}{name of estimator}
-\item{est}{estimate}
-\item{conf}{confidence interval width}
-\item{lci}{lower confidence interval}
-\item{uci}{upper confidence interval}
+\item{term}{name of estimator}
+\item{.lower}{lower confidence interval}
+\item{.estimate}{estimate}
+\item{.upper}{upper confidence interval}
+\item{.alpha}{alpha value confidence interval width = 1 - alpha}
+\item{.method}{method used used to estimate interval}
 }
 }
 \usage{
