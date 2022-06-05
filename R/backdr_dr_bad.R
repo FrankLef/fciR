@@ -10,7 +10,7 @@
 #' @importFrom formulaic create.formula
 #' @importFrom stats glm fitted predict
 #'
-#' @return Dataframe of estimates
+#' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 backdr_dr_bad <- function(data, outcome.name = "Y", exposure.name = "T",
                           confound.names = "H") {
@@ -49,7 +49,12 @@ backdr_dr_bad <- function(data, outcome.name = "Y", exposure.name = "T",
   EY1 <- mean(datY * (datT / eH) - EYhat1 * (datT - eH) / eH)
 
   # estimate the effect measures
-  effect_measures(EY0, EY1)
+  out <- effect_measures(EY0, EY1)
+  data.frame(
+    term = names(out),
+    estimate = unname(out),
+    std.err = NA_real_
+  )
 }
 
 

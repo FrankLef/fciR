@@ -122,7 +122,7 @@
 #'
 #' @docType data
 #'
-#' @format Dataframe with 4 rows and 5 variables.
+#' @format Dataframe with 4 rows and 6 variables.
 #' \describe{
 #'   \item{ss}{nb ofcovariates}
 #'   \item{estimator}{estimate}
@@ -139,7 +139,7 @@
 #'
 #' @docType data
 #'
-#' @format Dataframe with 13 rows and 7 variables.
+#' @format Dataframe with 13 rows and 8 variables.
 #' \describe{
 #'   \item{model}{model used for estimation}
 #'   \item{term}{name of estimator}
@@ -159,7 +159,7 @@
 #'
 #' @docType data
 #'
-#' @format Dataframe with 13 rows and 7 variables.
+#' @format Dataframe with 13 rows and 5 variables.
 #' \describe{
 #'   \item{A}{Exposure}
 #'   \item{S}{Surrogate marker}
@@ -175,15 +175,16 @@
 #'
 #' @docType data
 #'
-#' @format Dataframe with 10 rows and 7 variables.
+#' @format Dataframe with 10 rows and 8 variables.
 #' \describe{
-#'   \item{method}{method of estimation}
-#'   \item{name}{name of estimator}
+#'   \item{model}{model used for estimation}
+#'   \item{term}{name of estimator}
 #'   \item{Truth}{true value}
-#'   \item{est}{estimate}
-#'   \item{conf}{confidence interval width}
-#'   \item{lci}{lower confidence interval}
-#'   \item{uci}{upper confidence interval}
+#'   \item{.estimate}{estimate}
+#'   \item{.lower}{lower confidence interval}
+#'   \item{.upper}{upper confidence interval}
+#'   \item{.alpha}{alpha value confidence interval width = 1 - alpha}
+#'   \item{.method}{method used used to estimate interval}
 #' }
 "fci_tbl_09_01"
 
@@ -193,14 +194,15 @@
 #'
 #' @docType data
 #'
-#' @format Dataframe with 10 rows and 7 variables.
+#' @format Dataframe with 10 rows and 8 variables.
 #' \describe{
-#'   \item{method}{method of estimation}
-#'   \item{name}{name of estimator}
+#'   \item{model}{model used for estimation}
+#'   \item{term}{name of estimator}
 #'   \item{Truth}{true value}
-#'   \item{est}{estimate}
-#'   \item{conf}{confidence interval width}
-#'   \item{lci}{lower confidence interval}
-#'   \item{uci}{upper confidence interval}
+#'   \item{.estimate}{estimate}
+#'   \item{.lower}{lower confidence interval}
+#'   \item{.upper}{upper confidence interval}
+#'   \item{.alpha}{alpha value confidence interval width = 1 - alpha}
+#'   \item{.method}{method used used to estimate interval}
 #' }
 "fci_tbl_09_01a"

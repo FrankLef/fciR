@@ -24,7 +24,7 @@ backdr_twoparts(
 \item{condition.name}{Character vector of confound variable names.}
 }
 \value{
-Estimate using 2-parts standardization
+Dataframe in a useable format for \code{rsample::bootstraps}.
 }
 \description{
 Compute standardized estimates with the 2-parts model.

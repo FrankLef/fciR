@@ -61,7 +61,12 @@ backdr_out_np <- function(data, outcome.name = "Y", exposure.name = "T",
   EY1 <- EY[2]
 
   # estimate the effect measures
-  effect_measures(val0 = EY0, val1 = EY1)
+  out <- effect_measures(EY0, EY1)
+  data.frame(
+    term = names(out),
+    estimate = unname(out),
+    std.err = NA_real_
+  )
 }
 
 #' Standardized estimates via Outcome Modeling, Non-Parametric Regression
@@ -114,7 +119,12 @@ backdr_out_npr <- function(data, outcome.name = "Y", exposure.name = "T",
     sum(coefs[c(confound.names, ht)]) * EH
 
   # estimate the effect measures
-  effect_measures(val0 = EY0, val1 = EY1)
+  out <- effect_measures(EY0, EY1)
+  data.frame(
+    term = names(out),
+    estimate = unname(out),
+    std.err = NA_real_
+  )
 }
 
 #' @rdname backdr_out_npr

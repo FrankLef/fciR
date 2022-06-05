@@ -5,7 +5,7 @@
 \alias{fci_tbl_07_02}
 \title{Table 7.2}
 \format{
-Dataframe with 13 rows and 7 variables.
+Dataframe with 13 rows and 8 variables.
 \describe{
 \item{model}{model used for estimation}
 \item{term}{name of estimator}

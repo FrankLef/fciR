@@ -14,8 +14,7 @@ test_that("prob_lmod", {
   target <- data.frame(
     "term" = "logitP",
     "estimate" = round(qlogis(0.09001343), 4),
-    "std.err" = NA_real_,
-    row.names = "logitP"
+    "std.err" = NA_real_
   )
   # cat("\n")
   # print(target)

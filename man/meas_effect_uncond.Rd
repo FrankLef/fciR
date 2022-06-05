@@ -15,7 +15,7 @@ bootu(data, formula = Y ~ T)
 \item{formula}{The model formula.}
 }
 \value{
-Numeric vector of summarized results
+Dataframe in a useable format for \code{rsample::bootstraps}.
 }
 \description{
 Compute estimates of the unconditional association measures.

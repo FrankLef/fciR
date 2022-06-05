@@ -4,18 +4,18 @@ test_that("backdr_exp_gee", {
   data(whatif2dat)
   out <- backdr_exp_gee(whatif2dat, outcome.name = "vl4", exposure.name ="A",
                     confound.names = "lvlcont0")
-  out <- out[ids]
-  # cat("\n")
+  out <- out[out$term %in% ids, ]
+  # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")
 
   data(fci_tbl_06_09)
   target <- fci_tbl_06_09
-  target <- target$est[target$name %in% ids]
-  # cat("\n")
+  target <- target[target$term %in% ids, ]
+  # cat("\n", "target", "\n")
   # print(target)
   # cat("\n")
 
-  check <- sum(abs(out - target))
+  check <- sum(abs(out$estimate - target$.estimate))
   expect_lt(check, 0.01)
 })

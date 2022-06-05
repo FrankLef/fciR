@@ -17,7 +17,7 @@ sufficient confounder. See assumption 5 of section 8.2.}
 \item{surrogate.name}{Name of surrogate variable.}
 }
 \value{
-Named numeric vector with effect measures.
+Dataframe in a useable format for \code{rsample::bootstraps}.
 }
 \description{
 Estimate the effect using Front-door method.

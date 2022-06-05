@@ -36,7 +36,7 @@ will be used.}
 \code{c("binomial", "poisson", "gaussian")}.}
 }
 \value{
-Numeric vector of summarized results.
+Dataframe in a useable format for \code{rsample::bootstraps}.
 }
 \description{
 Compute estimates of the conditional association measures.

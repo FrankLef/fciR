@@ -9,7 +9,7 @@
 #' @inheritParams backdr_out_np
 #' @param condition.name Character vector of confound variable names.
 #'
-#' @return Estimate using 2-parts standardization
+#' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 backdr_twoparts <- function(data, outcome.name = "Y", exposure.name = "T",
                             confound.names = "H", condition.name = "Z") {
@@ -49,5 +49,10 @@ backdr_twoparts <- function(data, outcome.name = "Y", exposure.name = "T",
   EY1 <- mean(EYhat1)
 
   # estimate the effect measures
-  effect_measures(val0 = EY0, val1 = EY1)
+  out <- effect_measures(EY0, EY1)
+  data.frame(
+    term = names(out),
+    estimate = unname(out),
+    std.err = NA_real_
+  )
 }

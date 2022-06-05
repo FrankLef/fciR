@@ -5,15 +5,16 @@
 \alias{fci_tbl_09_01}
 \title{Table 9.1}
 \format{
-Dataframe with 10 rows and 7 variables.
+Dataframe with 10 rows and 8 variables.
 \describe{
-\item{method}{method of estimation}
-\item{name}{name of estimator}
+\item{model}{model used for estimation}
+\item{term}{name of estimator}
 \item{Truth}{true value}
-\item{est}{estimate}
-\item{conf}{confidence interval width}
-\item{lci}{lower confidence interval}
-\item{uci}{upper confidence interval}
+\item{.estimate}{estimate}
+\item{.lower}{lower confidence interval}
+\item{.upper}{upper confidence interval}
+\item{.alpha}{alpha value confidence interval width = 1 - alpha}
+\item{.method}{method used used to estimate interval}
 }
 }
 \usage{

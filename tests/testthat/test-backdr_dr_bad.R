@@ -1,22 +1,26 @@
 test_that("backdr_dr_bad", {
-  ids <- c("EY0", "EY1")
+  ids <- c("EY0", "EY1", "RD", "RR")
 
   data(whatif2dat)
   # out <- backdr_dr_bad(whatif2dat, formula = vl4 ~ A + lvlcont0, R = 500)
   out <- backdr_dr_bad(whatif2dat, outcome.name = "vl4", exposure.name = "A",
                        confound.names = "lvlcont0")
-  out <- out[ids]
-  # cat("\n")
+  out <- within(out, {
+    estimate[term == "logRR"] <- exp(estimate[term == "logRR"])
+    term[term == "logRR"] <- "RR"
+  })
+  out <- out[out$term %in% ids, ]
+  # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")
 
   data(fci_tbl_06_09)
   target <- fci_tbl_06_09
-  target <- target$est[target$name %in% ids]
-  # cat("\n")
+  target <- target[target$term %in% ids, ]
+  # cat("\n", "target", "\n")
   # print(target)
   # cat("\n")
 
-  check <- sum(abs(out - target))
+  check <- sum(abs(out$estimate - target$.estimate))
   expect_lt(check, 0.01)
 })

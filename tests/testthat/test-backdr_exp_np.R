@@ -4,19 +4,19 @@ test_that("backdr_exp_np", {
   data(whatifdat)
   out <- backdr_exp_np(whatifdat, outcome.name = "Y", exposure.name = "A",
                        confound.names = "H")
-  out <- out[ids]
+  out <- out[out$term %in% ids, ]
   # cat("\n")
   # print(out)
   # cat("\n")
 
   data(fci_tbl_06_01)
   target <- fci_tbl_06_01
-  target <- target$est[target$name %in% ids]
+  target <- target$est[target$term %in% ids]
   # cat("\n")
   # print(target)
   # cat("\n")
 
-  check <- sum(abs(out - target))
+  check <- sum(abs(out$estimate - target$.estimate))
   expect_lt(check, 0.01)
 })
 
@@ -26,19 +26,19 @@ test_that("backdr_exp_np: With ATT", {
   data(whatifdat)
   out <- backdr_exp_np(whatifdat, outcome.name = "Y", exposure.name = "A",
                        confound.names = "H", att = TRUE)
-  out <- out[ids]
-  # cat("\n")
+  out <- out[out$term %in% ids, ]
+  # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")
 
   data(fci_tbl_06_04)
   target <- fci_tbl_06_04
-  target <- target$est[target$name %in% ids]
-  # cat("\n")
+  target <- target$est[target$term %in% ids]
+  # cat("\n", "target", "\n")
   # print(target)
   # cat("\n")
 
-  check <- sum(abs(out - target))
+  check <- sum(abs(out$estimate - target$.estimate))
   expect_lt(check, 0.01)
 })
 

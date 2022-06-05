@@ -51,7 +51,6 @@ backdr_out <- function(data, formula = Y ~ `T` + A + H,
 
   # compute the effect measures
   out <- effect_measures(val0 = EY0, val1 = EY1)
-
   data.frame(
     term = names(out),
     estimate = out,

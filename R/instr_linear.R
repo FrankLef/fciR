@@ -10,7 +10,7 @@
 #' @importFrom stats lm glm fitted predict
 #' @importFrom AER ivreg
 #'
-#' @return Numeric vector of estimates.
+#' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 instr_linear <- function(data, outcome.name = "Y", exposure.name = "A",
                         instrument.name = "T", tol = .Machine$double.eps^0.5) {
@@ -40,7 +40,10 @@ instr_linear <- function(data, outcome.name = "Y", exposure.name = "A",
   EY0 <- mean((Deta - data[, exposure.name] * beta)[dat1])
 
   # estimate the effects
-  RD <- EY1 - EY0
-
-  effect_measures(val0 = EY0, val1 = EY1)
+  out <- effect_measures(val0 = EY0, val1 = EY1)
+  data.frame(
+    term = names(out),
+    estimate = unname(out),
+    std.err = NA_real_
+  )
 }

@@ -27,7 +27,7 @@ did_linear(
 \item{timevar}{Name that will be used for the time variable.}
 }
 \value{
-Estimates using the difference in differences.
+Dataframe in a useable format for \code{rsample::bootstraps}.
 }
 \description{
 Compute the DiD Estimator with a linear model.

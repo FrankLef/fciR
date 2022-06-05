@@ -24,7 +24,7 @@ instr_linear(
 \item{tol}{Numeric > 0. Tolerance used in estimation.}
 }
 \value{
-Numeric vector of estimates.
+Dataframe in a useable format for \code{rsample::bootstraps}.
 }
 \description{
 Estimate effect using instrument variables.

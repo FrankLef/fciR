@@ -51,7 +51,12 @@ backdr_exp_gee <- function(data, outcome.name = "Y", exposure.name = "T",
   EY1 <- sum(coefs)
 
   # estimate the effect measures
-  effect_measures(EY0, EY1)
+  out <- effect_measures(EY0, EY1)
+  data.frame(
+    term = names(out),
+    estimate = unname(out),
+    std.err = NA_real_
+  )
 }
 
 #' @rdname backdr_exp_gee

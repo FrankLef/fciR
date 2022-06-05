@@ -5,7 +5,7 @@
 \alias{fci_tbl_06_13}
 \title{Table 6.3 and 6.14}
 \format{
-Dataframe with 4 rows and 5 variables.
+Dataframe with 4 rows and 6 variables.
 \describe{
 \item{ss}{nb ofcovariates}
 \item{estimator}{estimate}

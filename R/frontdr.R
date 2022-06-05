@@ -13,7 +13,7 @@
 #' sufficient confounder. See assumption 5 of section 8.2.
 #' @param surrogate.name Name of surrogate variable.
 #'
-#' @return Named numeric vector with effect measures.
+#' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 frontdr_np <- function(data, outcome.name = "Y", exposure.name = "A",
                        surrogate.name = "S") {
@@ -104,5 +104,10 @@ frontdr_np <- function(data, outcome.name = "Y", exposure.name = "A",
   EY1 <- exY1_probS0_condA1 + exY1_probS1_condA1
 
   # estimate the effect measures
-  effect_measures(val0 = EY0, val1 = EY1, log = FALSE)
+  out <- effect_measures(val0 = EY0, val1 = EY1, log = FALSE)
+  data.frame(
+    term = names(out),
+    estimate = unname(out),
+    std.err = NA_real_
+  )
 }

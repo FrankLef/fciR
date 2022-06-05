@@ -33,7 +33,7 @@ standdr(
 \item{family}{family used for lm fit.}
 }
 \value{
-Dataframe of estimates
+Dataframe in a useable format for \code{rsample::bootstraps}.
 }
 \description{
 Compute the doubly robust standardized estimates.

@@ -13,7 +13,7 @@
 #' @importFrom rlang f_rhs .data
 #' @importFrom stats glm coef plogis
 #'
-#' @return Numeric vector of summarized results
+#' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 prob_lmod <- function(data, formula = Y ~ `T` + A + H,
                       condition.names = NULL) {
@@ -29,10 +29,9 @@ prob_lmod <- function(data, formula = Y ~ `T` + A + H,
   coefs <- coef(glm(formula = formula, family = "binomial", data = data))
   coefs <- coefs[c(x0, condition.names)]
   p <- unname(sum(coefs))
-  out <- c("logitP" = p)
   data.frame(
-    term = names(out),
-    estimate = out,
+    term = "logitP",
+    estimate = p,
     std.err = NA_real_
   )
 }
@@ -59,7 +58,7 @@ lmodboot <- prob_lmod
 #' @importFrom stats glm plogis
 #' @importFrom broom tidy
 #'
-#' @return Numeric vector of summarized results.
+#' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 prob_lmod_td <- function(data, formula = Y ~ `T` + A + H,
                          condition.names = NULL) {
@@ -77,9 +76,9 @@ prob_lmod_td <- function(data, formula = Y ~ `T` + A + H,
     broom::tidy()
 
   fit |>
-    filter(.data[["term"]] %in% condition.names) |>
+    filter(.data$term %in% condition.names) |>
     summarize(term = "logitP",
-              estimate = sum(.data[["estimate"]]),
+              estimate = sum(.data$estimate),
               # don't know the std.err so no t-intervals
               std.err = NA_real_)
 }

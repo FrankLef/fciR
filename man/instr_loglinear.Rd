@@ -27,7 +27,7 @@ instr_loglinear(
 \item{niter}{Number of iterations}
 }
 \value{
-Numeric vector of estimates.
+Dataframe in a useable format for \code{rsample::bootstraps}.
 }
 \description{
 Estimate effect using instrument variables via logarithmic fit.

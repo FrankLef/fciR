@@ -16,7 +16,7 @@
 #' @importFrom rlang f_rhs .data
 #' @importFrom stats glm coef plogis
 #'
-#' @return Numeric vector of summarized results
+#' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 meas_effect_uncond <- function(data, formula = Y ~ `T`) {
 

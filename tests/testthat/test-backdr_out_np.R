@@ -4,19 +4,19 @@ test_that("backdr_out_np", {
   data(whatifdat)
   out <- backdr_out_np(whatifdat, outcome.name = "Y",
                        exposure.name = "A", confound.names = "H")
-  out <- out[ids]
-  # cat("\n")
+  out <- out[out$term %in% ids, ]
+  # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")
 
   data(fci_tbl_06_01)
   target <- fci_tbl_06_01
-  target <- target$est[target$name %in% ids]
-  # cat("\n")
+  target <- target[target$term %in% ids, ]
+  # cat("\n", "target", "\n")
   # print(target)
   # cat("\n")
 
-  check <- sum(abs(out - target))
+  check <- sum(abs(out$estimate - target$.estimate))
   expect_lt(check, 0.001)
 })
 
@@ -27,19 +27,19 @@ test_that("backdr_out_np: With ATT", {
   out <- backdr_out_np(whatifdat, outcome.name = "Y",
                        exposure.name = "A", confound.names = "H",
                        att = TRUE)
-  out <- out[ids]
-  # cat("\n")
+  out <- out[out$term %in% ids, ]
+  # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")
 
   data(fci_tbl_06_04)
   target <- fci_tbl_06_04
-  target <- target$est[target$name %in% ids]
-  # cat("\n")
+  target <- target[target$term %in% ids, ]
+  # cat("\n", "target", "\n")
   # print(target)
   # cat("\n")
 
-  check <- sum(abs(out - target))
+  check <- sum(abs(out$estimate - target$.estimate))
   expect_lt(check, 0.001)
 })
 
@@ -51,19 +51,19 @@ test_that("backdr_out_npr", {
   out <- backdr_out_npr(whatifdat, outcome.name = "Y",
                        exposure.name = "A", confound.names = "H",
                        interactions = list(c("A", "H")))
-  out <- out[ids]
-  # cat("\n")
+  out <- out[out$term %in% ids, ]
+  # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")
 
   data(fci_tbl_06_01)
   target <- fci_tbl_06_01
-  target <- target$est[target$name %in% ids]
-  # cat("\n")
+  target <- target[target$term %in% ids, ]
+  # cat("\n", "target", "\n")
   # print(target)
   # cat("\n")
 
-  check <- sum(abs(out - target))
+  check <- sum(abs(out$estimate - target$.estimate))
   expect_lt(check, 0.001)
 })
 
@@ -74,18 +74,18 @@ test_that("backdr_out_npr: With ATT", {
   out <- backdr_out_npr(whatifdat, outcome.name = "Y",
                         exposure.name = "A", confound.names = "H",
                         interactions = list(c("A", "H")), att = TRUE)
-  out <- out[ids]
-  # cat("\n")
+  out <- out[out$term %in% ids, ]
+  # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")
 
   data(fci_tbl_06_04)
   target <- fci_tbl_06_04
-  target <- target$est[target$name %in% ids]
-  # cat("\n")
+  target <- target[target$term %in% ids, ]
+  # cat("\n", "target", "\n")
   # print(target)
   # cat("\n")
 
-  check <- sum(abs(out - target))
+  check <- sum(abs(out$estimate - target$.estimate))
   expect_lt(check, 0.001)
 })

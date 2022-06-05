@@ -24,7 +24,7 @@ badstanddr(data, outcome.name = "Y", exposure.name = "T", confound.names = "H")
 \item{confound.names}{Name of confound variable.}
 }
 \value{
-Dataframe of estimates
+Dataframe in a useable format for \code{rsample::bootstraps}.
 }
 \description{
 Doubly robust standardized estimates with misspecified outcome model.

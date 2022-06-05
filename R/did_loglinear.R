@@ -8,7 +8,7 @@
 #'
 #' @seealso did_longer
 #'
-#' @return Estimates using the difference in differences.
+#' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 did_loglinear <- function(data, outcome.name = "Y1", exposure.name = "T",
                           confound.names = "Y0", names_to = "var", timevar = "time") {
@@ -36,5 +36,10 @@ did_loglinear <- function(data, outcome.name = "Y1", exposure.name = "T",
 
   EY0A1 <- EY0  # change to explicit name
   # estimate the effect measures
-  effect_measures(val0 = EY0A1, val1 = EY1)
+  out <- effect_measures(val0 = EY0A1, val1 = EY1)
+  data.frame(
+    term = names(out),
+    estimate = unname(out),
+    std.err = NA_real_
+  )
 }

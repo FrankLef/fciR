@@ -5,7 +5,7 @@
 \alias{fci_sim_08_01}
 \title{Simulation 8.1}
 \format{
-Dataframe with 13 rows and 7 variables.
+Dataframe with 13 rows and 5 variables.
 \describe{
 \item{A}{Exposure}
 \item{S}{Surrogate marker}

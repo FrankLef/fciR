@@ -4,19 +4,18 @@ test_that("frontdr_np", {
 
   out <- frontdr_np(fci_sim_08_01, outcome.name = "Y", exposure.name = "A",
                     surrogate.name = "S")
-  # cat("\n")
+  # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")
 
   target <- data.frame(
-    name = c("EY0", "EY1", "RD", "RR", "RR*", "OR"),
-    est = c(0.055847, 0.185367, 0.129520, 3.319195, 1.158992, 3.846921))
-  target <- target$est
-  # cat("\n")
+    term = c("EY0", "EY1", "RD", "RR", "RR*", "OR"),
+    .estimate = c(0.055847, 0.185367, 0.129520, 3.319195, 1.158992, 3.846921))
+  # cat("\n", "target", "\n")
   # print(target)
   # cat("\n")
 
-  check <- sum(abs(out - target))
+  check <- sum(abs(out$.estimate - target$.estimate))
   expect_lt(check, 1e-6)
 })
 
@@ -38,20 +37,20 @@ test_that("frontdr_np: exercise 8.3", {
 
   out <- frontdr_np(df, outcome.name = "Y", exposure.name = "A",
                     surrogate.name = "S")
-  # cat("\n")
+  # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")
 
   target <- data.frame(
-    name = c("EY0", "EY1", "RD", "RR", "RR*", "OR"),
-    est = c(0.29803247, 0.37514842, 0.07711596,
-            1.25875019, 1.12341484, 1.41409864))
+    term = c("EY0", "EY1", "RD", "RR", "RR*", "OR"),
+    .estimate = c(0.29803247, 0.37514842, 0.07711596,
+                  1.25875019, 1.12341484, 1.41409864))
   target <- target$est
-  # cat("\n")
+  # cat("\n", "target", "\n")
   # print(target)
   # cat("\n")
 
-  check <- sum(abs(out - target))
+  check <- sum(abs(out$.estimate - target$.estimate))
   expect_lt(check, 1e-6)
 })
 

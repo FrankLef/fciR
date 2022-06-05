@@ -24,7 +24,7 @@ boot(data, outcome.name = "Y", exposure.name = "T", modifier.name = "M")
 \item{modifier.name}{Name of modifier variable.}
 }
 \value{
-Numeric vector of summarized results.
+Dataframe in a useable format for \code{rsample::bootstraps}.
 }
 \description{
 Compute estimates of the association measures for 2 strata.

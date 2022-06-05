@@ -66,7 +66,12 @@ backdr_exp <- function(data, outcome.name = "Y", exposure.name = "T",
   if (att) EY1 <- EYT1  # use att values if required
 
   # estimate the effect measures
-  effect_measures(EY0, EY1)
+  out <- effect_measures(EY0, EY1)
+  data.frame(
+    term = names(out),
+    estimate = unname(out),
+    std.err = NA_real_
+  )
 }
 
 #' @rdname backdr_exp

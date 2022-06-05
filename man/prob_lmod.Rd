@@ -18,7 +18,7 @@ lmodboot(data, formula = Y ~ T + A + H, condition.names = NULL)
 \code{NULL} all independent variables will be used.}
 }
 \value{
-Numeric vector of summarized results
+Dataframe in a useable format for \code{rsample::bootstraps}.
 }
 \description{
 Estimate s sampling distribution by bootstrapping.

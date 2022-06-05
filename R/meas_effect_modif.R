@@ -13,7 +13,7 @@
 #'
 #' @importFrom formulaic create.formula
 #'
-#' @return Numeric vector of summarized results.
+#' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 meas_effect_modif <- function(data, outcome.name = "Y", exposure.name = "T",
                               modifier.name = "M") {

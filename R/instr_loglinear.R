@@ -11,7 +11,7 @@
 #' @importFrom stats lm glm fitted predict
 #' @importFrom AER ivreg
 #'
-#' @return Numeric vector of estimates.
+#' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 instr_loglinear <- function(data, outcome.name = "Y", exposure.name = "A",
                         instrument.name = "T", tol = .Machine$double.eps^0.5,
@@ -62,5 +62,10 @@ instr_loglinear <- function(data, outcome.name = "Y", exposure.name = "A",
   # print(c(EY0, EY1))
   # cat("\n")
 
-  effect_measures(val0 = EY0, val1 = EY1)
+  out <- effect_measures(val0 = EY0, val1 = EY1)
+  data.frame(
+    term = names(out),
+    estimate = unname(out),
+    std.err = NA_real_
+  )
 }

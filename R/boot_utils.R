@@ -112,9 +112,9 @@ boot_run_td <- function(data, func, times = 1000, alpha = 0.05, ...) {
 
   data |>
     rsample::bootstraps(times = times, apparent = FALSE) |>
-    mutate(results = purrr::map_dfr(.data[["splits"]], function(x) {
+    mutate(results = purrr::map_dfr(.data$splits, function(x) {
       dat <- rsample::analysis(x)
       func(dat, ...)
     })) |>
-    rsample::int_pctl(.data[["results"]], alpha = alpha)
+    rsample::int_pctl(.data$results, alpha = alpha)
 }
