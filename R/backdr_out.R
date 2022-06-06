@@ -3,34 +3,31 @@
 #' Compute standardized estimates with parametric outcome model.
 #'
 #' The standardized estimates are computed using the outcome model. See chapter
-#' 6 for details.
+#' 6, section 6.1.2, for details.
 #'
-#' @param data Dataframe of raw data.
-#' @param formula Formula representing the model.
-#' @param exposure.name Name of exposure variable.
-#' @param family Name of distribution. Must be in
-#'  \code{c("binomial", "poisson", "gaussian")}.
+#' @inheritParams backdr_out_np
 #'
-#' @importFrom stats lm glm fitted predict
+#' @importFrom dplyr count group_by mutate summarize filter pull relocate
+#' @importFrom stats glm fitted predict
+#' @importFrom rlang .data
+#' @importFrom broom tidy
 #'
 #' @seealso effect_measures
 #'
-#' @return Dataframe of estimates using outcome-model standardization
+#' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-backdr_out <- function(data, formula = Y ~ `T` + A + H,
-                       exposure.name = "T",
-                       family = c("binomial", "poisson", "gaussian")) {
+backdr_out <- function(data, formula = Y ~ `T` + A + H, exposure.name = "T") {
   stopifnot(length(exposure.name) == 1)
+
   x0 <- "(Intercept)"  # name of intercept used by lm, glm, etc.
-  family <- match.arg(family)
 
-  fit <- glm(formula = formula, family = family, data = data)
+  fit <- glm(formula = formula, family = "binomial", data = data)
 
-  # dataset with everyone untreated
+  # counterfactual dataset with everyone untreated
   dat0 <- data
   dat0[, exposure.name] <- 0
 
-  # dataset with everyone treated
+  # counterfactual dataset with everyone untreated
   dat1 <- data
   dat1[, exposure.name] <- 1
 

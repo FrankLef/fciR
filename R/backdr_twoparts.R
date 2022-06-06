@@ -6,7 +6,10 @@
 #' are many zeros.  Note that the results don't match exactly those obtained
 #' with outcome-mode or exposure-model standardization.
 #'
-#' @inheritParams backdr_out_np
+#' @param data Dataframe of raw data.
+#' @param outcome.name Name of outcome variable.
+#' @param exposure.name Name of exposure variable.
+#' @param confound.names Name of confound variable.
 #' @param condition.name Character vector of confound variable names.
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.

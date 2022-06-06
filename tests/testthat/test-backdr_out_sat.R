@@ -1,8 +1,8 @@
-test_that("backdr_out_np", {
-  ids <- c("EY0", "EY1")
+test_that("backdr_out_sat", {
+  ids <- c("EY0", "EY1", "RD", "RR")
 
   data(whatifdat)
-  out <- backdr_out_np(whatifdat, formula = Y ~ A + H,
+  out <- backdr_out_sat(whatifdat, formula = Y ~ A * H,
                        exposure.name = "A", confound.names = "H")
   out <- out[out$term %in% ids, ]
   # cat("\n", "out", "\n")
@@ -17,16 +17,15 @@ test_that("backdr_out_np", {
   # cat("\n")
 
   check <- sum(abs(out$estimate - target$.estimate))
-  expect_lt(check, 0.001)
+  expect_lt(check, 0.005)
 })
 
-test_that("backdr_out_np: With ATT", {
-  ids <- c("EY0", "EY1")
+test_that("backdr_out_sat: With ATT", {
+  ids <- c("EY0", "EY1", "RD", "RR")
 
   data(whatifdat)
-  out <- backdr_out_np(whatifdat, formula = Y ~ A + H,
-                       exposure.name = "A", confound.names = "H",
-                       att = TRUE)
+  out <- backdr_out_sat(whatifdat, formula = Y ~ A + H + A * H,
+                        exposure.name = "A", confound.names = "H", att = TRUE)
   out <- out[out$term %in% ids, ]
   # cat("\n", "out", "\n")
   # print(out)
@@ -40,5 +39,5 @@ test_that("backdr_out_np: With ATT", {
   # cat("\n")
 
   check <- sum(abs(out$estimate - target$.estimate))
-  expect_lt(check, 0.001)
+  expect_lt(check, 0.005)
 })

@@ -13,7 +13,7 @@ backdr_twoparts(
 )
 }
 \arguments{
-\item{data}{Dataframe of data.}
+\item{data}{Dataframe of raw data.}
 
 \item{outcome.name}{Name of outcome variable.}
 

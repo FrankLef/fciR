@@ -5,7 +5,10 @@
 #' Compute the doubly robust standardized estimates using the code from section
 #' 6.3.
 #'
-#' @inheritParams backdr_out_np
+#' @param data Dataframe of data.
+#' @param outcome.name Name of outcome variable.
+#' @param exposure.name Name of exposure variable.
+#' @param confound.names Name of confound variable.
 #' @param family family used for lm fit.
 #'
 #' @importFrom formulaic create.formula

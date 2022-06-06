@@ -5,19 +5,9 @@
 \alias{standout}
 \title{Compute standardized estimates with parametric outcome model}
 \usage{
-backdr_out(
-  data,
-  formula = Y ~ T + A + H,
-  exposure.name = "T",
-  family = c("binomial", "poisson", "gaussian")
-)
+backdr_out(data, formula = Y ~ T + A + H, exposure.name = "T")
 
-standout(
-  data,
-  formula = Y ~ T + A + H,
-  exposure.name = "T",
-  family = c("binomial", "poisson", "gaussian")
-)
+standout(data, formula = Y ~ T + A + H, exposure.name = "T")
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
@@ -25,19 +15,16 @@ standout(
 \item{formula}{Formula representing the model.}
 
 \item{exposure.name}{Name of exposure variable.}
-
-\item{family}{Name of distribution. Must be in
-\code{c("binomial", "poisson", "gaussian")}.}
 }
 \value{
-Dataframe of estimates using outcome-model standardization
+Dataframe in a useable format for \code{rsample::bootstraps}.
 }
 \description{
 Compute standardized estimates with parametric outcome model.
 }
 \details{
 The standardized estimates are computed using the outcome model. See chapter
-6 for details.
+6, section 6.1.2, for details.
 }
 \seealso{
 effect_measures

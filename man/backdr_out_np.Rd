@@ -6,27 +6,27 @@
 \usage{
 backdr_out_np(
   data,
-  outcome.name = "Y",
+  formula = Y ~ T + H,
   exposure.name = "T",
   confound.names = "H",
   att = FALSE
 )
 }
 \arguments{
-\item{data}{Dataframe of data.}
+\item{data}{Dataframe of raw data.}
 
-\item{outcome.name}{Name of outcome variable.}
+\item{formula}{Formula representing the model.}
 
 \item{exposure.name}{Name of exposure variable.}
 
-\item{confound.names}{Name of confound variable.}
+\item{confound.names}{Name of confound variable. Must have length of 1.}
 
 \item{att}{if \code{FALSE} calculate the standardized (unconfounded)
 causal effect. If \code{TRUE} calculate the average effect of treatment
 on the treated.}
 }
 \value{
-Estimate using outcome-model standardization.
+Dataframe in a useable format for \code{rsample::bootstraps}.
 }
 \description{
 Standardized estimates via outcome modeling, non-parametric.

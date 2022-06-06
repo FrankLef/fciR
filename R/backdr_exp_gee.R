@@ -8,7 +8,10 @@
 #' arguments \code{formula}. The 2 formulas created are for the exposure model
 #' and another one for the weighted linear model.
 #'
-#' @inheritParams backdr_out_np
+#' @param data Dataframe of data.
+#' @param outcome.name Name of outcome variable.
+#' @param exposure.name Name of exposure variable.
+#' @param confound.names Name of confound variable.
 #'
 #' @importFrom formulaic create.formula
 #' @importFrom stats formula lm glm fitted predict

@@ -5,7 +5,10 @@
 #' Compute standardized averages using exposure modeling as described in
 #' section 6.2.
 #'
-#' @inheritParams backdr_out_np
+#' @param data Dataframe of data.
+#' @param outcome.name Name of outcome variable.
+#' @param exposure.name Name of exposure variable.
+#' @param confound.names Name of confound variable.
 #' @param att if \code{FALSE} calculate the standardized (unconfounded)
 #' causal effect. If \code{TRUE} calculate the average effect of treatment
 #' on the treated.
@@ -105,7 +108,10 @@ calc_exposure <- backdr_exp_np
 #' Compute standardized averages using exposure modeling as described in
 #' section 6.2.
 #'
-#' @inheritParams backdr_out_np
+#' @param data Dataframe of data.
+#' @param outcome.name Name of outcome variable.
+#' @param exposure.name Name of exposure variable.
+#' @param confound.names Name of confound variable.
 #' @param weights String. Name of the columns with the weights that will
 #' be used to create probabilities summing up to 1.
 #'
@@ -155,7 +161,10 @@ backdr_exp_bb <- function(data, outcome.name = "Y", exposure.name = "T",
 #' Compute standardized averages using exposure modeling as described in
 #' section 6.2.
 #'
-#' @inheritParams backdr_out_np
+#' @param data Dataframe of data.
+#' @param outcome.name Name of outcome variable.
+#' @param exposure.name Name of exposure variable.
+#' @param confound.names Name of confound variable.
 #' @param weights String. Name of the columns with the weights that will
 #' be used to create probabilities summing up to 1.
 #'

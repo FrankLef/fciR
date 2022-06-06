@@ -8,7 +8,8 @@ effect_vars(evars = c("standard", "modifier", "logit"))
 }
 \arguments{
 \item{evars}{String. Should one of \code{c("standard", "modifier", "logit")}.
-Default value is \code{"standard"}.}
+Default value is \code{"standard"}. It is the set of terms to use with the
+inverse function defined by \code{inv}. For example}
 }
 \value{
 Named character vector.

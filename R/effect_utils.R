@@ -86,7 +86,8 @@ effect_measures <- function(val0, val1, log = TRUE) {
 #' the output of effect measures and the inverse functions.
 #'
 #' @param evars String. Should one of \code{c("standard", "modifier", "logit")}.
-#' Default value is \code{"standard"}.
+#' Default value is \code{"standard"}. It is the set of terms to use with the
+#' inverse function defined by \code{inv}. For example
 #'
 #' @seealso effect_measures
 #'

@@ -5,57 +5,72 @@
 #' The standardized estimates are computed using the non-parametric outcome
 #' model. The calculations are performed without regression.
 #'
-#' @param data Dataframe of data.
-#' @param outcome.name Name of outcome variable.
+#' @param data Dataframe of raw data.
+#' @param formula Formula representing the model.
 #' @param exposure.name Name of exposure variable.
-#' @param confound.names Name of confound variable.
+#' @param confound.names Name of confound variable. Must have length of 1.
 #' @param att if \code{FALSE} calculate the standardized (unconfounded)
 #' causal effect. If \code{TRUE} calculate the average effect of treatment
 #' on the treated.
 #'
-#' @importFrom dplyr count group_by ungroup mutate summarise filter pull near
-#' @importFrom rlang .data enquo quo_name
+#' @importFrom dplyr count group_by mutate summarize filter pull relocate
+#' @importFrom rlang .data
+#' @importFrom stats setNames
 #'
-#' @return Estimate using outcome-model standardization.
+#' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-backdr_out_np <- function(data, outcome.name = "Y", exposure.name = "T",
+backdr_out_np <- function(data, formula = Y ~ `T` + H, exposure.name = "T",
                           confound.names = "H", att = FALSE) {
-  stopifnot(length(confound.names) == 1)
 
-  # get the summarized data
-  summ <- data %>%
-    count(.data[[outcome.name]], .data[[exposure.name]],
-          .data[[confound.names]], name = "n") %>%
+  # must have only one exposure
+  stopifnot(length(exposure.name) == 1)
+
+  # all independent variables must be accounted for
+  ind_vars <- all.vars(rlang::f_rhs(formula))
+  stopifnot(all(ind_vars %in% c(exposure.name, confound.names)))
+
+  # the name of the outcome variable
+  outcome.name <- all.vars(rlang::f_lhs(formula))
+
+  # compute the frequencies, this table is then used for all computations
+  summ <- data |>
+    count(.data[[outcome.name]], .data[[exposure.name]], .data[[confound.names]]) |>
     mutate(freq = n / sum(n))
-  stopifnot(near(sum(summ$freq), 1))
+  stopifnot(abs(sum(summ$freq) - 1) < .Machine$double.eps^0.5)
 
   # the expected value of the outcome given the exposure and confounds
-  EYcond <- summ %>%
-    group_by(.data[[exposure.name]], .data[[confound.names]]) %>%
-    summarise(EYcond = weighted.mean(x = .data[[outcome.name]], w = n))
+  out_cond_mean <- summ |>
+    group_by(.data[[exposure.name]], .data[[confound.names]]) |>
+    summarize(EY = weighted.mean(.data[[outcome.name]], w = n)) |>
+    # add and id column to be able to join the confounds variables later
+    unite(col = "id", .data[[confound.names]], remove = FALSE)
 
 
   # the confound distribution
   if (!att) {
-    PH <- summ %>%
-      group_by(.data[[confound.names]]) %>%
+    confound_dist <- summ %>%
+      group_by(.data[[confound.names]]) |>
       summarize(prob = sum(.data$freq))
-    # print(PH)
   } else {
-    PH <- summ %>%
-      filter(.data[[exposure.name]] == 1) %>%
-      group_by(.data[[confound.names]]) %>%
-      summarize(n = sum(n)) %>%
+    confound_dist <- summ %>%
+      filter(.data[[exposure.name]] == 1) |>
+      group_by(.data[[confound.names]]) |>
+      summarize(n = sum(n)) |>
       mutate(prob = .data$n / sum(.data$n))
   }
+  # add and id column to be able to join the confounds variables later
+  confound_dist <- confound_dist |>
+    unite(col = "id", .data[[confound.names]], remove = FALSE)
 
 
-  EY <- dplyr::inner_join(EYcond, PH, by = confound.names) %>%
-    mutate(EY = EYcond * .data$prob) %>%
-    group_by(.data[[exposure.name]]) %>%
-    summarize(EY = sum(EY)) %>%
-    arrange(.data[[exposure.name]]) %>%
-    pull(EY)
+  # multiply the conditional expectation by the confound probabilities
+  EY <- dplyr::inner_join(out_cond_mean, confound_dist, by = "id") |>
+    group_by(.data[[exposure.name]]) |>
+    summarize(EY = sum(.data$EY * .data$prob)) |>
+    # create the output vector
+    arrange(.data[[exposure.name]]) |>
+    pull(EY) |>
+    stats::setNames(c("EY0", "EY1"))
 
   EY0 <- EY[1]
   EY1 <- EY[2]
@@ -68,65 +83,3 @@ backdr_out_np <- function(data, outcome.name = "Y", exposure.name = "T",
     std.err = NA_real_
   )
 }
-
-#' Standardized estimates via Outcome Modeling, Non-Parametric Regression
-#'
-#' Standardized estimates via outcome modeling, non-parametric regression.
-#'
-#' The standardized estimates are computed using the non-parametric outcome
-#' model. IMPORTANT: The formula must be in the format \code{Y ~ T + ...} where the
-#' exposure is in the first position \code{T}.
-#'
-#' @inheritParams backdr_out_np
-#' @param interactions List of character vectors with the interactions.
-#' @param att if \code{FALSE} calculate the standardized (unconfounded)
-#' causal effect. If \code{TRUE} calculate the average effect of treatment
-#' on the treated.
-#'
-#'
-#' @return Estimate using outcome-model standardization.
-#' @export
-backdr_out_npr <- function(data, outcome.name = "Y", exposure.name = "T",
-                           confound.names = "H",
-                           interactions = list(c("T", "A")),
-                           att = FALSE) {
-  stopifnot(length(confound.names) == 1)
-
-  x0 <- "(Intercept)"  # name of intercept used by lm, glm, etc.
-
-  # marginal expected value of H
-  if (!att) {
-    EH <- mean(data[, confound.names])
-  } else {
-    # condition on treatment when ATT is requested
-    condT1 <- data[, exposure.name] == 1
-    EH <- mean(data[condT1, confound.names])
-  }
-
-  input.names <- c(exposure.name, confound.names)
-  a_formula <- formulaic::create.formula(outcome.name = outcome.name,
-                                         input.names = input.names,
-                                         interactions = interactions,
-                                         dat = data)
-
-  # fit the outcome model and extract the coefficients
-  coefs <- coef(lm(formula = a_formula , data = data))
-  # compute the marginal expected potential outcomes
-  EY0 <- coefs[x0] + coefs[confound.names] * EH
-  # create strings of interactions as coefficients
-  ht <- sapply(interactions, function(x) paste(x, collapse = ":"))
-  EY1 <- coefs[x0] + coefs[exposure.name] +
-    sum(coefs[c(confound.names, ht)]) * EH
-
-  # estimate the effect measures
-  out <- effect_measures(EY0, EY1)
-  data.frame(
-    term = names(out),
-    estimate = unname(out),
-    std.err = NA_real_
-  )
-}
-
-#' @rdname backdr_out_npr
-#' @export
-stand <- backdr_out_npr

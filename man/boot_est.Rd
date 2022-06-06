@@ -29,7 +29,8 @@ boot_est(
 the inverse logit and \code{none} will do nothing (identity function).}
 
 \item{evars}{String. Should one of \code{c("standard", "modifier", "logit")}.
-Default value is \code{"standard"}.}
+Default value is \code{"standard"}. It is the set of terms to use with the
+inverse function defined by \code{inv}.}
 
 \item{...}{Other named arguments for \code{func}.}
 }
