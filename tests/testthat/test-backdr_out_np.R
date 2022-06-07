@@ -3,7 +3,7 @@ test_that("backdr_out_np", {
 
   data(whatifdat)
   out <- backdr_out_np(whatifdat, formula = Y ~ A + H,
-                       exposure.name = "A", confound.names = "H")
+                       exposure.name = "A")
   out <- out[out$term %in% ids, ]
   # cat("\n", "out", "\n")
   # print(out)
@@ -25,8 +25,7 @@ test_that("backdr_out_np: With ATT", {
 
   data(whatifdat)
   out <- backdr_out_np(whatifdat, formula = Y ~ A + H,
-                       exposure.name = "A", confound.names = "H",
-                       att = TRUE)
+                       exposure.name = "A", att = TRUE)
   out <- out[out$term %in% ids, ]
   # cat("\n", "out", "\n")
   # print(out)

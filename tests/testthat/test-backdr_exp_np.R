@@ -1,31 +1,30 @@
 test_that("backdr_exp_np", {
-  ids <- c("EY0", "EY1")
+  ids <- c("EY0", "EY1", "RD")
 
   data(whatifdat)
-  out <- backdr_exp_np(whatifdat, outcome.name = "Y", exposure.name = "A",
-                       confound.names = "H")
+  out <- backdr_exp_np(whatifdat, formula = Y ~ A + H, exposure.name = "A")
   out <- out[out$term %in% ids, ]
-  # cat("\n")
+  # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")
 
   data(fci_tbl_06_01)
   target <- fci_tbl_06_01
-  target <- target$est[target$term %in% ids]
-  # cat("\n")
+  target <- target[target$term %in% ids, ]
+  # cat("\n", "target", "\n")
   # print(target)
   # cat("\n")
 
   check <- sum(abs(out$estimate - target$.estimate))
-  expect_lt(check, 0.01)
+  expect_lt(check, 0.001)
 })
 
 test_that("backdr_exp_np: With ATT", {
   ids <- c("EY0", "EY1")
 
   data(whatifdat)
-  out <- backdr_exp_np(whatifdat, outcome.name = "Y", exposure.name = "A",
-                       confound.names = "H", att = TRUE)
+  out <- backdr_exp_np(whatifdat, formula = Y ~ A + H, exposure.name = "A",
+                       att = TRUE)
   out <- out[out$term %in% ids, ]
   # cat("\n", "out", "\n")
   # print(out)
@@ -39,51 +38,5 @@ test_that("backdr_exp_np: With ATT", {
   # cat("\n")
 
   check <- sum(abs(out$estimate - target$.estimate))
-  expect_lt(check, 0.01)
+  expect_lt(check, 0.001)
 })
-
-test_that("backdr_exp_bb", {
-
-  data(mortality_long)
-  out <- backdr_exp_bb(mortality_long, outcome.name = "Y", exposure.name = "T",
-                       confound.names = "H", weights = "n")
-
-  target <- list("EY0" = 0.0078399, "EY1" = 0.0069952, "EY0T1" = 0.010176)
-
-  check <- abs(out$EY0 - target$EY0) + abs(out$EY1 - target$EY1) +
-    abs(out$EY0T1 - target$EY0T1)
-  expect_lt(check, 1e-6)
-})
-
-test_that("backdr_exp_bb: Boot", {
-  data(mortality_long)
-  is_skip <- TRUE
-  if (!is_skip) {
-    out <- fciR::boot_est(data = mortdat, func = fciR::backdr_exp_bb,
-                          R = 100, conf = 0.95,
-                          outcome.name = "Y", exposure.name = "T",
-                          confound.names = "H", weights = "n")
-
-    target <- list("EY0" = 0.0078399, "EY1" = 0.0069952, "EY0T1" = 0.010176)
-
-    check <- abs(out$EY0 - target$EY0) + abs(out$EY1 - target$EY1) +
-      abs(out$EY0T1 - target$EY0T1)
-  }
-  skip_if(is_skip, "Cannot be run with boot_est: Error message to resolve.")
-  expect_lt(check, 1e-6)
-})
-
-
-test_that("backdr_exp_bbX", {
-  data(mortality_long)
-  out <- backdr_exp_bbX(mortality_long, outcome.name = "Y", exposure.name = "T",
-                        confound.names = "H", weights = "n")
-
-  target <- list("EY0" = 0.0078399, "EY1" = 0.0069952, "EY0T1" = 0.010176)
-
-  check <- abs(out$EY0 - target$EY0) + abs(out$EY1 - target$EY1) +
-    abs(out$EY0T1 - target$EY0T1)
-  skip("Deprecated")
-  expect_lt(check, 1e-6)
-})
-

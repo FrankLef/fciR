@@ -17,7 +17,9 @@
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 backdr_out <- function(data, formula = Y ~ `T` + A + H, exposure.name = "T") {
-  stopifnot(length(exposure.name) == 1)
+
+  # audit and extract the variables
+  audit_formula(data, formula, exposure.name)
 
   x0 <- "(Intercept)"  # name of intercept used by lm, glm, etc.
 

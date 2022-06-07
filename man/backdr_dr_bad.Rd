@@ -5,23 +5,17 @@
 \alias{badstanddr}
 \title{Doubly robust standardized estimates with misspecified outcome model}
 \usage{
-backdr_dr_bad(
-  data,
-  outcome.name = "Y",
-  exposure.name = "T",
-  confound.names = "H"
-)
+backdr_dr_bad(data, formula = Y ~ T + H, exposure.name = "T")
 
-badstanddr(data, outcome.name = "Y", exposure.name = "T", confound.names = "H")
+badstanddr(data, formula = Y ~ T + H, exposure.name = "T")
 }
 \arguments{
-\item{data}{Dataframe of data.}
+\item{data}{Dataframe of raw data.}
 
-\item{outcome.name}{Name of outcome variable.}
+\item{formula}{Formula representing the model.}
 
-\item{exposure.name}{Name of exposure variable.}
-
-\item{confound.names}{Name of confound variable.}
+\item{exposure.name}{Name of exposure variable. All other independent
+variables in the formula will be assumed to be confounds.}
 }
 \value{
 Dataframe in a useable format for \code{rsample::bootstraps}.

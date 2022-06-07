@@ -5,32 +5,17 @@
 \alias{standdr}
 \title{Compute the doubly robust standardized estimates}
 \usage{
-backdr_dr(
-  data,
-  outcome.name = "Y",
-  exposure.name = "T",
-  confound.names = c("A", "H"),
-  family = c("binomial", "poisson", "gaussian")
-)
+backdr_dr(data, formula = Y ~ T + A + H, exposure.name = "T")
 
-standdr(
-  data,
-  outcome.name = "Y",
-  exposure.name = "T",
-  confound.names = c("A", "H"),
-  family = c("binomial", "poisson", "gaussian")
-)
+standdr(data, formula = Y ~ T + A + H, exposure.name = "T")
 }
 \arguments{
-\item{data}{Dataframe of data.}
+\item{data}{Dataframe of raw data.}
 
-\item{outcome.name}{Name of outcome variable.}
+\item{formula}{Formula representing the model.}
 
-\item{exposure.name}{Name of exposure variable.}
-
-\item{confound.names}{Name of confound variable.}
-
-\item{family}{family used for lm fit.}
+\item{exposure.name}{Name of exposure variable. All other independent
+variables in the formula will be assumed to be confounds.}
 }
 \value{
 Dataframe in a useable format for \code{rsample::bootstraps}.

@@ -1,9 +1,9 @@
 test_that("backdr_exp_gee", {
-  ids <- c("EY0", "EY1")
+  ids <- c("EY0", "EY1", "RD")
 
   data(whatif2dat)
-  out <- backdr_exp_gee(whatif2dat, outcome.name = "vl4", exposure.name ="A",
-                    confound.names = "lvlcont0")
+  out <- backdr_exp_gee(whatif2dat, formula = vl4 ~ A + lvlcont0,
+                        exposure.name ="A")
   out <- out[out$term %in% ids, ]
   # cat("\n", "out", "\n")
   # print(out)

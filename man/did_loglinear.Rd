@@ -2,13 +2,21 @@
 % Please edit documentation in R/did_loglinear.R
 \name{did_loglinear}
 \alias{did_loglinear}
+\alias{didloglinear}
 \title{Compute the DiD Estimator with a Loglinear Model}
 \usage{
 did_loglinear(
   data,
-  outcome.name = "Y1",
+  formula = Y1 ~ T + Y0,
   exposure.name = "T",
-  confound.names = "Y0",
+  names_to = "var",
+  timevar = "time"
+)
+
+didloglinear(
+  data,
+  formula = Y1 ~ T + Y0,
+  exposure.name = "T",
   names_to = "var",
   timevar = "time"
 )
@@ -16,11 +24,10 @@ did_loglinear(
 \arguments{
 \item{data}{Dataframe of raw data.}
 
-\item{outcome.name}{Name of final outcome.}
+\item{formula}{Formula representing the model.}
 
-\item{exposure.name}{Name of exposure variable.}
-
-\item{confound.names}{Name of baseline outcome (confound).}
+\item{exposure.name}{Name of exposure variable. All other independent
+variables in the formula will be assumed to be confounds.}
 
 \item{names_to}{Name that will be used for the name variable.}
 

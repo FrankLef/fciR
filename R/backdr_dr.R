@@ -5,38 +5,30 @@
 #' Compute the doubly robust standardized estimates using the code from section
 #' 6.3.
 #'
-#' @param data Dataframe of data.
-#' @param outcome.name Name of outcome variable.
-#' @param exposure.name Name of exposure variable.
-#' @param confound.names Name of confound variable.
-#' @param family family used for lm fit.
+#' @inheritParams backdr_out_np
 #'
-#' @importFrom formulaic create.formula
 #' @importFrom stats glm fitted predict
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-backdr_dr <- function(data, outcome.name = "Y", exposure.name = "T",
-                      confound.names = c("A", "H"),
-                      family = c("binomial", "poisson", "gaussian")) {
-  family <- match.arg(family)
+backdr_dr <- function(data, formula = Y ~ T + A + H, exposure.name = "T") {
 
-    # exposure model formula
-  eformula <- formulaic::create.formula(outcome.name = exposure.name,
-                                        input.names = confound.names,
-                                        dat = data)
+  # audit and extract the variables
+  var_names <- audit_formula(data, formula, exposure.name)
+  outcome.name <- var_names$outcome.name
+  confound.names <- var_names$extra.names
+
+  # exposure model formula
+  eformula <- paste(exposure.name, paste(confound.names, collapse = "+"),
+                    sep = "~")
+  eformula <- formula(eformula)
 
   # estimate the parametric exposure model
   eH <- fitted(glm(formula = eformula, family = "binomial", data = data))
   stopifnot(all(!dplyr::near(eH, 0)))  # eH must not equal zero
 
-  input.names <- c(exposure.name, confound.names)
-  a_formula <- formulaic::create.formula(outcome.name = outcome.name,
-                                         input.names = input.names,
-                                         dat = data)
-
   # Fit the parametric outcome model
-  lmod <- glm(formula = a_formula, family = family, data = data)
+  lmod <- glm(formula = formula, family = "binomial", data = data)
 
   # predict potential outcome for each participant
   dat0 <- data

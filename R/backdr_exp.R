@@ -1,4 +1,4 @@
-#' Compute standardized estimates with parametric exposure model
+#' Compute Standardized Estimates With Parametric Exposure Model
 #'
 #' Compute standardized estimates with parametric exposure model.
 #'
@@ -10,32 +10,28 @@
 #' "one can first recode the data so that T = 1 when it is previously equaled,
 #' and T = 0 when it previously equaled any value other than t", p. 113.
 #'
-#' @param data Dataframe of data.
-#' @param outcome.name Name of outcome variable.
-#' @param exposure.name Name of exposure variable.
-#' @param confound.names Name of confound variable.
-#' @param att if \code{FALSE} calculate the standardized (unconfounded)
-#' causal effect. If \code{TRUE} calculate the average effect of treatment
-#' on the treated.
+#' @inheritParams backdr_out_np
 #'
-#' @importFrom formulaic create.formula
 #' @importFrom stats glm fitted predict
 #'
-#' @return Dataframe of estimates using exposure-model standardization
+#' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-backdr_exp <- function(data, outcome.name = "Y", exposure.name = "T",
-                       confound.names = "H", att = FALSE) {
+backdr_exp <- function(data, formula = Y ~ `T` + H, exposure.name = "T",
+                       att = FALSE) {
   x0 <- "(Intercept)"  # name of intercept used by lm, glm, etc.
 
+  var_names <- audit_formula(data, formula, exposure.name)
+  outcome.name <- var_names$outcome.name
+  confound.names <- var_names$extra.names
+
   # exposure model formula
-  eformula <- formulaic::create.formula(outcome.name = exposure.name,
-                                        input.names = confound.names,
-                                        dat = data)
+  eformula <- paste(exposure.name, paste(confound.names, collapse = "+"),
+                    sep = "~")
+  eformula <- formula(eformula)
 
   # weighted linear model formula
-  lformula <- formulaic::create.formula(outcome.name = outcome.name,
-                                        input.names = exposure.name,
-                                        dat = data)
+  lformula <- paste(outcome.name, exposure.name, sep = "~")
+  lformula <- formula(lformula)
 
   # estimate the parametric exposure model
   # NOTE: fitted() is the same as using predict(..., type = "response")
@@ -79,4 +75,4 @@ backdr_exp <- function(data, outcome.name = "Y", exposure.name = "T",
 
 #' @rdname backdr_exp
 #' @export
-standexp <- backdr_exp
+standexp.r <- backdr_exp

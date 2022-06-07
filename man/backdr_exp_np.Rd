@@ -2,45 +2,35 @@
 % Please edit documentation in R/backdr_exp_np.R
 \name{backdr_exp_np}
 \alias{backdr_exp_np}
-\alias{calc_exposure}
-\title{Compute standardized averages using exposure modeling, non-parametric}
+\alias{mk.mortdat}
+\alias{attsem.r}
+\title{Compute Standardized Averages Using Exposure Modeling, Non Parametric}
 \usage{
-backdr_exp_np(
-  data,
-  outcome.name = "Y",
-  exposure.name = "T",
-  confound.names = "H",
-  att = FALSE
-)
+backdr_exp_np(data, formula = Y ~ T + H, exposure.name = "T", att = FALSE)
 
-calc_exposure(
-  data,
-  outcome.name = "Y",
-  exposure.name = "T",
-  confound.names = "H",
-  att = FALSE
-)
+mk.mortdat(data, formula = Y ~ T + H, exposure.name = "T", att = FALSE)
+
+attsem.r(data, formula = Y ~ T + H, exposure.name = "T", att = FALSE)
 }
 \arguments{
-\item{data}{Dataframe of data.}
+\item{data}{Dataframe of raw data.}
 
-\item{outcome.name}{Name of outcome variable.}
+\item{formula}{Formula representing the model.}
 
-\item{exposure.name}{Name of exposure variable.}
-
-\item{confound.names}{Name of confound variable.}
+\item{exposure.name}{Name of exposure variable. All other independent
+variables in the formula will be assumed to be confounds.}
 
 \item{att}{if \code{FALSE} calculate the standardized (unconfounded)
 causal effect. If \code{TRUE} calculate the average effect of treatment
 on the treated.}
 }
 \value{
-Estimate using exposure-model standardization.
+Dataframe in a useable format for \code{rsample::bootstraps}.
 }
 \description{
 Compute standardized averages using exposure modeling, non-parametric.
 }
 \details{
-Compute standardized averages using exposure modeling as described in
-section 6.2.
+Compute standardized averages using exposure modeling. See introduciton of
+section 6.2 and section 6.2.1.
 }

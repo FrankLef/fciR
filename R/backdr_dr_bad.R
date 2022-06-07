@@ -5,28 +5,27 @@
 #' Compute the doubly robust standardized estimates using the code from section
 #' 6.3.
 #'
-#' @param data Dataframe of data.
-#' @param outcome.name Name of outcome variable.
-#' @param exposure.name Name of exposure variable.
-#' @param confound.names Name of confound variable.
+#' @inheritParams backdr_out_np
 #'
-#' @importFrom formulaic create.formula
 #' @importFrom stats glm fitted predict
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-backdr_dr_bad <- function(data, outcome.name = "Y", exposure.name = "T",
-                          confound.names = "H") {
+backdr_dr_bad <- function(data, formula = Y ~ `T` + H, exposure.name = "T") {
+
+  # audit and extract the variables
+  var_names <- audit_formula(data, formula, exposure.name)
+  outcome.name <- var_names$outcome.name
+  confound.names <- var_names$extra.names
 
   # exposure model formula
-  eformula <- formulaic::create.formula(outcome.name = exposure.name,
-                                        input.names = confound.names,
-                                        dat = data)
+  eformula <- paste(exposure.name, paste(confound.names, collapse = "+"),
+                    sep = "~")
+  eformula <- formula(eformula)
 
   # weighted linear model formula
-  lformula <- formulaic::create.formula(outcome.name = outcome.name,
-                                        input.names = exposure.name,
-                                        dat = data)
+  lformula <- paste(outcome.name, exposure.name, sep = "~")
+  lformula <- formula(lformula)
 
   # estimate the parametric exposure model
   eH <- fitted(glm(formula = eformula, family = "binomial", data = data))

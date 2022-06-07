@@ -8,32 +8,32 @@
 #' arguments \code{formula}. The 2 formulas created are for the exposure model
 #' and another one for the weighted linear model.
 #'
-#' @param data Dataframe of data.
-#' @param outcome.name Name of outcome variable.
-#' @param exposure.name Name of exposure variable.
-#' @param confound.names Name of confound variable.
+#' @inheritParams backdr_out_np
 #'
-#' @importFrom formulaic create.formula
 #' @importFrom stats formula lm glm fitted predict
 #' @importFrom geepack geeglm
 #'
 #' @seealso backdr_exp
 #'
-#' @return Dataframe of estimates
+#' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-backdr_exp_gee <- function(data, outcome.name = "Y", exposure.name = "T",
-                           confound.names = "H") {
+backdr_exp_gee <- function(data, formula = Y ~ `T` + H, exposure.name = "T") {
+
   x0 <- "(Intercept)"  # name of intercept used by geeglm
 
-  # exposure model formula
-  eformula <- formulaic::create.formula(outcome.name = exposure.name,
-                                        input.names = confound.names,
-                                        dat = data)
+  # audit and extract the variables
+  var_names <- audit_formula(data, formula, exposure.name)
+  outcome.name <- var_names$outcome.name
+  confound.names <- var_names$extra.names
 
-  # IMPORTANT: geepack::geeglm returns an error when using a formula
-  #            created with formulaic::create.formula! Do it with paste().
+  # exposure model formula
+  eformula <- paste(exposure.name, paste(confound.names, collapse = "+"),
+                    sep = "~")
+  eformula <- formula(eformula)
+
   # weighted linear model formula
-  lformula <- formula(paste(outcome.name, exposure.name, sep = "~"))
+  lformula <- paste(outcome.name, exposure.name, sep = "~")
+  lformula <- formula(lformula)
 
   data$id <- seq_len(nrow(data))  # id column used by geeglm
 

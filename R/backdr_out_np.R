@@ -7,35 +7,30 @@
 #'
 #' @param data Dataframe of raw data.
 #' @param formula Formula representing the model.
-#' @param exposure.name Name of exposure variable.
-#' @param confound.names Name of confound variable. Must have length of 1.
+#' @param exposure.name Name of exposure variable. All other independent
+#' variables in the formula will be assumed to be confounds.
 #' @param att if \code{FALSE} calculate the standardized (unconfounded)
 #' causal effect. If \code{TRUE} calculate the average effect of treatment
 #' on the treated.
 #'
 #' @importFrom dplyr count group_by mutate summarize filter pull relocate
 #' @importFrom rlang .data
-#' @importFrom stats setNames
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 backdr_out_np <- function(data, formula = Y ~ `T` + H, exposure.name = "T",
-                          confound.names = "H", att = FALSE) {
+                          att = FALSE) {
 
-  # must have only one exposure
-  stopifnot(length(exposure.name) == 1)
-
-  # all independent variables must be accounted for
-  ind_vars <- all.vars(rlang::f_rhs(formula))
-  stopifnot(all(ind_vars %in% c(exposure.name, confound.names)))
-
-  # the name of the outcome variable
-  outcome.name <- all.vars(rlang::f_lhs(formula))
+  # audit and extract the variables
+  var_names <- audit_formula(data, formula, exposure.name)
+  outcome.name <- var_names$outcome.name
+  confound.names <- var_names$extra.names
 
   # compute the frequencies, this table is then used for all computations
   summ <- data |>
     count(.data[[outcome.name]], .data[[exposure.name]], .data[[confound.names]]) |>
     mutate(freq = n / sum(n))
+  # total freq mutst equal 1
   stopifnot(abs(sum(summ$freq) - 1) < .Machine$double.eps^0.5)
 
   # the expected value of the outcome given the exposure and confounds
@@ -69,8 +64,7 @@ backdr_out_np <- function(data, formula = Y ~ `T` + H, exposure.name = "T",
     summarize(EY = sum(.data$EY * .data$prob)) |>
     # create the output vector
     arrange(.data[[exposure.name]]) |>
-    pull(EY) |>
-    stats::setNames(c("EY0", "EY1"))
+    pull(EY)
 
   EY0 <- EY[1]
   EY1 <- EY[2]

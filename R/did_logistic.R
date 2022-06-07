@@ -10,9 +10,13 @@
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-did_logistic <- function(data, outcome.name = "Y1", exposure.name = "T",
-                         confound.names = "Y0", names_to = "var", timevar = "time") {
-  stopifnot(length(confound.names) == 1)
+did_logistic <- function(data, formula = Y1 ~ `T` + Y0, exposure.name = "T",
+                         names_to = "var", timevar = "time") {
+
+  # audit and extract the variables
+  var_names <- audit_formula(data, formula, exposure.name)
+  outcome.name <- var_names$outcome.name
+  confound.names <- var_names$extra.names
 
   # convert data to long format
   outcomes <- c(confound.names, outcome.name)
@@ -44,3 +48,7 @@ did_logistic <- function(data, outcome.name = "Y1", exposure.name = "T",
     std.err = NA_real_
   )
 }
+
+#' @rdname did_logistic
+#' @export
+didlogistic <- did_logistic

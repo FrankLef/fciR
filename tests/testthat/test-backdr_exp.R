@@ -1,9 +1,11 @@
 test_that("backdr_exp", {
-  ids <- c("EY0", "EY1")
+  ids <- c("EY0", "EY1", "RD")
 
   data(whatif2dat)
-  out <- backdr_exp(whatif2dat, outcome.name = "vl4", exposure.name = "A",
-                    confound.names = "lvlcont0")
+  out <- backdr_exp(whatif2dat, formula = vl4 ~ A + lvlcont0,
+                    exposure.name = "A")
+  # out <- backdr_exp(whatif2dat, outcome.name = "vl4", exposure.name = "A",
+  #                   confound.names = "lvlcont0")
   out <- out[out$term %in% ids, ]
   # cat("\n", "out", "\n")
   # print(out)
@@ -11,7 +13,7 @@ test_that("backdr_exp", {
 
   data(fci_tbl_06_09)
   target <- fci_tbl_06_09
-  target <- target$est[target$term %in% ids]
+  target <- target[target$term %in% ids, ]
   # cat("\n", "target", "\n")
   # print(target)
   # cat("\n")

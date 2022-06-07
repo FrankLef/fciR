@@ -17,10 +17,13 @@
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 backdr_out_sat <- function(data, formula = Y ~ A * H, exposure.name = "A",
-                           confound.names = "H", att = FALSE) {
+                           att = FALSE) {
 
   # this function works when there is only one confound
-  stopifnot(length(confound.names) == 1)
+  # audit and extract the variables
+  var_names <- audit_formula(data, formula, exposure.name, nvars = 1)
+  outcome.name <- var_names$outcome.name
+  confound.names <- var_names$extra.names
 
   x0 <- "(Intercept)"  # name of intercept used by lm, glm, etc.
 

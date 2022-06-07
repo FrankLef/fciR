@@ -2,40 +2,27 @@
 % Please edit documentation in R/backdr_exp.R
 \name{backdr_exp}
 \alias{backdr_exp}
-\alias{standexp}
-\title{Compute standardized estimates with parametric exposure model}
+\alias{standexp.r}
+\title{Compute Standardized Estimates With Parametric Exposure Model}
 \usage{
-backdr_exp(
-  data,
-  outcome.name = "Y",
-  exposure.name = "T",
-  confound.names = "H",
-  att = FALSE
-)
+backdr_exp(data, formula = Y ~ T + H, exposure.name = "T", att = FALSE)
 
-standexp(
-  data,
-  outcome.name = "Y",
-  exposure.name = "T",
-  confound.names = "H",
-  att = FALSE
-)
+standexp.r(data, formula = Y ~ T + H, exposure.name = "T", att = FALSE)
 }
 \arguments{
-\item{data}{Dataframe of data.}
+\item{data}{Dataframe of raw data.}
 
-\item{outcome.name}{Name of outcome variable.}
+\item{formula}{Formula representing the model.}
 
-\item{exposure.name}{Name of exposure variable.}
-
-\item{confound.names}{Name of confound variable.}
+\item{exposure.name}{Name of exposure variable. All other independent
+variables in the formula will be assumed to be confounds.}
 
 \item{att}{if \code{FALSE} calculate the standardized (unconfounded)
 causal effect. If \code{TRUE} calculate the average effect of treatment
 on the treated.}
 }
 \value{
-Dataframe of estimates using exposure-model standardization
+Dataframe in a useable format for \code{rsample::bootstraps}.
 }
 \description{
 Compute standardized estimates with parametric exposure model.
