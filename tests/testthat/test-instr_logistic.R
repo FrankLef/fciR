@@ -2,8 +2,8 @@ test_that("inst_logistic", {
   ids <- c("RD" = 4, "logRR" = 7, "logOR" = 10)
 
   data("doublewhatifdat")
-  out <- instr_logistic(doublewhatifdat, outcome.name = "VL1", exposure.name = "A",
-              instrument.name = "T")
+  out <- instr_logistic(doublewhatifdat, formula = VL1 ~ A * `T`,
+                        exposure.name = "A")
   out <- out[out$term %in% names(ids), ]
   # cat("\n", "out", "\n")
   # print(out)
@@ -11,12 +11,11 @@ test_that("inst_logistic", {
 
   data(fci_tbl_09_01)
   target <- fci_tbl_09_01
-  target <- target$est[ids, ]
+  target <- target[ids, ]
   # cat("\n", "target", "\n")
   # print(target)
   # cat("\n")
 
   check <- sum(abs(out$estimate - target$.estimate))
-  # skip("TODO")
   expect_lt(check, 0.001)
 })

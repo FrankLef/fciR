@@ -20,7 +20,7 @@
 #'
 #' @return ggplot
 #' @export
-ggp_measures_groups <- function(data, group = "method",
+ggp_measures_groups <- function(data, group = "model",
                                 title = "Title", subtitle = "Subtitle",
                                 vline = list(colors = c("lightseagreen", "violet"),
                                              linetype = "solid", size = 3, alpha = 0.5),
@@ -30,7 +30,7 @@ ggp_measures_groups <- function(data, group = "method",
 
   # filter and order the data
   the_names <- c("RD", "RR", "RR*", "OR")
-  data <- data[data$name %in% the_names, ]
+  data <- data[data$term %in% the_names, ]
 
   ggplot(data,
          aes(x = .data$.estimate, xmin = .data$.lower,

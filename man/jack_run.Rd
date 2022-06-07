@@ -4,14 +4,15 @@
 \alias{jack_run}
 \title{Estimate of Effect Measure and CI With Jacknife (LOO)}
 \usage{
-jack_run(data, func, conf = 0.95, ...)
+jack_run(data, func, alpha = 0.05, ...)
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
 
 \item{func}{Function to estimate the effect measure.}
 
-\item{conf}{Confidence interval width. Default is 0.95.}
+\item{alpha}{Alpha used by percentile to give interval in
+\code{c(alpha, 1- alpha)}.}
 
 \item{...}{Other named arguments for \code{func}.}
 }

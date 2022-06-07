@@ -1,4 +1,3 @@
-
 #' Compute ITT, CACE and ATT from Instrument Variables
 #'
 #' Compute ITT, CACE and ATT from instrument variables.
@@ -6,15 +5,22 @@
 #' See section 9.3 on p. 164 for details. When the tolerance is not met, the
 #'
 #' @param data Dataframe of raw data.
-#' @param outcome.name Name of outcome variable.
-#' @param exposure.name Name of exposure variable.
-#' @param instrument.name Name of instrument variable.
-#' @param tol Numeric > 0. Tolerance used in estimation.
+#' @param formula Formula representing the model.
+#' @param exposure.name Name of exposure variable. The other independent
+#' variables in the formula will be assumed to be the instrument variable.
+#' There can be only one exposure variable and one instrument variable.
+#' @param tol Numeric > 0. Tolerance used in estimation. Default is
+#' .Machine$double.eps^0.5.
 #'
-#' @return Named numeric vector of estimates with ITT and IV (IV=CACE)
+#' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-instr_vars <- function(data, outcome.name = "Y", exposure.name = "A",
-                       instrument.name = "T", tol = .Machine$double.eps^0.5) {
+instr_vars <- function(data, formula = Y ~ A + `T`, exposure.name = "A",
+                       tol = .Machine$double.eps^0.5) {
+
+  # audit and extract the variables
+  var_names <- audit_formula(data, formula, exposure.name, nvars = 1)
+  outcome.name <- var_names$outcome.name
+  instrument.name <- var_names$extra.names
 
   # estimate the ITT
   dat0 <- data[, instrument.name] == 0
@@ -30,5 +36,15 @@ instr_vars <- function(data, outcome.name = "Y", exposure.name = "A",
   } else {
     IV <- NA_real_
   }
-  c("ITT" = ITT, "IV" = IV)
+
+  out <- c("ITT" = ITT, "IV" = IV)
+  data.frame(
+    term = names(out),
+    estimate = unname(out),
+    std.err = NA_real_
+  )
 }
+
+#' @rdname instr_vars
+#' @export
+iv.r <- instr_vars

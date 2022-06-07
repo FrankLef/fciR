@@ -2,13 +2,21 @@
 % Please edit documentation in R/instr_loglinear.R
 \name{instr_loglinear}
 \alias{instr_loglinear}
+\alias{ivlog.r}
 \title{Estimate Effect Using Instrument Variables via Logarithmic fit}
 \usage{
 instr_loglinear(
   data,
-  outcome.name = "Y",
+  formula = Y ~ A * T,
   exposure.name = "A",
-  instrument.name = "T",
+  tol = .Machine$double.eps^0.5,
+  niter = 10L
+)
+
+ivlog.r(
+  data,
+  formula = Y ~ A * T,
+  exposure.name = "A",
   tol = .Machine$double.eps^0.5,
   niter = 10L
 )
@@ -16,13 +24,14 @@ instr_loglinear(
 \arguments{
 \item{data}{Dataframe of raw data.}
 
-\item{outcome.name}{Name of outcome variable.}
+\item{formula}{Formula representing the model.}
 
-\item{exposure.name}{Name of exposure variable.}
+\item{exposure.name}{Name of exposure variable. The other independent
+variables in the formula will be assumed to be the instrument variable.
+There can be only one exposure variable and one instrument variable.}
 
-\item{instrument.name}{Name of instrument variable.}
-
-\item{tol}{Numeric > 0. Tolerance used in estimation.}
+\item{tol}{Numeric > 0. Tolerance used in estimation. Default is
+.Machine$double.eps^0.5.}
 
 \item{niter}{Number of iterations}
 }

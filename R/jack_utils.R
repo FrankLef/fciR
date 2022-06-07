@@ -12,15 +12,14 @@
 #'
 #' @return Numeric vector with estimates and confidence interval.
 #' @export
-jack_ci <- function(x, conf = 0.95) {
+jack_ci <- function(x, alpha = 0.05) {
   n <- length(x)
   nsample <- n - 1
   m <- mean(x)
   v <- (nsample / n) * sum((x - m)^2)
   se <- sqrt(v)
-  ci <- stats::qt(conf, df = nsample)
-  c("est" = m, "se" = se, "conf" = conf,
-    "lci" = m - ci * se, "uci" = m + ci * se)
+  ci <- qt(1 - alpha, df = nsample)
+  c(".lower" = m - ci * se, ".estimate" = m, ".upper" = m + ci * se)
 }
 
 
@@ -41,20 +40,29 @@ jack_ci <- function(x, conf = 0.95) {
 #'
 #' @return Dataframe of estimates with confidence interval.
 #' @export
-jack_run <- function(data, func, conf = 0.95, ...) {
+jack_run <- function(data, func, alpha = 0.05, ...) {
   # get the leave-one-out samples
   the_samples <- rsample::loo_cv(data)
 
   # estimates the effect measures
   the_results <- purrr::map_dfr(.x = the_samples$splits, .f = function(x) {
-    df <- rsample::analysis(x)
-    func(df, ...)
+    dat <- rsample::analysis(x)
+    df <- func(dat, ...)
+    out <- c(df$estimate)
+    names(out) <- df$term
+    out
   })
 
-  # compute the confidence intervals
-  purrr::map_dfr(.x = the_results, .f = ~jack_ci(., conf = conf), .id = "name")
-}
+  # compute the confidence interval for each term
+  out <- purrr::map_dfr(.x = the_results, .f = ~jack_ci(., alpha = alpha), .id = "term")
 
+  # create the output dataframe
+  data.frame(
+    out,
+    ".alpha" = alpha,
+    ".method" = "qt"
+  )
+}
 
 
 #' Estimate of Effect Measure and CI With Jacknife (LOO)
@@ -70,7 +78,8 @@ jack_run <- function(data, func, conf = 0.95, ...) {
 #'
 #' @param data Dataframe of raw data.
 #' @param func Function to estimate the effect measure.
-#' @param conf Confidence interval width. Default is 0.95.
+#' @param alpha Alpha used by percentile to give interval in
+#' \code{c(alpha, 1- alpha)}.
 #' @param inv Choice of inverse function to apply to the effect measure
 #'  \code{exp} will exponentiate the result (Default), \code{expit} will apply
 #'  the inverse logit and \code{none} will do nothing (identity function).
@@ -82,16 +91,20 @@ jack_run <- function(data, func, conf = 0.95, ...) {
 #'
 #' @return Dataframe of estimates with confidence interval.
 #' @export
-jack_est <- function(data, func, conf = 0.95,
+jack_est <- function(data, func, alpha = 0.05,
                      inv = c("exp", "expit", "none"),
                      evars = c("standard", "modifier", "logit"),
                      ...) {
   inv <- match.arg(inv)
   evars <- match.arg(evars)
 
-  out <- jack_run(data = data, func = func, conf = conf, ...)
+  out <- jack_run(data = data, func = func, alpha = alpha, ...)
 
   # inverse transform the result
   vars <- effect_vars(evars = evars)
   effect_inv(data = out, inv = inv, vars = vars)
 }
+
+#' @rdname jack_est
+#' @export
+jackiv.r <- jack_est

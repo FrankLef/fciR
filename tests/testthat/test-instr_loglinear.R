@@ -2,8 +2,8 @@ test_that("inst_loglinear", {
   ids <- c("RD" = 3, "logRR" = 6, "logOR" = 9)
 
   data("doublewhatifdat")
-  out <- instr_loglinear(doublewhatifdat, outcome.name = "VL1", exposure.name = "A",
-              instrument.name = "T")
+  out <- instr_loglinear(doublewhatifdat, formula = VL1 ~ A * `T`,
+                         exposure.name = "A")
   out <- out[out$term %in% names(ids), ]
   # cat("\n", "out", "\n")
   # print(out)

@@ -2,19 +2,21 @@
 % Please edit documentation in R/frontdr.R
 \name{frontdr_np}
 \alias{frontdr_np}
-\title{Estimate the effect using Front-Door Method}
+\alias{frontdoor.r}
+\title{Estimate the Effect Using the Front-Door Method}
 \usage{
-frontdr_np(data, outcome.name = "Y", exposure.name = "A", surrogate.name = "S")
+frontdr_np(data, formula = Y ~ A + S, exposure.name = "A")
+
+frontdoor.r(data, formula = Y ~ A + S, exposure.name = "A")
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
 
-\item{outcome.name}{Name of outcome variable.}
+\item{formula}{Formula representing the model.}
 
-\item{exposure.name}{Name of exposure variable which is treated as a
-sufficient confounder. See assumption 5 of section 8.2.}
-
-\item{surrogate.name}{Name of surrogate variable.}
+\item{exposure.name}{Name of exposure variable. The other independent
+variable in the formula will be assumed to be the surrogate. there can be
+only one exposure and one surrogate.}
 }
 \value{
 Dataframe in a useable format for \code{rsample::bootstraps}.
@@ -24,7 +26,5 @@ Estimate the effect using Front-door method.
 }
 \details{
 Estimate the effect using Front-door method. The exposure variable is used
-as a confounder in the front-door method and thus, it is called
-\code{confound.names} in the arguments, as described by assumption 5
-in section 8.2. See section 8.3 for details on the algorithm.
+as a confounder in the front-door method.
 }

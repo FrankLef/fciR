@@ -4,12 +4,13 @@
 \alias{jack_ci}
 \title{Compute the Confidence Interval Estimated with Jacknife}
 \usage{
-jack_ci(x, conf = 0.95)
+jack_ci(x, alpha = 0.05)
 }
 \arguments{
 \item{x}{Numerical vector of effect measure}
 
-\item{conf}{Confidence interval width. Default is 0.95.}
+\item{alpha}{Alpha used by percentile to give interval in
+\code{c(alpha, 1- alpha)}.}
 }
 \value{
 Numeric vector with estimates and confidence interval.

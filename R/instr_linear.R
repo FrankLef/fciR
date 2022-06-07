@@ -6,23 +6,20 @@
 #'
 #' @inheritParams instr_vars
 #'
-#' @importFrom formulaic create.formula
 #' @importFrom stats lm glm fitted predict
 #' @importFrom AER ivreg
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-instr_linear <- function(data, outcome.name = "Y", exposure.name = "A",
-                        instrument.name = "T", tol = .Machine$double.eps^0.5) {
+instr_linear <- function(data, formula = Y ~ A * `T`, exposure.name = "A",
+                         tol = .Machine$double.eps^0.5) {
 
-  # fit the model
-  input.names <- c(exposure.name, instrument.name)
-  interactions <- list(c(exposure.name, instrument.name))
-  a_formula <- formulaic::create.formula(outcome.name = outcome.name,
-                                         input.names = input.names,
-                                         interactions = interactions,
-                                         dat = data)
-  mod.out <- glm(formula = a_formula, data = data, family = "gaussian")
+  # audit and extract the variables
+  var_names <- audit_formula(data, formula, exposure.name, nvars = 1)
+  outcome.name <- var_names$outcome.name
+  instrument.name <- var_names$extra.names
+
+  mod.out <- glm(formula = formula, data = data, family = "gaussian")
 
   # estimate D eta
   Deta <- predict(mod.out, type = "link")
@@ -47,3 +44,7 @@ instr_linear <- function(data, outcome.name = "Y", exposure.name = "A",
     std.err = NA_real_
   )
 }
+
+#' @rdname instr_linear
+#' @export
+ividentity.r <- instr_linear

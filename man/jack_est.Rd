@@ -2,12 +2,22 @@
 % Please edit documentation in R/jack_utils.R
 \name{jack_est}
 \alias{jack_est}
+\alias{jackiv.r}
 \title{Estimate of Effect Measure and CI With Jacknife (LOO)}
 \usage{
 jack_est(
   data,
   func,
-  conf = 0.95,
+  alpha = 0.05,
+  inv = c("exp", "expit", "none"),
+  evars = c("standard", "modifier", "logit"),
+  ...
+)
+
+jackiv.r(
+  data,
+  func,
+  alpha = 0.05,
   inv = c("exp", "expit", "none"),
   evars = c("standard", "modifier", "logit"),
   ...
@@ -18,7 +28,8 @@ jack_est(
 
 \item{func}{Function to estimate the effect measure.}
 
-\item{conf}{Confidence interval width. Default is 0.95.}
+\item{alpha}{Alpha used by percentile to give interval in
+\code{c(alpha, 1- alpha)}.}
 
 \item{inv}{Choice of inverse function to apply to the effect measure
 \code{exp} will exponentiate the result (Default), \code{expit} will apply

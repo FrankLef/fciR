@@ -7,30 +7,27 @@
 #' @inheritParams instr_vars
 #' @param niter Number of iterations
 #'
-#' @importFrom formulaic create.formula
 #' @importFrom stats lm glm fitted predict
 #' @importFrom AER ivreg
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-instr_logistic <- function(data, outcome.name = "Y", exposure.name = "A",
-                        instrument.name = "T", tol = .Machine$double.eps^0.5,
-                        niter = 10L) {
-  stopifnot(tol >= .Machine$double.eps^0.5)
+instr_logistic <- function(data, formula = Y ~ A * `T`, exposure.name = "A",
+                           tol = .Machine$double.eps^0.5,
+                           niter = 10L) {
   stopifnot(niter >= 1, niter <= 20)
+
+  # audit and extract the variables
+  var_names <- audit_formula(data, formula, exposure.name, nvars = 1)
+  outcome.name <- var_names$outcome.name
+  instrument.name <- var_names$extra.names
 
   A <- data[, exposure.name]
   Z <- data[, instrument.name]
 
 
   # Estimate D eta
-  input.names <- c(exposure.name, instrument.name)
-  interactions <- list(c(exposure.name, instrument.name))
-  a_formula <- formulaic::create.formula(outcome.name = outcome.name,
-                                         input.names = input.names,
-                                         interactions = interactions,
-                                         dat = data)
-  mod.out <- glm(formula = a_formula, data = data, family = "binomial")
+  mod.out <- glm(formula = formula, data = data, family = "binomial")
   Deta <- predict(mod.out, type = "link")
 
   # initialize beta_t to keep track of results
@@ -70,3 +67,7 @@ instr_logistic <- function(data, outcome.name = "Y", exposure.name = "A",
     std.err = NA_real_
   )
 }
+
+#' @rdname instr_logistic
+#' @export
+ivlogit.r <- instr_logistic

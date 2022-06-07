@@ -1,22 +1,24 @@
-#' Estimate the effect using Front-Door Method
+#' Estimate the Effect Using the Front-Door Method
 #'
 #' Estimate the effect using Front-door method.
 #'
 #' Estimate the effect using Front-door method. The exposure variable is used
-#' as a confounder in the front-door method and thus, it is called
-#' \code{confound.names} in the arguments, as described by assumption 5
-#' in section 8.2. See section 8.3 for details on the algorithm.
+#' as a confounder in the front-door method.
 #'
 #' @param data Dataframe of raw data.
-#' @param outcome.name Name of outcome variable.
-#' @param exposure.name Name of exposure variable which is treated as a
-#' sufficient confounder. See assumption 5 of section 8.2.
-#' @param surrogate.name Name of surrogate variable.
+#' @param formula Formula representing the model.
+#' @param exposure.name Name of exposure variable. The other independent
+#' variable in the formula will be assumed to be the surrogate. there can be
+#' only one exposure and one surrogate.
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-frontdr_np <- function(data, outcome.name = "Y", exposure.name = "A",
-                       surrogate.name = "S") {
+frontdr_np <- function(data, formula = Y ~ A + S, exposure.name = "A") {
+
+  # audit and extract the variables
+  var_names <- audit_formula(data, formula, exposure.name, nvars = 1)
+  outcome.name <- var_names$outcome.name
+  surrogate.name <- var_names$extra.names
 
   # P(A=1)
   probA1 <- mean(data[, exposure.name])
@@ -111,3 +113,7 @@ frontdr_np <- function(data, outcome.name = "Y", exposure.name = "A",
     std.err = NA_real_
   )
 }
+
+#' @rdname frontdr_np
+#' @export
+frontdoor.r <- frontdr_np

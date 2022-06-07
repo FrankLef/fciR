@@ -2,8 +2,7 @@ test_that("frontdr_np", {
 
   data(fci_sim_08_01)
 
-  out <- frontdr_np(fci_sim_08_01, outcome.name = "Y", exposure.name = "A",
-                    surrogate.name = "S")
+  out <- frontdr_np(fci_sim_08_01, formula = Y ~ A + S, exposure.name = "A")
   # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")
@@ -35,8 +34,7 @@ test_that("frontdr_np: exercise 8.3", {
 
   df <- sim8ex3()
 
-  out <- frontdr_np(df, outcome.name = "Y", exposure.name = "A",
-                    surrogate.name = "S")
+  out <- frontdr_np(fci_sim_08_01, formula = Y ~ A + S, exposure.name = "A")
   # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")

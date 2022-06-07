@@ -6,7 +6,7 @@
 \usage{
 ggp_measures_groups(
   data,
-  group = "method",
+  group = "model",
   title = "Title",
   subtitle = "Subtitle",
   vline = list(colors = c("lightseagreen", "violet"), linetype = "solid", size = 3,
