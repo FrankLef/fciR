@@ -94,6 +94,7 @@ effect_measures <- function(val0, val1, log = TRUE) {
 #' @return Named character vector.
 #' @export
 effect_vars <- function(evars = c("standard", "modifier", "logit")) {
+  .Deprecated(new = "effect_transf")
   evars <- match.arg(evars)
 
   switch(evars,
@@ -133,6 +134,7 @@ effect_vars <- function(evars = c("standard", "modifier", "logit")) {
 #' @return Inversed transform of input.
 #' @export
 effect_inv <- function(data, inv = c("exp", "expit", "none"), vars) {
+  .Deprecated(new = "effect_transf")
   inv <- match.arg(inv)
 
   if (inv == "exp") {
@@ -164,6 +166,7 @@ effect_inv <- function(data, inv = c("exp", "expit", "none"), vars) {
 effect_exp <- function(data,
                       vars = c("RR" = "logRR", "RR*"  = "logRR*",
                                "OR" = "logOR")) {
+  .Deprecated(new = "effect_transf")
   is_matched <- vars %in% data$term
   if (any(is_matched)) {
     # nomatch = 0 to exclude unmatched items
@@ -192,6 +195,7 @@ effect_exp <- function(data,
 #' @return Dataframe of converted effects measures.
 #' @export
 effect_expit <- function(data, vars = c("P" = "logitP")) {
+  .Deprecated(new = "effect_transf")
   is_matched <- vars %in% data$term
   if (any(is_matched)) {
     # nomatch = 0 to exclude unmatched items
