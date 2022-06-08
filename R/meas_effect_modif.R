@@ -15,7 +15,7 @@
 #' @export
 meas_effect_modif <- function(data, formula = Y ~ `T` + M, exposure.name = "T") {
 
-  var_names <- audit_formula(data, formula, exposure.name, 1)
+  var_names <- audit_formula(data, formula, exposure.name, nvars = 1)
   outcome.name <- var_names$outcome.name
   modifier.name <- var_names$extra.names
 

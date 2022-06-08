@@ -6,6 +6,8 @@
 #' 6, section 6.1.2, for details.
 #'
 #' @inheritParams backdr_out_np
+#' @param family Name of the model's family. Must be one of
+#' \code{c("binomial", "poisson", "gaussian")}. default is \code{"binomial"}.
 #'
 #' @importFrom dplyr count group_by mutate summarize filter pull relocate
 #' @importFrom stats glm fitted predict
@@ -16,14 +18,18 @@
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-backdr_out <- function(data, formula = Y ~ `T` + A + H, exposure.name = "T") {
+backdr_out <- function(data, formula = Y ~ `T` + A + H, exposure.name = "T",
+                       family = c("binomial", "poisson", "gaussian")) {
+
+  # the model's family
+  family <- match.arg(family)
+
+  x0 <- "(Intercept)"  # name of intercept used by lm, glm, etc.
 
   # audit and extract the variables
   audit_formula(data, formula, exposure.name)
 
-  x0 <- "(Intercept)"  # name of intercept used by lm, glm, etc.
-
-  fit <- glm(formula = formula, family = "binomial", data = data)
+  fit <- glm(formula = formula, family = family, data = data)
 
   # counterfactual dataset with everyone untreated
   dat0 <- data

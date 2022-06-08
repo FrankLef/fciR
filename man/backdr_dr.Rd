@@ -5,9 +5,19 @@
 \alias{standdr}
 \title{Compute the doubly robust standardized estimates}
 \usage{
-backdr_dr(data, formula = Y ~ T + A + H, exposure.name = "T")
+backdr_dr(
+  data,
+  formula = Y ~ T + A + H,
+  exposure.name = "T",
+  family = c("binomial", "poisson", "gaussian")
+)
 
-standdr(data, formula = Y ~ T + A + H, exposure.name = "T")
+standdr(
+  data,
+  formula = Y ~ T + A + H,
+  exposure.name = "T",
+  family = c("binomial", "poisson", "gaussian")
+)
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
@@ -16,6 +26,9 @@ standdr(data, formula = Y ~ T + A + H, exposure.name = "T")
 
 \item{exposure.name}{Name of exposure variable. All other independent
 variables in the formula will be assumed to be confounds.}
+
+\item{family}{Name of the model's family. Must be one of
+\code{c("binomial", "poisson", "gaussian")}. default is \code{"binomial"}.}
 }
 \value{
 Dataframe in a useable format for \code{rsample::bootstraps}.
