@@ -5,16 +5,16 @@ test_that("backdr_out_sat", {
   out <- backdr_out_sat(whatifdat, formula = Y ~ A * H,
                        exposure.name = "A")
   out <- out[out$term %in% ids, ]
-  cat("\n", "out", "\n")
-  print(out)
-  cat("\n")
+  # cat("\n", "out", "\n")
+  # print(out)
+  # cat("\n")
 
   data(fci_tbl_06_01)
   target <- fci_tbl_06_01
   target <- target[target$term %in% ids, ]
-  cat("\n", "target", "\n")
-  print(target)
-  cat("\n")
+  # cat("\n", "target", "\n")
+  # print(target)
+  # cat("\n")
 
   check <- sum(abs(out$estimate - target$.estimate))
   expect_lt(check, 0.005)

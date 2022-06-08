@@ -9,8 +9,7 @@ boot_est(
   func,
   times = 1000,
   alpha = 0.05,
-  inv = c("exp", "expit", "none"),
-  evars = c("standard", "modifier", "logit"),
+  transf = c("identity", "exp", "expit"),
   ...
 )
 }
@@ -24,18 +23,13 @@ boot_est(
 \item{alpha}{Alpha used by percentile to give interval in
 \code{c(alpha, 1- alpha)}.}
 
-\item{inv}{Choice of inverse function to apply to the effect measure
-\code{exp} will exponentiate the result (Default), \code{expit} will apply
-the inverse logit and \code{none} will do nothing (identity function).}
-
-\item{evars}{String. Should one of \code{c("standard", "modifier", "logit")}.
-Default value is \code{"standard"}. It is the set of terms to use with the
-inverse function defined by \code{inv}.}
+\item{transf}{Type of conversion. Must be one of
+\code{c("identity", "exp", "expit")}, default is \code{identity}.}
 
 \item{...}{Other named arguments for \code{func}.}
 }
 \value{
-Dataframe of estimates with confidence interval..
+Dataframe of estimates with confidence interval.
 }
 \description{
 Get estimate and CI using a function as input.
@@ -43,4 +37,7 @@ Get estimate and CI using a function as input.
 \details{
 Boostrap with a function and extra arguments as input. The function is called
 \code{statistic} to remain constant with \code{boot::boot}.
+}
+\seealso{
+effect_transf
 }

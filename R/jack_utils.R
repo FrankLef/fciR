@@ -80,29 +80,23 @@ jack_run <- function(data, func, alpha = 0.05, ...) {
 #' @param func Function to estimate the effect measure.
 #' @param alpha Alpha used by percentile to give interval in
 #' \code{c(alpha, 1- alpha)}.
-#' @param inv Choice of inverse function to apply to the effect measure
-#'  \code{exp} will exponentiate the result (Default), \code{expit} will apply
-#'  the inverse logit and \code{none} will do nothing (identity function).
-#' @param evars String. Should one of \code{c("standard", "modifier", "logit")}.
-#' Default value is \code{"standard"}.
+#' @param transf Type of conversion. Must be one of
+#' \code{c("identity", "exp", "expit")}, default is \code{identity}.
 #' @param ... Other named arguments for \code{func}.
 #'
-#' @seealso jack_run jack_ci
+#' @seealso jack_run jack_ci effect_transf
 #'
 #' @return Dataframe of estimates with confidence interval.
 #' @export
 jack_est <- function(data, func, alpha = 0.05,
-                     inv = c("exp", "expit", "none"),
-                     evars = c("standard", "modifier", "logit"),
-                     ...) {
-  inv <- match.arg(inv)
-  evars <- match.arg(evars)
+                     transf = c("identity", "exp", "expit"), ...) {
+  stopifnot(alpha > .Machine$double.eps^0.5, alpha < 0.5)
+  transf <- match.arg(transf)
 
   out <- jack_run(data = data, func = func, alpha = alpha, ...)
 
   # inverse transform the result
-  vars <- effect_vars(evars = evars)
-  effect_inv(data = out, inv = inv, vars = vars)
+  effect_transf(data = out, transf = transf)
 }
 
 #' @rdname jack_est

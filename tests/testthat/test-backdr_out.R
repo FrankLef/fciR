@@ -24,7 +24,7 @@ test_that("backdr_out", {
 test_that("backdr_out: Bootstrapping", {
   data(whatif2dat)
   out <- boot_est(data = whatif2dat, func = backdr_out,
-                  times = 100, alpha = 0.05,
+                  times = 100, alpha = 0.05, transf = "exp",
                   formula = vl4 ~ A + lvlcont0, exposure.name ="A")
   # cat("\n", "out", "\n")
   # print(out)

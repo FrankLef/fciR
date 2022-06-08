@@ -15,7 +15,7 @@ df_log$.estimate[ids] <- log(df_log$.estimate[ids])
 df_log$.upper[ids] <- log(df_log$.upper[ids])
 
 test_that("effect_transf: log", {
-  out <- effect_transf(df_log, type = "exp")
+  out <- effect_transf(df_log, transf = "exp")
   # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")
@@ -45,12 +45,23 @@ df_expit <- data.frame(
   )
 
 test_that("effect_transf: logit", {
-  out <- effect_transf(df_logit, type = "expit")
+  out <- effect_transf(df_logit, transf = "expit")
   # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")
 
   target <- df_expit
+
+  expect_identical(out, target)
+})
+
+test_that("effect_transf: identity", {
+  out <- effect_transf(df_logit)
+  # cat("\n", "out", "\n")
+  # print(out)
+  # cat("\n")
+
+  target <- df_logit
 
   expect_identical(out, target)
 })

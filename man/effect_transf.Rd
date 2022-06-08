@@ -4,13 +4,13 @@
 \alias{effect_transf}
 \title{Convert Dataframe of Effect Measures to Its Inverse}
 \usage{
-effect_transf(data, type = c("identity", "exp", "expit"))
+effect_transf(data, transf = c("identity", "exp", "expit"))
 }
 \arguments{
 \item{data}{Dataframe of effect measures.}
 
-\item{type}{Type of conversion. Must be one of
-\code{c("identity", "exp", "expit")}, default is \code{identity}}
+\item{transf}{Type of conversion. Must be one of
+\code{c("identity", "exp", "expit")}, default is \code{identity}.}
 }
 \value{
 Data.frame

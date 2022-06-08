@@ -6,29 +6,24 @@
 #' \code{statistic} to remain constant with \code{boot::boot}.
 #'
 #' @inheritParams boot_run
-#' @param inv Choice of inverse function to apply to the effect measure
-#'  \code{exp} will exponentiate the result (Default), \code{expit} will apply
-#'  the inverse logit and \code{none} will do nothing (identity function).
-#' @param evars String. Should one of \code{c("standard", "modifier", "logit")}.
-#' Default value is \code{"standard"}. It is the set of terms to use with the
-#' inverse function defined by \code{inv}.
+#' @param transf Type of conversion. Must be one of
+#' \code{c("identity", "exp", "expit")}, default is \code{identity}.
 #' @param ... Other named arguments for \code{func}.
 #'
-#' @return Dataframe of estimates with confidence interval..
+#' @seealso effect_transf
+#'
+#' @return Dataframe of estimates with confidence interval.
 #' @export
 boot_est <- function(data, func, times = 1000, alpha = 0.05,
-                     inv = c("exp", "expit", "none"),
-                     evars = c("standard", "modifier", "logit"),
-                     ...) {
+                     transf = c("identity", "exp", "expit"), ...) {
   stopifnot(times >= 1, alpha > .Machine$double.eps^0.5, alpha < 0.5)
-  inv <- match.arg(inv)
-  evars <- match.arg(evars)
+
+  transf <- match.arg(transf)
 
   out <- boot_run(data = data, func = func, times = times, alpha = alpha, ...)
 
-  # compute the 4 effect measures
-  vars <- effect_vars(evars = evars)
-  effect_inv(data = out, inv = inv, vars = vars)
+  # transform the results
+  effect_transf(data = out, transf = transf)
 }
 
 #' Bootstrap and generate a dataframe of estimates with CI

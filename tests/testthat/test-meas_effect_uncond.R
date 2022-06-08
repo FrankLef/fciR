@@ -30,7 +30,7 @@ test_that("meas_effect_uncond: Boot", {
   data <- whatifdat
 
   out <- boot_est(data, func = meas_effect_uncond, times = 100, alpha = 0.05,
-                  formula = Y ~ `T`)
+                  transf = "exp", formula = Y ~ `T`)
   # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")

@@ -5,23 +5,9 @@
 \alias{jackiv.r}
 \title{Estimate of Effect Measure and CI With Jacknife (LOO)}
 \usage{
-jack_est(
-  data,
-  func,
-  alpha = 0.05,
-  inv = c("exp", "expit", "none"),
-  evars = c("standard", "modifier", "logit"),
-  ...
-)
+jack_est(data, func, alpha = 0.05, transf = c("identity", "exp", "expit"), ...)
 
-jackiv.r(
-  data,
-  func,
-  alpha = 0.05,
-  inv = c("exp", "expit", "none"),
-  evars = c("standard", "modifier", "logit"),
-  ...
-)
+jackiv.r(data, func, alpha = 0.05, transf = c("identity", "exp", "expit"), ...)
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
@@ -31,12 +17,8 @@ jackiv.r(
 \item{alpha}{Alpha used by percentile to give interval in
 \code{c(alpha, 1- alpha)}.}
 
-\item{inv}{Choice of inverse function to apply to the effect measure
-\code{exp} will exponentiate the result (Default), \code{expit} will apply
-the inverse logit and \code{none} will do nothing (identity function).}
-
-\item{evars}{String. Should one of \code{c("standard", "modifier", "logit")}.
-Default value is \code{"standard"}.}
+\item{transf}{Type of conversion. Must be one of
+\code{c("identity", "exp", "expit")}, default is \code{identity}.}
 
 \item{...}{Other named arguments for \code{func}.}
 }
@@ -55,5 +37,5 @@ The output is transformed with inverse function when required. See section
 9.3 of the book for more details.
 }
 \seealso{
-jack_run jack_ci
+jack_run jack_ci effect_transf
 }

@@ -48,7 +48,6 @@ test_that("jack_est", {
   if (!is_skip) {
     data(doublewhatifdat)
     out <- jack_est(doublewhatifdat, func = fciR::instr_linear, alpha = 0.05,
-                    inv = "none", evars = "standard",
                     formula = VL1 ~ A + `T`, exposure.name = "A")
     out <- out[out$term %in% names(ids), ]
     # cat("\n", "out", "\n")

@@ -35,8 +35,7 @@ test_that("meas_effect_modif: Boot", {
   df <- recovery
 
   out <- boot_est(data = recovery, func = meas_effect_modif,
-                  times = 100, alpha = 0.05,
-                  inv = "exp", evars = "modifier",
+                  times = 100, alpha = 0.05, transf = "exp",
                   formula = Y ~ `T` + M, exposure.name = "T")
   # cat("\n", "out", "\n")
   # print(out)

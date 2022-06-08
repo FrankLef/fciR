@@ -7,23 +7,23 @@
 #'
 #'
 #' @param data Dataframe of effect measures.
-#' @param type Type of conversion. Must be one of
-#' \code{c("identity", "exp", "expit")}, default is \code{identity}
+#' @param transf Type of conversion. Must be one of
+#' \code{c("identity", "exp", "expit")}, default is \code{identity}.
 #'
 #' @return Data.frame
 #' @export
-effect_transf <- function(data, type = c("identity", "exp", "expit")) {
-  type = match.arg(type)
+effect_transf <- function(data, transf = c("identity", "exp", "expit")) {
+  transf = match.arg(transf)
 
-  if (type == "identity") {
+  if (transf == "identity") {
     # do nothing if identity
-    out <- identity(data)
-  } else if (type == "exp") {
+    out <- data
+  } else if (transf == "exp") {
     out <- effect_transf_proc(data, prefix = "log")
-  } else if (type == "expit") {
+  } else if (transf == "expit") {
     out <- effect_transf_proc(data, prefix = "logit")
   } else {
-    msg <- sprintf("%s is an invalid type.", type)
+    msg <- sprintf("%s is an invalid transformation.", transf)
     stop(msg)
   }
 
@@ -77,7 +77,7 @@ effect_transf_proc <- function(data, prefix = c("log", "logit")) {
       .upper[is_logit] <- plogis(.upper[is_logit])
     })
   } else {
-    msg <- sprintf("%s is an invalid prefix.", type)
+    msg <- sprintf("%s is an invalid prefix.", prefix)
     stop(msg)
   }
 
