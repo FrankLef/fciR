@@ -4,19 +4,21 @@
 #'
 #' The formula must always be in form \code{Y ~ `T` + M}, that is with only
 #' 2 predictors: \code{T} as the treatment variable and \code{M} as the modifier
+#' variable. The exposure variable is identified by the argument
+#' \code{exposure.name}, the other variable is assumed to be the modifier
 #' variable.
 #'
-#' @param data Dataframe of raw data.
-#' @param outcome.name Name of outcome variable.
-#' @param exposure.name Name of exposure variable.
-#' @param modifier.name Name of modifier variable.
+#' @inheritParams meas_effect_cond
 #'
-#' @importFrom formulaic create.formula
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-meas_effect_modif <- function(data, outcome.name = "Y", exposure.name = "T",
-                              modifier.name = "M") {
+meas_effect_modif <- function(data, formula = Y ~ `T` + M, exposure.name = "T") {
+
+  var_names <- audit_formula(data, formula, exposure.name, 1)
+  outcome.name <- var_names$outcome.name
+  modifier.name <- var_names$extra.names
+
 
   # estimate the expected potential outcomes
   Y_condT0_condM0 <- data[, exposure.name] == 0 & data[, modifier.name] == 0

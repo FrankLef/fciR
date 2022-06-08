@@ -24,14 +24,16 @@ meas_effect_cond <- function(data, formula = Y ~ `T` + A + H,
                              exposure.name = "T", condition.names = NULL,
                              family = c("binomial", "poisson", "gaussian")) {
 
-  # independent variables from the formula
-  indvars <- all.vars(rlang::f_rhs(formula))
-  # if condition.names is NULL then use all independent variables
-  # EXCLUDING exposure
-  if (is.null(condition.names)) condition.names <- indvars[indvars != exposure.name]
-  stopifnot(all(condition.names %in% indvars), exposure.name %in% indvars)
   # name of intercept used by lm, glm, etc.
   x0 <- "(Intercept)"
+
+  var_names <- audit_formula(data, formula, exposure.name)
+  outcome.name <- var_names$outcome.name
+  confound.names <- var_names$extra.names  # this includes the condition.name
+
+  # if condition.names is NULL then use all independent variables
+  # EXCLUDING exposure
+  if (is.null(condition.names)) condition.names <- confound.names
 
 
   # get the family

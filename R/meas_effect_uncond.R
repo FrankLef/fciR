@@ -10,10 +10,8 @@
 #'    bootstrapping
 #' Assumptions: We assume that (3.2) holds but not (3.1)
 #' See p. 45 and 46 for more details.
-#' @param data Dataframe of raw data.
-#' @param formula The model formula.
+#' @inheritParams meas_effect_cond
 #'
-#' @importFrom rlang f_rhs .data
 #' @importFrom stats glm coef plogis
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
@@ -21,8 +19,9 @@
 meas_effect_uncond <- function(data, formula = Y ~ `T`) {
 
   x0 <- "(Intercept)"  # name of intercept used by lm, glm, etc.
-  outvars <- all.vars(rlang::f_lhs(formula))  # the outcome variable
-  indvars <- all.vars(rlang::f_rhs(formula))  # the independent variables
+  outcome.name <- all.vars(formula[[2]])  # the outcome variable
+  input.names <- all.vars(formula[[3]])  # the independent variables
+
 
   # estimate the conditional probabilities
   coefs <- coef(glm(formula = formula, family = "gaussian", data = data))
@@ -34,11 +33,11 @@ meas_effect_uncond <- function(data, formula = Y ~ `T`) {
 
   # use loglinear model to estimate the log relative risk
   coefs <- coef(glm(formula = formula, family = "poisson", data = data))
-  logrr <- coefs[indvars]
+  logrr <- coefs[input.names]
 
   # prepare data to estimate the log other relative risk
-  ystar <- 1 - data[, outvars]
-  xstar <- 1 - data[, indvars]
+  ystar <- 1 - data[, outcome.name]
+  xstar <- 1 - data[, input.names]
 
   # use loglinear model to estimate the log other relative risk
   coefs <- coef(glm(ystar ~ xstar, family = "poisson"))
@@ -46,7 +45,7 @@ meas_effect_uncond <- function(data, formula = Y ~ `T`) {
 
   # use logistic model to estimate the log of other risk
   coefs <- coef(glm(formula = formula, family = "binomial", data = data))
-  logor <- coefs[indvars]
+  logor <- coefs[input.names]
 
   # return the results
   out <- c(p0, p1, rd, logrr, logrrstar, logor)

@@ -5,23 +5,16 @@
 \alias{boot}
 \title{Compute estimates of the association measures for 2 strata}
 \usage{
-meas_effect_modif(
-  data,
-  outcome.name = "Y",
-  exposure.name = "T",
-  modifier.name = "M"
-)
+meas_effect_modif(data, formula = Y ~ T + M, exposure.name = "T")
 
-boot(data, outcome.name = "Y", exposure.name = "T", modifier.name = "M")
+boot(data, formula = Y ~ T + M, exposure.name = "T")
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
 
-\item{outcome.name}{Name of outcome variable.}
+\item{formula}{The model formula.}
 
-\item{exposure.name}{Name of exposure variable.}
-
-\item{modifier.name}{Name of modifier variable.}
+\item{exposure.name}{Name of the exposure variable.}
 }
 \value{
 Dataframe in a useable format for \code{rsample::bootstraps}.
@@ -32,5 +25,7 @@ Compute estimates of the association measures for 2 strata.
 \details{
 The formula must always be in form \code{Y ~ `T` + M}, that is with only
 2 predictors: \code{T} as the treatment variable and \code{M} as the modifier
+variable. The exposure variable is identified by the argument
+\code{exposure.name}, the other variable is assumed to be the modifier
 variable.
 }
