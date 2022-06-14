@@ -9,6 +9,7 @@ boot_est(
   func,
   times = 1000,
   alpha = 0.05,
+  seed = NULL,
   transf = c("identity", "exp", "expit"),
   ...
 )
@@ -22,6 +23,9 @@ boot_est(
 
 \item{alpha}{Alpha used by percentile to give interval in
 \code{c(alpha, 1- alpha)}.}
+
+\item{seed}{Seed for random number generator. If \code{NULL} the seed itself
+is random.}
 
 \item{transf}{Type of conversion. Must be one of
 \code{c("identity", "exp", "expit")}, default is \code{identity}.}

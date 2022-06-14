@@ -14,20 +14,16 @@
 #' @export
 effect_transf <- function(data, transf = c("identity", "exp", "expit")) {
   transf = match.arg(transf)
-
-  if (transf == "identity") {
-    # do nothing if identity
-    out <- data
-  } else if (transf == "exp") {
-    out <- effect_transf_proc(data, prefix = "log")
-  } else if (transf == "expit") {
-    out <- effect_transf_proc(data, prefix = "logit")
-  } else {
-    msg <- sprintf("%s is an invalid transformation.", transf)
-    stop(msg)
-  }
-
-  out
+  switch(
+    transf,
+    "identity" = data,
+    "exp" = effect_transf_proc(data, prefix = "log"),
+    "expit" = effect_transf_proc(data, prefix = "logit"),
+    {
+      msg <- sprintf("%s is an invalid transf value.", transf)
+      stop(msg)
+    }
+  )
 }
 
 #' Convert Dataframe of Effect Measures to Its Inverse
@@ -45,6 +41,10 @@ effect_transf <- function(data, transf = c("identity", "exp", "expit")) {
 #' @return Data.frame
 #' @export
 effect_transf_proc <- function(data, prefix = c("log", "logit")) {
+
+  # cat("\n", "inside effect_transf_proc: START", "\n")
+  # print(data)
+  # cat("\n")
 
   # locate the rows with "^log" and "logit"
   rgx <- paste0("^", prefix, ".+")
@@ -80,6 +80,10 @@ effect_transf_proc <- function(data, prefix = c("log", "logit")) {
     msg <- sprintf("%s is an invalid prefix.", prefix)
     stop(msg)
   }
+
+  # cat("\n", "inside effect_transf_proc: END", "\n")
+  # print(out)
+  # cat("\n")
 
   out
 }

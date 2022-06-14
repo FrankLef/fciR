@@ -11,8 +11,8 @@ fci_tbl_06_01 <- function() {
     .method = "norm")
 }
 
-fci_tbl_06_01 <- fci_tbl_06_01()
-usethis::use_data(fci_tbl_06_01, overwrite = TRUE)
+# fci_tbl_06_01 <- fci_tbl_06_01()
+# usethis::use_data(fci_tbl_06_01, overwrite = TRUE)
 
 #' Create data for table 6.4
 #'
@@ -27,8 +27,8 @@ fci_tbl_06_04 <- function() {
     .method = "norm")
 }
 
-fci_tbl_06_04 <- fci_tbl_06_04()
-usethis::use_data(fci_tbl_06_04, overwrite = TRUE)
+# fci_tbl_06_04 <- fci_tbl_06_04()
+# usethis::use_data(fci_tbl_06_04, overwrite = TRUE)
 
 #' Create data for table 6.7
 #'
@@ -43,8 +43,8 @@ fci_tbl_06_07 <- function() {
     .method = "norm")
 }
 
-fci_tbl_06_07 <- fci_tbl_06_07()
-usethis::use_data(fci_tbl_06_07, overwrite = TRUE)
+# fci_tbl_06_07 <- fci_tbl_06_07()
+# usethis::use_data(fci_tbl_06_07, overwrite = TRUE)
 
 #' Create data for table 6.9
 #'

@@ -34,21 +34,24 @@ test_that("meas_effect_modif: Boot", {
   data(recovery)
   df <- recovery
 
+  # must use seed 12345 to match results
   out <- boot_est(data = recovery, func = meas_effect_modif,
-                  times = 100, alpha = 0.05, transf = "exp",
+                  times = 100, alpha = 0.05, seed = 12345, transf = "exp",
                   formula = Y ~ `T` + M, exposure.name = "T")
   # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")
 
   data(fci_tbl_04_02)
-  target <- fci_tbl_04_02
-  target_id <- paste(target$term, target$group, sep = ".")
+  target <- fci_tbl_04_02 |>
+    unite(col = "term", term, group, sep = ".")
+  # NOTE: For some reason the rows are sorted differently by boot_run
+  target <- target[match(out$term, target$term, nomatch = 0), ]
   # cat("\n", "target", "\n")
   # print(target)
   # cat("\n")
 
-  ids <- match(target_id, out$term)
-  check <- sum(abs(out$.estimate[ids] - target$.estimate))
-  expect_lt(check, 0.01)
+  # ids <- match(target_id, out$term)
+  check <- all(abs(out$.estimate - target$.estimate) < 0.01)
+  expect_true(check)
 })

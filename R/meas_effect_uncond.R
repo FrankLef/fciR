@@ -29,11 +29,11 @@ meas_effect_uncond <- function(data, formula = Y ~ `T`) {
   p0 <- coefs[x0]
   p1 <- sum(coefs)
   # estimate the risk difference
-  rd <- p1 - p0
+  RD <- p1 - p0
 
   # use loglinear model to estimate the log relative risk
   coefs <- coef(glm(formula = formula, family = "poisson", data = data))
-  logrr <- coefs[input.names]
+  logRR <- coefs[input.names]
 
   # prepare data to estimate the log other relative risk
   ystar <- 1 - data[, outcome.name]
@@ -41,17 +41,16 @@ meas_effect_uncond <- function(data, formula = Y ~ `T`) {
 
   # use loglinear model to estimate the log other relative risk
   coefs <- coef(glm(ystar ~ xstar, family = "poisson"))
-  logrrstar <- coefs[2]
+  logRRstar <- coefs[2]
 
   # use logistic model to estimate the log of other risk
   coefs <- coef(glm(formula = formula, family = "binomial", data = data))
-  logor <- coefs[input.names]
+  logOR <- coefs[input.names]
 
   # return the results
-  out <- c(p0, p1, rd, logrr, logrrstar, logor)
-  names(out) <- c("P0", "P1", "RD", "logRR", "logRR*", "logOR")
+  out <- c(p0, p1, RD, logRR, logRRstar, logOR)
   data.frame(
-    term = names(out),
+    term = c("P0", "P1", "RD", "logRR", "logRR*", "logOR"),
     estimate = unname(out),
     std.err = NA_real_
   )

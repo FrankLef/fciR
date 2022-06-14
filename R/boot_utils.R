@@ -14,39 +14,34 @@
 #'
 #' @return Dataframe of estimates with confidence interval.
 #' @export
-boot_est <- function(data, func, times = 1000, alpha = 0.05,
+boot_est <- function(data, func, times = 1000, alpha = 0.05, seed = NULL,
                      transf = c("identity", "exp", "expit"), ...) {
   stopifnot(times >= 1, alpha > .Machine$double.eps^0.5, alpha < 0.5)
 
   transf <- match.arg(transf)
 
-  out <- boot_run(data = data, func = func, times = times, alpha = alpha, ...)
+  out <- boot_run(data = data, func = func, times = times, alpha = alpha,
+                  seed = seed, ...)
 
   # transform the results
   effect_transf(data = out, transf = transf)
 }
 
-#' Bootstrap and generate a dataframe of estimates with CI
+#' Bootstrapping Confidence Intervals with Base R
 #'
-#' Bootstrap and generate a dataframe of estimates with CI.
+#' Bootstrapping confidence intervals with base R.
 #'
-#' Generate a dataframe of estimates with the columns
-#' \code{c("est", "conf", "lci", "uci")}. The \code{boot::boot} function is used
-#' for bootstraping and the function \code{boot::boot.ci} is used to compute the
-#' confidence interval.
+#' Generate a dataframe of estimates using he \code{boot::boot} function for
+#' bootstrapping and \code{boot::boot.ci} to compute the confidence intervals.
 #'
-#' @param data Dataframe of raw data.
-#' @param func Function applied to data by bootstrapping.
-#' @param times Number of bootstrap replicates. Default is 1000.
-#' @param alpha Alpha used by percentile to give interval in
-#' \code{c(alpha, 1- alpha)}.
+#' @inheritParams boot_run
 #' @param ... Other named arguments for \code{statistic}.
 #'
 #' @seealso boot::boot boot::boot.ci
 #'
-#' @return Dataframe of estimates with CI.
+#' @return Dataframe with term, .lower, .estimate, .upper, .alpha, .method.
 #' @export
-boot_run <- function(data, func, times = 1000, alpha = 0.05, ...) {
+bootR_run <- function(data, func, times = 1000, alpha = 0.05, seed = NULL, ...) {
   stopifnot(times >= 1, alpha > .Machine$double.eps^0.5, alpha < 0.5)
 
   # the function is for bootstrapping returns a named vector
@@ -59,6 +54,7 @@ boot_run <- function(data, func, times = 1000, alpha = 0.05, ...) {
   }
 
   # run the bootstrapping
+  set.seed(seed)
   boot.out <- boot::boot(data = data, statistic = boot.func, R = times, ...)
 
   # the method used for intervals
@@ -95,22 +91,30 @@ boot_run <- function(data, func, times = 1000, alpha = 0.05, ...) {
 #' @param times Number of bootstrap replicates. Default is 1000.
 #' @param alpha Alpha used by percentile to give interval in
 #' \code{c(alpha, 1- alpha)}.
+#' @param seed Seed for random number generator. If \code{NULL} the seed itself
+#' is random.
 #' @param ... Additional arguments used by \code{func}.
 #'
 #' @importFrom rsample bootstraps int_pctl analysis
 #' @importFrom purrr map_dfr
 #' @importFrom rlang .data
 #'
-#' @return Dataframe with term, .lower, .estimate, .upper, .alpha, .method
+#' @seealso rsample::bootstraps rsample::int_pctl
+#'
+#' @source \url{https://rsample.tidymodels.org/articles/Applications/Intervals.html}
+#'
+#' @return Dataframe with term, .lower, .estimate, .upper, .alpha, .method.
 #' @export
-boot_run_td <- function(data, func, times = 1000, alpha = 0.05, ...) {
+boot_run <- function(data, func, times = 1000, alpha = 0.05, seed = NULL, ...) {
   stopifnot(times >= 1, alpha > .Machine$double.eps^0.5, alpha < 0.5)
 
+  set.seed(seed)
   data |>
     rsample::bootstraps(times = times, apparent = FALSE) |>
-    mutate(results = purrr::map_dfr(.data$splits, function(x) {
+    mutate(results = purrr::map(.data$splits, function(x) {
       dat <- rsample::analysis(x)
       func(dat, ...)
     })) |>
-    rsample::int_pctl(.data$results, alpha = alpha)
+    rsample::int_pctl(.data$results, alpha = alpha) |>
+    suppressWarnings()
 }
