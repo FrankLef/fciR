@@ -7,7 +7,6 @@
 #' @inheritParams instr_vars
 #' @param niter Number of iterations
 #'
-#' @importFrom formulaic create.formula
 #' @importFrom stats lm glm fitted predict
 #' @importFrom AER ivreg
 #'

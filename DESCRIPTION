@@ -31,7 +31,6 @@ Imports:
     ggdag,
     dagitty,
     ggrepel,
-    formulaic,
     magick,
     AER,
     rsample,
