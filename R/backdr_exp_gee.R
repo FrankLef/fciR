@@ -3,7 +3,7 @@
 #' Compute standardized estimates with parametric exposure model.
 #'
 #' The standardized estimates are computed using the exposure model and the
-#' \code{geeglm} from the \code{gee} package.
+#' \code{geeglm} from the \code{geepack} package.
 #' This method requires 2 different formulas which are created from the
 #' arguments \code{formula}. The 2 formulas created are for the exposure model
 #' and another one for the weighted linear model.
@@ -11,6 +11,7 @@
 #' @inheritParams backdr_out_np
 #'
 #' @importFrom stats formula lm glm fitted predict
+#' @importFrom gee gee
 #' @importFrom geepack geeglm
 #'
 #' @seealso backdr_exp

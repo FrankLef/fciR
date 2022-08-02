@@ -8,8 +8,8 @@ ggp_measures(
   data,
   title = "Title",
   subtitle = "Subtitle",
-  vline = list(colors = c("lightseagreen", "violet"), linetype = "solid", size = 3,
-    alpha = 0.5),
+  vline = list(colors = c("lightseagreen", "violet"), linetype = "solid", size = 3, alpha
+    = 0.5),
   pointrange = list(size = 1, fatten = 2),
   text = list(size = 3, color = "navy", digits = 2),
   scale_color = list(zero = "darkgreen", one = "magenta"),

@@ -9,8 +9,8 @@ ggp_measures_groups(
   group = "model",
   title = "Title",
   subtitle = "Subtitle",
-  vline = list(colors = c("lightseagreen", "violet"), linetype = "solid", size = 3,
-    alpha = 0.5),
+  vline = list(colors = c("lightseagreen", "violet"), linetype = "solid", size = 3, alpha
+    = 0.5),
   pointrange = list(size = 1, fatten = 2),
   text = list(size = 3, color = "navy", digits = 2),
   text_size = list(title = 0.9, y_axis = 0.9)
