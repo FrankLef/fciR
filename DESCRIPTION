@@ -20,6 +20,8 @@ Config/testthat/edition: 3
 Imports: 
     tidyr,
     dplyr,
+    assertthat,
+    checkmate,
     boot,
     ggplot2,
     gt,

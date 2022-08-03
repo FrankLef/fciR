@@ -8,6 +8,9 @@
 #' @inheritParams boot_run
 #' @param transf Type of conversion. Must be one of
 #' \code{c("identity", "exp", "expit")}, default is \code{identity}.
+#' @param terms Charctaer vector used to reorder the rows using the
+#' \code{term} column. When \code{NULL}, no reordering takes place.
+#' Default is \code{c("P0", "P1", "RD", "RR", "RR*", "OR")}.
 #' @param ... Other named arguments for \code{func}.
 #'
 #' @seealso effect_transf
@@ -15,8 +18,14 @@
 #' @return Dataframe of estimates with confidence interval.
 #' @export
 boot_est <- function(data, func, times = 1000, alpha = 0.05, seed = NULL,
-                     transf = c("identity", "exp", "expit"), ...) {
-  stopifnot(times >= 1, alpha > .Machine$double.eps^0.5, alpha < 0.5)
+                     transf = c("identity", "exp", "expit"),
+                     terms = c("P0", "P1", "RD", "RR", "RR*", "OR"), ...) {
+  checkmate::assertDataFrame(data)
+  checkmate::assertFunction(func)
+  checkmate::assertNumber(alpha, lower = 0.01, upper = 0.49)
+  checkmate::assertIntegerish(seed, lower = 1, null.ok = TRUE)
+  checkmate::assertCount(times, positive = TRUE)
+  checkmate::assertCharacter(terms, null.ok = TRUE)
 
   transf <- match.arg(transf)
 
@@ -24,7 +33,18 @@ boot_est <- function(data, func, times = 1000, alpha = 0.05, seed = NULL,
                   seed = seed, ...)
 
   # transform the results
-  effect_transf(data = out, transf = transf)
+  out <- effect_transf(data = out, transf = transf)
+
+  # NOTE: this step must absolutely be the last one!
+  if (!is.null(terms)) {
+    pos <- match(terms, out$term)
+    check <- sum(is.na(pos))
+    msg <- sprintf("%d invalid terms used to reorder output.", check)
+    assertthat::assert_that(check == 0, msg = msg)
+    out <- out[pos, ]
+  }
+
+  out
 }
 
 #' Bootstrapping Confidence Intervals with Base R
@@ -42,7 +62,9 @@ boot_est <- function(data, func, times = 1000, alpha = 0.05, seed = NULL,
 #' @return Dataframe with term, .lower, .estimate, .upper, .alpha, .method.
 #' @export
 bootR_run <- function(data, func, times = 1000, alpha = 0.05, seed = NULL, ...) {
-  stopifnot(times >= 1, alpha > .Machine$double.eps^0.5, alpha < 0.5)
+  checkmate::assertNumber(alpha, lower = 0.01, upper = 0.49)
+  checkmate::assertIntegerish(seed, lower = 1, null.ok = TRUE)
+  checkmate::assertCount(times, positive = TRUE)
 
   # the function is for bootstrapping returns a named vector
   boot.func <- function(data, ids, ...) {
@@ -106,7 +128,9 @@ bootR_run <- function(data, func, times = 1000, alpha = 0.05, seed = NULL, ...) 
 #' @return Dataframe with term, .lower, .estimate, .upper, .alpha, .method.
 #' @export
 boot_run <- function(data, func, times = 1000, alpha = 0.05, seed = NULL, ...) {
-  stopifnot(times >= 1, alpha > .Machine$double.eps^0.5, alpha < 0.5)
+  checkmate::assertNumber(alpha, lower = 0.01, upper = 0.49)
+  checkmate::assertIntegerish(seed, lower = 1, null.ok = TRUE)
+  checkmate::assertCount(times, positive = TRUE)
 
   set.seed(seed)
   data |>

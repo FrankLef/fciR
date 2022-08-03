@@ -1,7 +1,8 @@
 test_that("instr_vars", {
 
-  data(whatif2dat)
-  out <- instr_vars(whatifdat, formula = Y ~ A + `T`, exposure.name = "A")
+  data(whatifdat)
+  df <- whatifdat
+  out <- instr_vars(df, formula = Y ~ A + `T`, exposure.name = "A")
   # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")

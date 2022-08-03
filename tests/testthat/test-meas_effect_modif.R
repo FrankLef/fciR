@@ -37,6 +37,7 @@ test_that("meas_effect_modif: Boot", {
   # must use seed 12345 to match results
   out <- boot_est(data = recovery, func = meas_effect_modif,
                   times = 100, alpha = 0.05, seed = 12345, transf = "exp",
+                  terms = NULL,
                   formula = Y ~ `T` + M, exposure.name = "T")
   # cat("\n", "out", "\n")
   # print(out)
