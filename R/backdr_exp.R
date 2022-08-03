@@ -18,6 +18,11 @@
 #' @export
 backdr_exp <- function(data, formula = Y ~ `T` + H, exposure.name = "T",
                        att = FALSE) {
+  checkmate::assertDataFrame(data)
+  checkmate::assertFormula(formula)
+  checkmate::assertNames(exposure.name, subset.of = names(data))
+  checkmate::assertFlag(att)
+
   x0 <- "(Intercept)"  # name of intercept used by lm, glm, etc.
 
   var_names <- audit_formula(data, formula, exposure.name)

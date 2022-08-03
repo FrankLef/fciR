@@ -13,6 +13,8 @@
 #' @return Numeric vector with estimates and confidence interval.
 #' @export
 jack_ci <- function(x, alpha = 0.05) {
+  checkmate::assertNumber(alpha, lower = 0.01, upper = 0.49)
+
   n <- length(x)
   nsample <- n - 1
   m <- mean(x)
@@ -41,6 +43,8 @@ jack_ci <- function(x, alpha = 0.05) {
 #' @return Dataframe of estimates with confidence interval.
 #' @export
 jack_run <- function(data, func, alpha = 0.05, ...) {
+  checkmate::assertNumber(alpha, lower = 0.01, upper = 0.49)
+
   # get the leave-one-out samples
   the_samples <- rsample::loo_cv(data)
 
@@ -90,7 +94,10 @@ jack_run <- function(data, func, alpha = 0.05, ...) {
 #' @export
 jack_est <- function(data, func, alpha = 0.05,
                      transf = c("identity", "exp", "expit"), ...) {
-  stopifnot(alpha > .Machine$double.eps^0.5, alpha < 0.5)
+  checkmate::assertDataFrame(data)
+  checkmate::assertFunction(func)
+  checkmate::assertNumber(alpha, lower = 0.01, upper = 0.49)
+
   transf <- match.arg(transf)
 
   out <- jack_run(data = data, func = func, alpha = alpha, ...)

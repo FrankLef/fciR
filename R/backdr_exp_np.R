@@ -14,6 +14,11 @@
 #' @export
 backdr_exp_np <- function(data, formula = Y ~ `T` + H, exposure.name = "T",
                           att = FALSE) {
+  checkmate::assertDataFrame(data)
+  checkmate::assertFormula(formula)
+  checkmate::assertNames(exposure.name, subset.of = names(data))
+  checkmate::assertFlag(att)
+
   # audit and extract the variables
   var_names <- audit_formula(data, formula, exposure.name)
   outcome.name <- var_names$outcome.name

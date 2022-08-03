@@ -12,6 +12,9 @@
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 backdr_dr_bad <- function(data, formula = Y ~ `T` + H, exposure.name = "T") {
+  checkmate::assertDataFrame(data)
+  checkmate::assertFormula(formula)
+  checkmate::assertNames(exposure.name, subset.of = names(data))
 
   # audit and extract the variables
   var_names <- audit_formula(data, formula, exposure.name)

@@ -16,7 +16,8 @@
 #' @return List with outcome.name, exposure.name and extra.names of variables.
 #' @export
 audit_formula <- function(data, formula, exposure.name, nvars = NA_integer_) {
-  stopifnot(is.na(nvars) | nvars >= 1)
+  checkmate::assertString(exposure.name, min.chars = 1)
+  checkmate::assertCount(nvars, positive = TRUE, na.ok = TRUE)
 
   # the outcome variable must be in the data
   outcome.name <- all.vars(formula[[2]])

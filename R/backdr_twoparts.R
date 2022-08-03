@@ -13,6 +13,10 @@
 #' @export
 backdr_twoparts <- function(data, formula = Y ~ `T` + H + Z, exposure.name = "T",
                             condition.name = "Z") {
+  checkmate::assertDataFrame(data)
+  checkmate::assertFormula(formula)
+  checkmate::assertNames(exposure.name, subset.of = names(data))
+  checkmate::assertNames(condition.name, subset.of = names(data))
 
   # audit and extract the variables
   var_names <- audit_formula(data, formula, exposure.name)

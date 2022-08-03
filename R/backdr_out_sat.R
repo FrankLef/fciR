@@ -18,6 +18,10 @@
 #' @export
 backdr_out_sat <- function(data, formula = Y ~ A * H, exposure.name = "A",
                            att = FALSE) {
+  checkmate::assertDataFrame(data)
+  checkmate::assertFormula(formula)
+  checkmate::assertNames(exposure.name, subset.of = names(data))
+  checkmate::assertFlag(att)
 
   # this function works when there is only one confound
   # audit and extract the variables

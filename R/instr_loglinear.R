@@ -14,7 +14,10 @@
 #' @export
 instr_loglinear <- function(data, formula = Y ~ A * `T`, exposure.name = "A",
                         tol = .Machine$double.eps^0.5, niter = 10L) {
-  stopifnot(niter >= 1, niter <= 20)
+  checkmate::assertDataFrame(data)
+  checkmate::assertFormula(formula)
+  checkmate::assertNames(exposure.name, subset.of = names(data))
+  checkmate::assertInteger(niter, lower = 1, upper = 20)
 
   # audit and extract the variables
   var_names <- audit_formula(data, formula, exposure.name, nvars = 1)

@@ -12,6 +12,9 @@
 #' @export
 did_loglinear <- function(data, formula = Y1 ~ `T` + Y0, exposure.name = "T",
                           names_to = "var", timevar = "time") {
+  checkmate::assertDataFrame(data)
+  checkmate::assertFormula(formula)
+  checkmate::assertNames(exposure.name, subset.of = names(data))
 
   # audit and extract the variables
   var_names <- audit_formula(data, formula, exposure.name)

@@ -15,6 +15,9 @@
 #' @export
 backdr_dr <- function(data, formula = Y ~ T + A + H, exposure.name = "T",
                       family = c("binomial", "poisson", "gaussian")) {
+  checkmate::assertDataFrame(data)
+  checkmate::assertFormula(formula)
+  checkmate::assertNames(exposure.name, subset.of = names(data))
 
   # the model's family
   family <- match.arg(family)

@@ -19,6 +19,9 @@
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 backdr_exp_gee <- function(data, formula = Y ~ `T` + H, exposure.name = "T") {
+  checkmate::assertDataFrame(data)
+  checkmate::assertFormula(formula)
+  checkmate::assertNames(exposure.name, subset.of = names(data))
 
   x0 <- "(Intercept)"  # name of intercept used by geeglm
 

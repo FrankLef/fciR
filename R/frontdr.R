@@ -14,6 +14,9 @@
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 frontdr_np <- function(data, formula = Y ~ A + S, exposure.name = "A") {
+  checkmate::assertDataFrame(data)
+  checkmate::assertFormula(formula)
+  checkmate::assertNames(exposure.name, subset.of = names(data))
 
   # audit and extract the variables
   var_names <- audit_formula(data, formula, exposure.name, nvars = 1)
