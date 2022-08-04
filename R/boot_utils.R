@@ -8,9 +8,8 @@
 #' @inheritParams boot_run
 #' @param transf Type of conversion. Must be one of
 #' \code{c("identity", "exp", "expit")}, default is \code{identity}.
-#' @param terms Charctaer vector used to reorder the rows using the
+#' @param terms Character vector used to reorder the rows using the
 #' \code{term} column. When \code{NULL}, no reordering takes place.
-#' Default is \code{c("P0", "P1", "RD", "RR", "RR*", "OR")}.
 #' @param ... Other named arguments for \code{func}.
 #'
 #' @seealso effect_transf
@@ -18,8 +17,7 @@
 #' @return Dataframe of estimates with confidence interval.
 #' @export
 boot_est <- function(data, func, times = 1000, alpha = 0.05, seed = NULL,
-                     transf = c("identity", "exp", "expit"),
-                     terms = c("P0", "P1", "RD", "RR", "RR*", "OR"), ...) {
+                     transf = c("identity", "exp", "expit"), terms = NULL, ...) {
   checkmate::assertDataFrame(data)
   checkmate::assertFunction(func)
   checkmate::assertNumber(alpha, lower = 0.01, upper = 0.49)

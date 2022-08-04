@@ -11,7 +11,7 @@ boot_est(
   alpha = 0.05,
   seed = NULL,
   transf = c("identity", "exp", "expit"),
-  terms = c("P0", "P1", "RD", "RR", "RR*", "OR"),
+  terms = NULL,
   ...
 )
 }
@@ -31,9 +31,8 @@ is random.}
 \item{transf}{Type of conversion. Must be one of
 \code{c("identity", "exp", "expit")}, default is \code{identity}.}
 
-\item{terms}{Charctaer vector used to reorder the rows using the
-\code{term} column. When \code{NULL}, no reordering takes place.
-Default is \code{c("P0", "P1", "RD", "RR", "RR*", "OR")}.}
+\item{terms}{Character vector used to reorder the rows using the
+\code{term} column. When \code{NULL}, no reordering takes place.}
 
 \item{...}{Other named arguments for \code{func}.}
 }
