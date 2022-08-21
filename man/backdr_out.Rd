@@ -7,15 +7,17 @@
 \usage{
 backdr_out(
   data,
-  formula = Y ~ T + A + H,
-  exposure.name = "T",
+  formula,
+  exposure.name,
+  confound.names,
   family = c("binomial", "poisson", "gaussian")
 )
 
 standout(
   data,
-  formula = Y ~ T + A + H,
-  exposure.name = "T",
+  formula,
+  exposure.name,
+  confound.names,
   family = c("binomial", "poisson", "gaussian")
 )
 }
@@ -24,8 +26,9 @@ standout(
 
 \item{formula}{Formula representing the model.}
 
-\item{exposure.name}{Name of exposure variable. All other independent
-variables in the formula will be assumed to be confounds.}
+\item{exposure.name}{Name of exposure variable.}
+
+\item{confound.names}{Names of the confound variables.}
 
 \item{family}{Name of the model's family. Must be one of
 \code{c("binomial", "poisson", "gaussian")}. default is \code{"binomial"}.}

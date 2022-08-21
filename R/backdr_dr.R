@@ -9,23 +9,20 @@
 #' @param family Name of the model's family. Must be one of
 #' \code{c("binomial", "poisson", "gaussian")}. default is \code{"binomial"}.
 #'
-#' @importFrom stats glm fitted predict
-#'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
+#' @source Section 6.3.
 #' @export
-backdr_dr <- function(data, formula = Y ~ T + A + H, exposure.name = "T",
+backdr_dr <- function(data, formula, exposure.name, confound.names,
                       family = c("binomial", "poisson", "gaussian")) {
   checkmate::assertDataFrame(data)
   checkmate::assertFormula(formula)
-  checkmate::assertNames(exposure.name, subset.of = names(data))
 
   # the model's family
   family <- match.arg(family)
 
-  # audit and extract the variables
-  var_names <- audit_formula(data, formula, exposure.name)
+  # audit the variables
+  var_names <- audit_formula(data, formula, exposure.name, confound.names)
   outcome.name <- var_names$outcome.name
-  confound.names <- var_names$extra.names
 
   # exposure model formula
   eformula <- paste(exposure.name, paste(confound.names, collapse = "+"),
@@ -34,7 +31,8 @@ backdr_dr <- function(data, formula = Y ~ T + A + H, exposure.name = "T",
 
   # estimate the parametric exposure model
   eH <- fitted(glm(formula = eformula, family = "binomial", data = data))
-  stopifnot(all(!dplyr::near(eH, 0)))  # eH must not equal zero
+  assertthat::assert_that(all(!dplyr::near(eH, 0)),
+                          msg = "eH must not equal zero")
 
   # Fit the parametric outcome model
   lmod <- glm(formula = formula, family = family, data = data)

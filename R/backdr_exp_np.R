@@ -7,29 +7,26 @@
 #'
 #' @inheritParams backdr_out_np
 #'
-#' @importFrom dplyr count group_by ungroup mutate summarise filter pull near
-#' @importFrom rlang .data
-#'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-backdr_exp_np <- function(data, formula = Y ~ `T` + H, exposure.name = "T",
+backdr_exp_np <- function(data, formula, exposure.name, confound.names,
                           att = FALSE) {
   checkmate::assertDataFrame(data)
   checkmate::assertFormula(formula)
-  checkmate::assertNames(exposure.name, subset.of = names(data))
   checkmate::assertFlag(att)
 
   # audit and extract the variables
-  var_names <- audit_formula(data, formula, exposure.name)
+  var_names <- audit_formula(data, formula, exposure.name, confound.names)
   outcome.name <- var_names$outcome.name
-  confound.names <- var_names$extra.names
 
   # get the summarized data
-  summ <- data %>%
+  summ <- data |>
     count(.data[[outcome.name]], .data[[exposure.name]], .data[[confound.names]],
           name = "n") %>%
     mutate(freq = n / sum(n))
-  stopifnot(dplyr::near(sum(summ$freq), 1))
+  assertthat::assert_that(dplyr::near(abs(sum(summ$freq)), 1),
+                          msg = "total freq must equal 1")
+
 
   # compute e(H=0) and e(H=1)
   eH <- summ %>%
@@ -40,8 +37,9 @@ backdr_exp_np <- function(data, formula = Y ~ `T` + H, exposure.name = "T",
     filter(.data[[exposure.name]] == 1) |>
     arrange(.data[[confound.names]]) |>
     pull(.data$prob)
-  eH
-  stopifnot(all(eH > .Machine$double.eps^0.5))
+  # eH
+  assertthat::assert_that(all(!dplyr::near(eH, 0)),
+                          msg = "eH must not equal zero")
   eH0 <- eH[1]
   eH1 <- eH[2]
 

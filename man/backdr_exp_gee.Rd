@@ -5,17 +5,18 @@
 \alias{standexpgee}
 \title{Compute standardized estimates with parametric exposure model}
 \usage{
-backdr_exp_gee(data, formula = Y ~ T + H, exposure.name = "T")
+backdr_exp_gee(data, formula, exposure.name, confound.names)
 
-standexpgee(data, formula = Y ~ T + H, exposure.name = "T")
+standexpgee(data, formula, exposure.name, confound.names)
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
 
 \item{formula}{Formula representing the model.}
 
-\item{exposure.name}{Name of exposure variable. All other independent
-variables in the formula will be assumed to be confounds.}
+\item{exposure.name}{Name of exposure variable.}
+
+\item{confound.names}{Names of the confound variables.}
 }
 \value{
 Dataframe in a useable format for \code{rsample::bootstraps}.

@@ -4,20 +4,16 @@
 \alias{backdr_twoparts}
 \title{Compute standardized estimates with the 2-parts model}
 \usage{
-backdr_twoparts(
-  data,
-  formula = Y ~ T + H + Z,
-  exposure.name = "T",
-  condition.name = "Z"
-)
+backdr_twoparts(data, formula, exposure.name, confound.names, condition.name)
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
 
 \item{formula}{Formula representing the model.}
 
-\item{exposure.name}{Name of exposure variable. All other independent
-variables in the formula will be assumed to be confounds.}
+\item{exposure.name}{Name of exposure variable.}
+
+\item{confound.names}{Names of the confound variables.}
 
 \item{condition.name}{Character vector of confound variable names.}
 }

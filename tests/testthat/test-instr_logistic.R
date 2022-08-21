@@ -3,7 +3,7 @@ test_that("inst_logistic", {
 
   data("doublewhatifdat")
   out <- instr_logistic(doublewhatifdat, formula = VL1 ~ A * `T`,
-                        exposure.name = "A")
+                        exposure.name = "A", instrument.name = "T")
   out <- out[out$term %in% names(ids), ]
   # cat("\n", "out", "\n")
   # print(out)

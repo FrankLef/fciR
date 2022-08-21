@@ -7,21 +7,18 @@
 #'
 #' @param data Dataframe of raw data.
 #' @param formula Formula representing the model.
-#' @param exposure.name Name of exposure variable. The other independent
-#' variable in the formula will be assumed to be the surrogate. there can be
-#' only one exposure and one surrogate.
+#' @param exposure.name Name of exposure variable.
+#' @param surrogate.name Name of the surrogate variable.
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-frontdr_np <- function(data, formula = Y ~ A + S, exposure.name = "A") {
+frontdr_np <- function(data, formula, exposure.name, surrogate.name) {
   checkmate::assertDataFrame(data)
   checkmate::assertFormula(formula)
-  checkmate::assertNames(exposure.name, subset.of = names(data))
 
   # audit and extract the variables
-  var_names <- audit_formula(data, formula, exposure.name, nvars = 1)
+  var_names <- audit_formula(data, formula, exposure.name, surrogate.name)
   outcome.name <- var_names$outcome.name
-  surrogate.name <- var_names$extra.names
 
   # P(A=1)
   probA1 <- mean(data[, exposure.name])

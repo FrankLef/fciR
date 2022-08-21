@@ -10,16 +10,14 @@
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-did_logistic <- function(data, formula = Y1 ~ `T` + Y0, exposure.name = "T",
+did_logistic <- function(data, formula, exposure.name, confound.names,
                          names_to = "var", timevar = "time") {
   checkmate::assertDataFrame(data)
   checkmate::assertFormula(formula)
-  checkmate::assertNames(exposure.name, subset.of = names(data))
 
   # audit and extract the variables
-  var_names <- audit_formula(data, formula, exposure.name)
+  var_names <- audit_formula(data, formula, exposure.name, confound.names)
   outcome.name <- var_names$outcome.name
-  confound.names <- var_names$extra.names
 
   # convert data to long format
   outcomes <- c(confound.names, outcome.name)

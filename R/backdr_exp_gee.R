@@ -10,25 +10,19 @@
 #'
 #' @inheritParams backdr_out_np
 #'
-#' @importFrom stats formula lm glm fitted predict
-#' @importFrom gee gee
-#' @importFrom geepack geeglm
-#'
 #' @seealso backdr_exp
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-backdr_exp_gee <- function(data, formula = Y ~ `T` + H, exposure.name = "T") {
+backdr_exp_gee <- function(data, formula, exposure.name, confound.names) {
   checkmate::assertDataFrame(data)
   checkmate::assertFormula(formula)
-  checkmate::assertNames(exposure.name, subset.of = names(data))
 
   x0 <- "(Intercept)"  # name of intercept used by geeglm
 
   # audit and extract the variables
-  var_names <- audit_formula(data, formula, exposure.name)
+  var_names <- audit_formula(data, formula, exposure.name, confound.names)
   outcome.name <- var_names$outcome.name
-  confound.names <- var_names$extra.names
 
   # exposure model formula
   eformula <- paste(exposure.name, paste(confound.names, collapse = "+"),
@@ -43,7 +37,8 @@ backdr_exp_gee <- function(data, formula = Y ~ `T` + H, exposure.name = "T") {
 
   # estimate the parametric exposure model
   eH <- fitted(glm(formula = eformula, family = "binomial", data = data))
-  stopifnot(all(!dplyr::near(eH, 0)))  # eH must not equal zero
+  assertthat::assert_that(all(!dplyr::near(eH, 0)),
+                          msg = "eH must not equal zero")
 
   # compute the weights
   datT <- data[, exposure.name]

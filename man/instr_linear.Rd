@@ -7,15 +7,17 @@
 \usage{
 instr_linear(
   data,
-  formula = Y ~ A * T,
-  exposure.name = "A",
+  formula,
+  exposure.name,
+  instrument.name,
   tol = .Machine$double.eps^0.5
 )
 
 ividentity.r(
   data,
-  formula = Y ~ A * T,
-  exposure.name = "A",
+  formula,
+  exposure.name,
+  instrument.name,
   tol = .Machine$double.eps^0.5
 )
 }
@@ -24,9 +26,9 @@ ividentity.r(
 
 \item{formula}{Formula representing the model.}
 
-\item{exposure.name}{Name of exposure variable. The other independent
-variables in the formula will be assumed to be the instrument variable.
-There can be only one exposure variable and one instrument variable.}
+\item{exposure.name}{Name of exposure variable.}
+
+\item{instrument.name}{Name of instrument variable.}
 
 \item{tol}{Numeric > 0. Tolerance used in estimation. Default is
 .Machine$double.eps^0.5.}

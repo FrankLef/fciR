@@ -3,9 +3,7 @@ test_that("backdr_exp", {
 
   data(whatif2dat)
   out <- backdr_exp(whatif2dat, formula = vl4 ~ A + lvlcont0,
-                    exposure.name = "A")
-  # out <- backdr_exp(whatif2dat, outcome.name = "vl4", exposure.name = "A",
-  #                   confound.names = "lvlcont0")
+                    exposure.name = "A", confound.names = "lvlcont0")
   out <- out[out$term %in% ids, ]
   # cat("\n", "out", "\n")
   # print(out)

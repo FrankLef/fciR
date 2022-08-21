@@ -10,19 +10,15 @@
 #' \code{c("binomial", "poisson", "gaussian")}. default is \code{"binomial"}.
 #'
 #' @importFrom dplyr count group_by mutate summarize filter pull relocate
-#' @importFrom stats glm fitted predict
-#' @importFrom rlang .data
-#' @importFrom broom tidy
 #'
 #' @seealso effect_measures
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-backdr_out <- function(data, formula = Y ~ `T` + A + H, exposure.name = "T",
+backdr_out <- function(data, formula, exposure.name, confound.names,
                        family = c("binomial", "poisson", "gaussian")) {
   checkmate::assertDataFrame(data)
   checkmate::assertFormula(formula)
-  checkmate::assertNames(exposure.name, subset.of = names(data))
 
   # the model's family
   family <- match.arg(family)
@@ -30,7 +26,8 @@ backdr_out <- function(data, formula = Y ~ `T` + A + H, exposure.name = "T",
   x0 <- "(Intercept)"  # name of intercept used by lm, glm, etc.
 
   # audit and extract the variables
-  audit_formula(data, formula, exposure.name)
+  var_names <- audit_formula(data, formula, exposure.name, confound.names)
+  outcome.name <- var_names$outcome.name
 
   fit <- glm(formula = formula, family = family, data = data)
 

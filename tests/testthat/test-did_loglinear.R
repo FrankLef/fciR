@@ -3,7 +3,8 @@ test_that("did_loglinear", {
 
   data(doublewhatifdat)
   out <- did_loglinear(doublewhatifdat, formula = VL1 ~ A + VL0,
-                       exposure.name = "A", names_to = "var", timevar = "time")
+                       exposure.name = "A", confound.names = "VL0",
+                       names_to = "var", timevar = "time")
   out <- out[out$term %in% ids, ]
   # cat("\n", "out", "\n")
   # print(out)

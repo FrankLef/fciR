@@ -5,18 +5,18 @@
 \alias{frontdoor.r}
 \title{Estimate the Effect Using the Front-Door Method}
 \usage{
-frontdr_np(data, formula = Y ~ A + S, exposure.name = "A")
+frontdr_np(data, formula, exposure.name, surrogate.name)
 
-frontdoor.r(data, formula = Y ~ A + S, exposure.name = "A")
+frontdoor.r(data, formula, exposure.name, surrogate.name)
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
 
 \item{formula}{Formula representing the model.}
 
-\item{exposure.name}{Name of exposure variable. The other independent
-variable in the formula will be assumed to be the surrogate. there can be
-only one exposure and one surrogate.}
+\item{exposure.name}{Name of exposure variable.}
+
+\item{surrogate.name}{Name of the surrogate variable.}
 }
 \value{
 Dataframe in a useable format for \code{rsample::bootstraps}.

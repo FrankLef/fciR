@@ -4,7 +4,7 @@
 \alias{audit_formula}
 \title{Audit the Formula Used for Causal Inference}
 \usage{
-audit_formula(data, formula, exposure.name, nvars = NA_integer_)
+audit_formula(data, formula, exposure.name, extra.names)
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
@@ -13,8 +13,7 @@ audit_formula(data, formula, exposure.name, nvars = NA_integer_)
 
 \item{exposure.name}{The name of the exposure variable.}
 
-\item{nvars}{The required number of extra variables. If \code{NA_integer_}
-then the nb of variables must be >= 1. The default value is \code{NA_integer_}.}
+\item{extra.names}{Character vector with the names of the extra variable.}
 }
 \value{
 List with outcome.name, exposure.name and extra.names of variables.
@@ -23,8 +22,15 @@ List with outcome.name, exposure.name and extra.names of variables.
 Audit the formula used for causal inference.
 }
 \details{
-The formula and the variables used must be validated to avoid many different
-problems. All formula are assumed to have at least 1 outcome variable,
+The formula and the variables used must be validated to avoid problems.
+All formula must have at least 1 outcome variable,
 1 exposure variable and 1 extra variable. The extra variables can be confounds,
 instrumental variable, etc. depending on the context.
+}
+\examples{
+out <- audit_formula(
+ iris, formula = Sepal.Length ~ Species * Sepal.Width,
+ exposure.name = "Species", extra.names = "Sepal.Width")
+# return a list with all 3 variable names
+stopifnot(length(out) == 3)
 }

@@ -11,26 +11,18 @@
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-backdr_twoparts <- function(data, formula = Y ~ `T` + H + Z, exposure.name = "T",
-                            condition.name = "Z") {
+backdr_twoparts <- function(data, formula, exposure.name,
+                            confound.names, condition.name) {
   checkmate::assertDataFrame(data)
   checkmate::assertFormula(formula)
-  checkmate::assertNames(exposure.name, subset.of = names(data))
-  checkmate::assertNames(condition.name, subset.of = names(data))
 
   # audit and extract the variables
-  var_names <- audit_formula(data, formula, exposure.name)
+  var_names <- audit_formula(data, formula, exposure.name,
+                             c(confound.names, condition.name))
   outcome.name <- var_names$outcome.name
-  confound.names <- var_names$extra.names
 
-  # remove condition.name from confounds
-  confound.names <- confound.names[confound.names != condition.name]
-
-  # formula's independent variables
+  # create formula excluding condition.name
   input.names <- c(exposure.name, confound.names)
-
-
-  # create formula excluding ondition.name
   a_formula <- paste(outcome.name, paste(input.names, collapse = "+"),
                      sep = "~")
   a_formula <- formula(a_formula)

@@ -6,8 +6,8 @@
 #'
 #' @param data Dataframe of raw data.
 #' @param formula Formula representing the model.
-#' @param exposure.name Name of exposure variable. All other independent
-#' variables in the formula will be assumed to be confounds.
+#' @param exposure.name Name of exposure variable.
+#' @param confound.names Names of the confound variables.
 #' @param names_to Name that will be used for the name variable.
 #' @param timevar Name that will be used for the time variable.
 #'
@@ -15,16 +15,14 @@
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-did_linear <- function(data, formula = Y1 ~ `T` + Y0, exposure.name = "T",
+did_linear <- function(data, formula, exposure.name, confound.names,
                        names_to = "var", timevar = "time") {
   checkmate::assertDataFrame(data)
   checkmate::assertFormula(formula)
-  checkmate::assertNames(exposure.name, subset.of = names(data))
 
   # audit and extract the variables
-  var_names <- audit_formula(data, formula, exposure.name)
+  var_names <- audit_formula(data, formula, exposure.name, confound.names)
   outcome.name <- var_names$outcome.name
-  confound.names <- var_names$extra.names
 
   # convert data to long format
   outcomes <- c(confound.names, outcome.name)

@@ -2,24 +2,22 @@
 #'
 #' Doubly robust standardized estimates with misspecified outcome model.
 #'
-#' Compute the doubly robust standardized estimates using the code from section
-#' 6.3.
+#' Compute the doubly robust standardized estimates with erros in the outcome
+#' model.
 #'
 #' @inheritParams backdr_out_np
 #'
-#' @importFrom stats glm fitted predict
+#' @source section 6.3
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-backdr_dr_bad <- function(data, formula = Y ~ `T` + H, exposure.name = "T") {
+backdr_dr_bad <- function(data, formula, exposure.name, confound.names) {
   checkmate::assertDataFrame(data)
   checkmate::assertFormula(formula)
-  checkmate::assertNames(exposure.name, subset.of = names(data))
 
-  # audit and extract the variables
-  var_names <- audit_formula(data, formula, exposure.name)
+  # audit the variables
+  var_names <- audit_formula(data, formula, exposure.name, confound.names)
   outcome.name <- var_names$outcome.name
-  confound.names <- var_names$extra.names
 
   # exposure model formula
   eformula <- paste(exposure.name, paste(confound.names, collapse = "+"),
@@ -32,7 +30,8 @@ backdr_dr_bad <- function(data, formula = Y ~ `T` + H, exposure.name = "T") {
 
   # estimate the parametric exposure model
   eH <- fitted(glm(formula = eformula, family = "binomial", data = data))
-  stopifnot(all(!dplyr::near(eH, 0)))  # eH must not equal zero
+  assertthat::assert_that(all(!dplyr::near(eH, 0)),
+                          msg = "eH must not equal zero")
 
   # fit a nonparametric outcome model that we do not believe
   # i.e. a bad outcome model

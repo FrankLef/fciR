@@ -6,21 +6,18 @@
 #'
 #' @inheritParams instr_vars
 #'
-#' @importFrom stats lm glm fitted predict
 #' @importFrom AER ivreg
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-instr_linear <- function(data, formula = Y ~ A * `T`, exposure.name = "A",
+instr_linear <- function(data, formula, exposure.name, instrument.name,
                          tol = .Machine$double.eps^0.5) {
   checkmate::assertDataFrame(data)
   checkmate::assertFormula(formula)
-  checkmate::assertNames(exposure.name, subset.of = names(data))
 
   # audit and extract the variables
-  var_names <- audit_formula(data, formula, exposure.name, nvars = 1)
+  var_names <- audit_formula(data, formula, exposure.name, instrument.name)
   outcome.name <- var_names$outcome.name
-  instrument.name <- var_names$extra.names
 
   mod.out <- glm(formula = formula, data = data, family = "gaussian")
 

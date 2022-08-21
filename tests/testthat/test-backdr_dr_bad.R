@@ -4,7 +4,7 @@ test_that("backdr_dr_bad", {
   data(whatif2dat)
   # out <- backdr_dr_bad(whatif2dat, formula = vl4 ~ A + lvlcont0, R = 500)
   out <- backdr_dr_bad(whatif2dat, formula = vl4 ~ A + lvlcont0,
-                       exposure.name = "A")
+                       exposure.name = "A", confound.names = "lvlcont0")
   out <- within(out, {
     estimate[term == "logRR"] <- exp(estimate[term == "logRR"])
     term[term == "logRR"] <- "RR"

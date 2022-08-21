@@ -4,18 +4,23 @@
 \alias{backdr_dr}
 \alias{standdr}
 \title{Compute the doubly robust standardized estimates}
+\source{
+Section 6.3.
+}
 \usage{
 backdr_dr(
   data,
-  formula = Y ~ T + A + H,
-  exposure.name = "T",
+  formula,
+  exposure.name,
+  confound.names,
   family = c("binomial", "poisson", "gaussian")
 )
 
 standdr(
   data,
-  formula = Y ~ T + A + H,
-  exposure.name = "T",
+  formula,
+  exposure.name,
+  confound.names,
   family = c("binomial", "poisson", "gaussian")
 )
 }
@@ -24,8 +29,9 @@ standdr(
 
 \item{formula}{Formula representing the model.}
 
-\item{exposure.name}{Name of exposure variable. All other independent
-variables in the formula will be assumed to be confounds.}
+\item{exposure.name}{Name of exposure variable.}
+
+\item{confound.names}{Names of the confound variables.}
 
 \item{family}{Name of the model's family. Must be one of
 \code{c("binomial", "poisson", "gaussian")}. default is \code{"binomial"}.}

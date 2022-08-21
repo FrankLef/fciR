@@ -1,6 +1,6 @@
 #' A package to study with Fundamentals of Causal Inference by Babette Brumback
 #'
-#' Pretty much all the functions developed by Babette Brumback inthe book
+#' Pretty much all the functions developed by Babette Brumback in the book
 #' Fundamentals of Causal Inference.
 #'
 #' @section fciR functions:
@@ -9,7 +9,16 @@
 #' @docType package
 #' @name fciR
 #'
-#' @importFrom dplyr %>%
+#' @source Fundamentals of Causal Inference with R, Babette A. Brumback,
+#' 2022, CRC Press
+#'
+#' @importFrom rlang .data
+#' @importFrom dplyr %>% count group_by mutate summarize filter pull relocate
+#' ungroup pull near
+#' @importFrom stats lm glm fitted predict
+#' @importFrom gee gee
+#' @importFrom geepack geeglm
+#' @importFrom broom tidy
 #'
 #' @keywords internal
 "_PACKAGE"

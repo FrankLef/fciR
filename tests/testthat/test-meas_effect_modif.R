@@ -1,7 +1,8 @@
 test_that("meas_effect_modif", {
   data(recovery)
   df <- recovery
-  out <- meas_effect_modif(recovery, formula = Y ~ `T` + M, exposure.name = "T")
+  out <- meas_effect_modif(recovery, formula = Y ~ `T` + M, exposure.name = "T",
+                           modifier.name = "M")
   # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")
@@ -38,7 +39,7 @@ test_that("meas_effect_modif: Boot", {
   out <- boot_est(data = recovery, func = meas_effect_modif,
                   times = 100, alpha = 0.05, seed = 12345, transf = "exp",
                   terms = NULL,
-                  formula = Y ~ `T` + M, exposure.name = "T")
+                  formula = Y ~ `T` + M, exposure.name = "T", modifier.name = "M")
   # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")

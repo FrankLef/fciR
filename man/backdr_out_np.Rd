@@ -4,15 +4,16 @@
 \alias{backdr_out_np}
 \title{Standardized estimates via Outcome Modeling, Non-Parametric}
 \usage{
-backdr_out_np(data, formula = Y ~ T + H, exposure.name = "T", att = FALSE)
+backdr_out_np(data, formula, exposure.name, confound.names, att = FALSE)
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
 
 \item{formula}{Formula representing the model.}
 
-\item{exposure.name}{Name of exposure variable. All other independent
-variables in the formula will be assumed to be confounds.}
+\item{exposure.name}{Name of exposure variable.}
+
+\item{confound.names}{Names of the confound variables.}
 
 \item{att}{if \code{FALSE} calculate the standardized (unconfounded)
 causal effect. If \code{TRUE} calculate the average effect of treatment

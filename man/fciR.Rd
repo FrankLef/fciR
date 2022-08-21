@@ -5,8 +5,12 @@
 \alias{fciR}
 \alias{fciR-package}
 \title{A package to study with Fundamentals of Causal Inference by Babette Brumback}
+\source{
+Fundamentals of Causal Inference with R, Babette A. Brumback,
+2022, CRC Press
+}
 \description{
-Pretty much all the functions developed by Babette Brumback inthe book
+Pretty much all the functions developed by Babette Brumback in the book
 Fundamentals of Causal Inference.
 }
 \section{fciR functions}{

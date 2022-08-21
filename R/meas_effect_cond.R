@@ -9,6 +9,7 @@
 #' @param data Dataframe of raw data.
 #' @param formula The model formula.
 #' @param exposure.name Name of the exposure variable.
+#' @param confound.names Name of confound variables.
 #' @param condition.names Character vector of conditioned variable names. If
 #' \code{NULL} all independent variables exclusding the \code{exposure.name}
 #' will be used.
@@ -20,16 +21,16 @@
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-meas_effect_cond <- function(data, formula = Y ~ `T` + A + H,
-                             exposure.name = "T", condition.names = NULL,
+meas_effect_cond <- function(data, formula, exposure.name, confound.names,
+                             condition.names = NULL,
                              family = c("binomial", "poisson", "gaussian")) {
 
   # name of intercept used by lm, glm, etc.
   x0 <- "(Intercept)"
 
-  var_names <- audit_formula(data, formula, exposure.name)
+  var_names <- audit_formula(data, formula, exposure.name,
+                             c(confound.names, condition.names))
   outcome.name <- var_names$outcome.name
-  confound.names <- var_names$extra.names  # this includes the condition.name
 
   # if condition.names is NULL then use all independent variables
   # EXCLUDING exposure

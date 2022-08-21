@@ -5,17 +5,18 @@
 \alias{stand.r}
 \title{Standardized estimates via Outcome Modeling, Saturated regression}
 \usage{
-backdr_out_sat(data, formula = Y ~ A * H, exposure.name = "A", att = FALSE)
+backdr_out_sat(data, formula, exposure.name, confound.names, att = FALSE)
 
-stand.r(data, formula = Y ~ A * H, exposure.name = "A", att = FALSE)
+stand.r(data, formula, exposure.name, confound.names, att = FALSE)
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
 
 \item{formula}{Formula representing the model.}
 
-\item{exposure.name}{Name of exposure variable. All other independent
-variables in the formula will be assumed to be confounds.}
+\item{exposure.name}{Name of exposure variable.}
+
+\item{confound.names}{Names of the confound variables.}
 
 \item{att}{if \code{FALSE} calculate the standardized (unconfounded)
 causal effect. If \code{TRUE} calculate the average effect of treatment

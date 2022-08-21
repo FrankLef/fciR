@@ -3,7 +3,7 @@ test_that("backdr_exp_gee", {
 
   data(whatif2dat)
   out <- backdr_exp_gee(whatif2dat, formula = vl4 ~ A + lvlcont0,
-                        exposure.name ="A")
+                        exposure.name ="A", confound.names = "lvlcont0")
   out <- out[out$term %in% ids, ]
   # cat("\n", "out", "\n")
   # print(out)

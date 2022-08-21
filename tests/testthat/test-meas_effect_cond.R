@@ -3,7 +3,8 @@ test_that("meas_effect_cond", {
   data <- whatifdat
 
   out <- meas_effect_cond(data, formula = Y ~ `T` + A + H,
-                          exposure.name = "T", condition.names = "H")
+                          exposure.name = "T", confound.names = "A",
+                          condition.names = "H")
   # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")

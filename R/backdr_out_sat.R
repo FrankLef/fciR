@@ -10,23 +10,18 @@
 #'
 #' @inheritParams backdr_out_np
 #'
-#' @importFrom stats glm
-#' @importFrom rlang .data
-#' @importFrom broom tidy
-#'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-backdr_out_sat <- function(data, formula = Y ~ A * H, exposure.name = "A",
-                           att = FALSE) {
+backdr_out_sat <- function(data, formula, exposure.name,
+                           confound.names, att = FALSE) {
   checkmate::assertDataFrame(data)
   checkmate::assertFormula(formula)
-  checkmate::assertNames(exposure.name, subset.of = names(data))
+  checkmate::assert_string(confound.names, min.chars = 1)
   checkmate::assertFlag(att)
 
   # this function works when there is only one confound
   # audit and extract the variables
-  var_names <- audit_formula(data, formula, exposure.name, nvars = 1)
-  outcome.name <- var_names$outcome.name
+  var_names <- audit_formula(data, formula, exposure.name, confound.names)
   confound.names <- var_names$extra.names
 
   x0 <- "(Intercept)"  # name of intercept used by lm, glm, etc.

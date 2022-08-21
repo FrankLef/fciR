@@ -12,22 +12,19 @@
 #'
 #' @inheritParams backdr_out_np
 #'
-#' @importFrom stats glm fitted predict
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-backdr_exp <- function(data, formula = Y ~ `T` + H, exposure.name = "T",
+backdr_exp <- function(data, formula, exposure.name, confound.names,
                        att = FALSE) {
   checkmate::assertDataFrame(data)
   checkmate::assertFormula(formula)
-  checkmate::assertNames(exposure.name, subset.of = names(data))
   checkmate::assertFlag(att)
 
   x0 <- "(Intercept)"  # name of intercept used by lm, glm, etc.
 
-  var_names <- audit_formula(data, formula, exposure.name)
+  var_names <- audit_formula(data, formula, exposure.name, confound.names)
   outcome.name <- var_names$outcome.name
-  confound.names <- var_names$extra.names
 
   # exposure model formula
   eformula <- paste(exposure.name, paste(confound.names, collapse = "+"),
@@ -42,7 +39,8 @@ backdr_exp <- function(data, formula = Y ~ `T` + H, exposure.name = "T",
   # NOTE: fitted() is the same as using predict(..., type = "response")
   #       BUT fitted only use the ORIGINAL data, there is no newdata.
   eH <- fitted(glm(formula = eformula, family = "binomial", data = data))
-  stopifnot(all(!dplyr::near(eH, 0)))  # e must not equal zero
+  assertthat::assert_that(all(!dplyr::near(eH, 0)),
+                          msg = "eH must not equal zero")
 
   # compute the E(T) when ATT is required
   e0 <- NA_real_

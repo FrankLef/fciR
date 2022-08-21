@@ -7,16 +7,18 @@
 \usage{
 meas_effect_cond(
   data,
-  formula = Y ~ T + A + H,
-  exposure.name = "T",
+  formula,
+  exposure.name,
+  confound.names,
   condition.names = NULL,
   family = c("binomial", "poisson", "gaussian")
 )
 
 bootc(
   data,
-  formula = Y ~ T + A + H,
-  exposure.name = "T",
+  formula,
+  exposure.name,
+  confound.names,
   condition.names = NULL,
   family = c("binomial", "poisson", "gaussian")
 )
@@ -27,6 +29,8 @@ bootc(
 \item{formula}{The model formula.}
 
 \item{exposure.name}{Name of the exposure variable.}
+
+\item{confound.names}{Name of confound variables.}
 
 \item{condition.names}{Character vector of conditioned variable names. If
 \code{NULL} all independent variables exclusding the \code{exposure.name}

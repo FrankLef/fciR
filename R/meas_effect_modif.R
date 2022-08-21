@@ -9,15 +9,15 @@
 #' variable.
 #'
 #' @inheritParams meas_effect_cond
+#' @param modifier.name Name of modifier variable.
 #'
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-meas_effect_modif <- function(data, formula = Y ~ `T` + M, exposure.name = "T") {
+meas_effect_modif <- function(data, formula, exposure.name, modifier.name) {
 
-  var_names <- audit_formula(data, formula, exposure.name, nvars = 1)
+  var_names <- audit_formula(data, formula, exposure.name, modifier.name)
   outcome.name <- var_names$outcome.name
-  modifier.name <- var_names$extra.names
 
 
   # estimate the expected potential outcomes
