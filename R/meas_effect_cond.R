@@ -10,9 +10,8 @@
 #' @param formula The model formula.
 #' @param exposure.name Name of the exposure variable.
 #' @param confound.names Name of confound variables.
-#' @param condition.names Character vector of conditioned variable names. If
-#' \code{NULL} all independent variables exclusding the \code{exposure.name}
-#' will be used.
+#' @param condition.names Character vector of conditioned variable names. By
+#' default, it will be the same as the \code{confound.names}.
 #' @param family Name of distribution. Must be in
 #'  \code{c("binomial", "poisson", "gaussian")}.
 #'
@@ -22,11 +21,13 @@
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 meas_effect_cond <- function(data, formula, exposure.name, confound.names,
-                             condition.names = NULL,
+                             condition.names = confound.names,
                              family = c("binomial", "poisson", "gaussian")) {
 
   # name of intercept used by lm, glm, etc.
   x0 <- "(Intercept)"
+
+  if (is.null(condition.names)) condition.names <- confound.names
 
   var_names <- audit_formula(data, formula, exposure.name,
                              c(confound.names, condition.names))

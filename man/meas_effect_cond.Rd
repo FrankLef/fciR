@@ -10,7 +10,7 @@ meas_effect_cond(
   formula,
   exposure.name,
   confound.names,
-  condition.names = NULL,
+  condition.names = confound.names,
   family = c("binomial", "poisson", "gaussian")
 )
 
@@ -19,7 +19,7 @@ bootc(
   formula,
   exposure.name,
   confound.names,
-  condition.names = NULL,
+  condition.names = confound.names,
   family = c("binomial", "poisson", "gaussian")
 )
 }
@@ -32,9 +32,8 @@ bootc(
 
 \item{confound.names}{Name of confound variables.}
 
-\item{condition.names}{Character vector of conditioned variable names. If
-\code{NULL} all independent variables exclusding the \code{exposure.name}
-will be used.}
+\item{condition.names}{Character vector of conditioned variable names. By
+default, it will be the same as the \code{confound.names}.}
 
 \item{family}{Name of distribution. Must be in
 \code{c("binomial", "poisson", "gaussian")}.}
