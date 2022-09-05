@@ -11,6 +11,8 @@
 #' @param tol Numeric > 0. Tolerance used in estimation. Default is
 #' .Machine$double.eps^0.5.
 #'
+#' @source Section 9.3
+#'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 instr_vars <- function(data, formula, exposure.name, instrument.name,

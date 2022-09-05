@@ -12,6 +12,8 @@
 #' @importFrom dplyr group_by ungroup summarize n
 #' @importFrom stats sd quantile weighted.mean
 #'
+#' @source Section 6.3.1
+#'
 #' @return Dataframe of results.
 #' @export
 mc_standdr <- function(ss = c(40, 100), nrep = 1000, width = 0.95) {

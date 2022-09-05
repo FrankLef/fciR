@@ -4,6 +4,9 @@
 \alias{meas_effect_modif}
 \alias{boot}
 \title{Compute estimates of the association measures for 2 strata}
+\source{
+Section 4.1
+}
 \usage{
 meas_effect_modif(data, formula, exposure.name, modifier.name)
 

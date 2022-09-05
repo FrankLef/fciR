@@ -3,6 +3,9 @@
 \name{backdr_out_np}
 \alias{backdr_out_np}
 \title{Standardized estimates via Outcome Modeling, Non-Parametric}
+\source{
+Section 6.1
+}
 \usage{
 backdr_out_np(data, formula, exposure.name, confound.names, att = FALSE)
 }

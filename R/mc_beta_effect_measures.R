@@ -15,6 +15,8 @@
 #'
 #' @importFrom stats rbeta
 #'
+#' @source Section 4.2.1
+#'
 #' @return List of matrices. One per event of effect measure.
 #' @export
 #'

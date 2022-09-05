@@ -8,6 +8,8 @@
 #'
 #' @seealso did_longer
 #'
+#' @source Section 7.1.3
+#'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 did_logistic <- function(data, formula, exposure.name, confound.names,

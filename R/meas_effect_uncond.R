@@ -14,6 +14,8 @@
 #'
 #' @importFrom stats glm coef plogis
 #'
+#' @source Section 3.3
+#'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 meas_effect_uncond <- function(data, formula = Y ~ `T`) {

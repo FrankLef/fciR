@@ -13,6 +13,8 @@
 #' causal effect. If \code{TRUE} calculate the average effect of treatment
 #' on the treated.
 #'
+#' @source Section 6.1
+#'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 backdr_out_np <- function(data, formula, exposure.name, confound.names,

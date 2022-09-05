@@ -12,6 +12,7 @@
 #'
 #' @inheritParams backdr_out_np
 #'
+#' @source Section 6.2.2
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export

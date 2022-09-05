@@ -4,6 +4,9 @@
 \alias{did_logistic}
 \alias{didlogistic}
 \title{Compute the DiD Estimator with a Lofistic Model}
+\source{
+Section 7.1.3
+}
 \usage{
 did_logistic(
   data,

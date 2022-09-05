@@ -4,6 +4,9 @@
 \alias{instr_logistic}
 \alias{ivlogit.r}
 \title{Estimate Effect Using Instrument Variables via Logistic Fit}
+\source{
+Section 9.3
+}
 \usage{
 instr_logistic(
   data,

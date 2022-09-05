@@ -5,6 +5,9 @@
 \alias{mk.mortdat}
 \alias{attsem.r}
 \title{Compute Standardized Averages Using Exposure Modeling, Non Parametric}
+\source{
+Section 6.2.1
+}
 \usage{
 backdr_exp_np(data, formula, exposure.name, confound.names, att = FALSE)
 
@@ -32,6 +35,6 @@ Dataframe in a useable format for \code{rsample::bootstraps}.
 Compute standardized averages using exposure modeling, non-parametric.
 }
 \details{
-Compute standardized averages using exposure modeling. See introduciton of
+Compute standardized averages using exposure modeling. See introduction of
 section 6.2 and section 6.2.1.
 }

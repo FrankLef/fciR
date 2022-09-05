@@ -3,6 +3,9 @@
 \name{mc_beta_effect_measures}
 \alias{mc_beta_effect_measures}
 \title{Monte Carlo Sim of Effect Measures using the Beta distribution}
+\source{
+Section 4.2.1
+}
 \usage{
 mc_beta_effect_measures(
   shape1_prms = 1,

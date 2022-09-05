@@ -4,6 +4,9 @@
 \alias{instr_loglinear}
 \alias{ivlog.r}
 \title{Estimate Effect Using Instrument Variables via Logarithmic fit}
+\source{
+Section 9.3
+}
 \usage{
 instr_loglinear(
   data,

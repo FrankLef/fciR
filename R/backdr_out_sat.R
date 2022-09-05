@@ -10,6 +10,8 @@
 #'
 #' @inheritParams backdr_out_np
 #'
+#' @source Section 6.1
+#'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 backdr_out_sat <- function(data, formula, exposure.name,

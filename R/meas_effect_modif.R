@@ -11,6 +11,7 @@
 #' @inheritParams meas_effect_cond
 #' @param modifier.name Name of modifier variable.
 #'
+#' @source Section 4.1
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export

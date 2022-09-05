@@ -4,6 +4,9 @@
 \alias{instr_vars}
 \alias{iv.r}
 \title{Compute ITT, CACE and ATT from Instrument Variables}
+\source{
+Section 9.3
+}
 \usage{
 instr_vars(
   data,

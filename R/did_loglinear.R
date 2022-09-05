@@ -8,6 +8,8 @@
 #'
 #' @seealso did_longer
 #'
+#' @source Section 7.1.2
+#'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 did_loglinear <- function(data, formula, exposure.name, confound.names,

@@ -4,6 +4,9 @@
 \alias{backdr_out_sat}
 \alias{stand.r}
 \title{Standardized estimates via Outcome Modeling, Saturated regression}
+\source{
+Section 6.1
+}
 \usage{
 backdr_out_sat(data, formula, exposure.name, confound.names, att = FALSE)
 

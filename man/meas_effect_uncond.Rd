@@ -4,6 +4,9 @@
 \alias{meas_effect_uncond}
 \alias{bootu}
 \title{Compute estimates of the unconditional association measures}
+\source{
+Section 3.3
+}
 \usage{
 meas_effect_uncond(data, formula = Y ~ T)
 

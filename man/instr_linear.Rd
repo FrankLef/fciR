@@ -4,6 +4,9 @@
 \alias{instr_linear}
 \alias{ividentity.r}
 \title{Estimate Effect Using Instrument Variables}
+\source{
+Section 9.3
+}
 \usage{
 instr_linear(
   data,

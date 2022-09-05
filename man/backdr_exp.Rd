@@ -4,6 +4,9 @@
 \alias{backdr_exp}
 \alias{standexp.r}
 \title{Compute Standardized Estimates With Parametric Exposure Model}
+\source{
+Section 6.2.2
+}
 \usage{
 backdr_exp(data, formula, exposure.name, confound.names, att = FALSE)
 

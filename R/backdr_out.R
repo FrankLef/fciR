@@ -13,6 +13,8 @@
 #'
 #' @seealso effect_measures
 #'
+#' @source Section 6.1.2
+#'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 backdr_out <- function(data, formula, exposure.name, confound.names,

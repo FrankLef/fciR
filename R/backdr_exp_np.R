@@ -2,10 +2,12 @@
 #'
 #' Compute standardized averages using exposure modeling, non-parametric.
 #'
-#' Compute standardized averages using exposure modeling. See introduciton of
+#' Compute standardized averages using exposure modeling. See introduction of
 #' section 6.2 and section 6.2.1.
 #'
 #' @inheritParams backdr_out_np
+#'
+#' @source Section 6.2.1
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export

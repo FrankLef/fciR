@@ -7,18 +7,20 @@
 \format{
 Dataframe with 2348 rows and 12 variables.
 \describe{
-\item{age}{todo}
-\item{gt65}{todo}
-\item{attend}{todo}
-\item{gthsedu}{todo}
-\item{magthsedu}{todo}
-\item{pagthsedu}{todo}
-\item{fair}{todo}
-\item{owngun}{todo}
-\item{conservative}{todo}
-\item{trump}{todo}
-\item{white}{todo}
-\item{female}{todo}
+\item{age}{age of participant.}
+\item{gt65}{1 = age greater than 65.}
+\item{attend}{1 = attending religious service more than once a month.}
+\item{gthsedu}{1 = greater than a high school education.}
+\item{magthsedu}{1 = participant's mother having greater than a
+high school education.}
+\item{pagthsedu}{1 = participant's father having greater than a
+high school education.}
+\item{fair}{1 = belief that if people got a chance they would try to be fair.}
+\item{owngun}{1 = owning a gun or revolver.}
+\item{conservative}{1 = political views that are slighlty conservative or more.}
+\item{trump}{0 = those who did not vote or did not answer are coded 0.}
+\item{white}{1 = participant considers himself white.}
+\item{female}{respondent's sex}
 }
 an exported object
 }

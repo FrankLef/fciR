@@ -13,6 +13,8 @@
 #'
 #' @seealso did_longer
 #'
+#' @source Section 7.1.1
+#'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 did_linear <- function(data, formula, exposure.name, confound.names,

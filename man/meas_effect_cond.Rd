@@ -4,6 +4,9 @@
 \alias{meas_effect_cond}
 \alias{bootc}
 \title{Compute estimates of the conditional association measures}
+\source{
+Section 3.3
+}
 \usage{
 meas_effect_cond(
   data,

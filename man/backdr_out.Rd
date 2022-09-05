@@ -4,6 +4,9 @@
 \alias{backdr_out}
 \alias{standout}
 \title{Compute standardized estimates with parametric outcome model}
+\source{
+Section 6.1.2
+}
 \usage{
 backdr_out(
   data,

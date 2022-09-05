@@ -3,6 +3,9 @@
 \name{mc_standdr}
 \alias{mc_standdr}
 \title{Monte Carlo Simulation of Doubly Robust Standardization}
+\source{
+Section 6.3.1
+}
 \usage{
 mc_standdr(ss = c(40, 100), nrep = 1000, width = 0.95)
 }

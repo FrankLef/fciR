@@ -4,6 +4,9 @@
 \alias{frontdr_np}
 \alias{frontdoor.r}
 \title{Estimate the Effect Using the Front-Door Method}
+\source{
+Section 8.3
+}
 \usage{
 frontdr_np(data, formula, exposure.name, surrogate.name)
 

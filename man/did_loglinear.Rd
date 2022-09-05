@@ -4,6 +4,9 @@
 \alias{did_loglinear}
 \alias{didloglinear}
 \title{Compute the DiD Estimator with a Loglinear Model}
+\source{
+Section 7.1.2
+}
 \usage{
 did_loglinear(
   data,

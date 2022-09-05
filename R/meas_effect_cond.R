@@ -18,6 +18,8 @@
 #' @importFrom rlang f_rhs .data
 #' @importFrom stats glm coef plogis
 #'
+#' @source Section 3.3
+#'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 meas_effect_cond <- function(data, formula, exposure.name, confound.names,

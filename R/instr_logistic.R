@@ -9,6 +9,8 @@
 #'
 #' @importFrom AER ivreg
 #'
+#' @source Section 9.3
+#'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 instr_logistic <- function(data, formula, exposure.name, instrument.name,

@@ -10,6 +10,8 @@
 #' @param exposure.name Name of exposure variable.
 #' @param surrogate.name Name of the surrogate variable.
 #'
+#' @source Section 8.3
+#'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 frontdr_np <- function(data, formula, exposure.name, surrogate.name) {

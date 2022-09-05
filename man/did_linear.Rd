@@ -4,6 +4,9 @@
 \alias{did_linear}
 \alias{didlinear}
 \title{Compute the DiD Estimator with a Linear Model}
+\source{
+Section 7.1.1
+}
 \usage{
 did_linear(
   data,
