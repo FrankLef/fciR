@@ -18,3 +18,7 @@ prop_scores <- function(data, formula) {
   fit <- glm(formula = formula, family = "binomial", data = data)
   list(fitted = fitted(fit), fit = fit)
 }
+
+#' @rdname prop_scores
+#' @export
+prop.r <- prop_scores
