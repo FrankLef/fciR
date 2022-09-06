@@ -61,6 +61,8 @@ instr_loglinear <- function(data, formula, exposure.name, instrument.name,
   # cat("\n")
 
   out <- effect_measures(val0 = EY0, val1 = EY1)
+  # add beta to the results
+  out <- c("beta" = unname(beta), out)
   data.frame(
     term = names(out),
     estimate = unname(out),
