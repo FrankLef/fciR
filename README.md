@@ -42,31 +42,36 @@ The relevant functions and their correspondence in the book are listed
 in the following table. It is important to note that **all boostrapping
 code are replaced by `fciR::boot_est`**.
 
-|       Reference       | Book         | fciR                 | Description                                                          |
-|:---------------------:|:-------------|:---------------------|:---------------------------------------------------------------------|
-|  Section 2.4, p. 33   | lmodboot     | prob\_lmod           | Estimate the sampling distribution                                   |
-|  Section 2.4, p. 33   | lmodboot     | prob\_lmod\_td       | Estimate the sampling distribution using tidyverse                   |
-|  Section 2.4, p. 34   | lmodboot     | boot\_est            | The bootstrapping code section is replaced by this one               |
-|  Section 3.3, p. 46   | bootu        | meas\_effect\_uncond | Estimate unconditional association measures                          |
-|  Section 3.3, p. 50   | lmodboot     | meas\_effect\_uncond | Estimate conditional association measures                            |
-|  Section 4.1, p. 60   | bootinside   | meas\_effect\_modif  | Estimate effect measure with modifications                           |
-|  Section 6.1, p. 101  | stand        | backdr\_out\_npr     | backdoor method via outcome model using non parametric regression    |
-| Section 6.1.1, p. 106 | standatt     | backdr\_out\_npr     | same as backdr\_out\_npr but with `att=TRUE`                         |
-| Section 6.1.2, p. 111 | standout     | backdr\_out          | backdoor via outcome model using parametric method                   |
-| Section 6.1.2, p. 112 | standout     | backdr\_out          | Same as previous one but using different parameters                  |
-|  Section 6.2, p. 114  | mk.mordat    | backdr\_exp\_bb      | Standardization via exposure modeling                                |
-|  Section 6.2, p. 115  | mordat.out   | backdr\_out          | Standardization via outcome modeling                                 |
-| Section 6.2.1, p. 116 | attsem       | backdr\_out          | Standardization via outcome modeling with `att=TRUE`                 |
-| Section 6.2.2, p. 118 | standexp     | backdr\_exp          | Standardization via parametric exposure model                        |
-| Section 6.2.2, p. 119 | exp          | backdr\_exp\_gee     | Standardization via parametric exposure model with `geepack::geeglm` |
-| Section 6.2.2, p. 119 | standep      | backdr\_exp          | Same as above for p. 118                                             |
-|  Section 6.3, p. 125  | badstanddr   | backdr\_dr\_bad      | Misspecified doubly sobust standardization                           |
-|  Section 6.3, p. 127  | simdr        | mc\_standdr          | Monte-Carlo simulation investigating small-sample robustness         |
-|  Section 7.2, p. 141  | didlinear    | did\_linear          | Difference-in-Differences estimator with linear model                |
-|  Section 7.2, p. 141  | didloglinear | did\_loglinear       | Difference-in-Differences estimator with loglinear model             |
-|  Section 7.2, p. 142  | didlogistic  | did\_logistic        | Difference-in-Differences estimator with logistic model              |
-|  Section 7.2, p. 142  | bootdid      | boot\_est            | Same bootstrapping function used everywhere else in the package      |
-|  Section 8.3, p. 153  | frontdoor    | frontdr\_np          | Front-door method non-parametric                                     |
+|       Reference       | Book         | fciR               | Description                                                          |
+|:---------------------:|:-------------|:-------------------|:---------------------------------------------------------------------|
+|  Section 2.4, p. 33   | lmodboot     | prob_lmod          | Estimate the sampling distribution                                   |
+|  Section 2.4, p. 33   | lmodboot     | prob_lmod_td       | Estimate the sampling distribution using tidyverse                   |
+|  Section 2.4, p. 34   | lmodboot     | boot_est           | The bootstrapping code section is replaced by this one               |
+|  Section 3.3, p. 46   | bootu        | meas_effect_uncond | Estimate unconditional association measures                          |
+|  Section 3.3, p. 50   | lmodboot     | meas_effect_uncond | Estimate conditional association measures                            |
+|  Section 4.1, p. 60   | bootinside   | meas_effect_modif  | Estimate effect measure with modifications                           |
+|  Section 6.1, p. 101  | stand        | backdr_out_npr     | backdoor method via outcome model using non parametric regression    |
+| Section 6.1.1, p. 106 | standatt     | backdr_out_npr     | same as backdr_out_npr but with `att=TRUE`                           |
+| Section 6.1.2, p. 111 | standout     | backdr_out         | backdoor via outcome model using parametric method                   |
+| Section 6.1.2, p. 112 | standout     | backdr_out         | Same as previous one but using different parameters                  |
+|  Section 6.2, p. 114  | mk.mordat    | backdr_exp_bb      | Standardization via exposure modeling                                |
+|  Section 6.2, p. 115  | mordat.out   | backdr_out         | Standardization via outcome modeling                                 |
+| Section 6.2.1, p. 116 | attsem       | backdr_out         | Standardization via outcome modeling with `att=TRUE`                 |
+| Section 6.2.2, p. 118 | standexp     | backdr_exp         | Standardization via parametric exposure model                        |
+| Section 6.2.2, p. 119 | exp          | backdr_exp_gee     | Standardization via parametric exposure model with `geepack::geeglm` |
+| Section 6.2.2, p. 119 | standep      | backdr_exp         | Same as above for p. 118                                             |
+| Section 6.2.2, p. 120 | prop         | prop_mod           | Fit the propensity score model                                       |
+|  Section 6.3, p. 125  | badstanddr   | backdr_dr_bad      | Misspecified doubly robust standardization                           |
+|  Section 6.3, p. 127  | simdr        | mc_standdr         | Monte-Carlo simulation investigating small-sample robustness         |
+|  Section 7.2, p. 141  | didlinear    | did_linear         | Difference-in-Differences estimator with linear model                |
+|  Section 7.2, p. 141  | didloglinear | did_loglinear      | Difference-in-Differences estimator with loglinear model             |
+|  Section 7.2, p. 142  | didlogistic  | did_logistic       | Difference-in-Differences estimator with logistic model              |
+|  Section 7.2, p. 142  | bootdid      | boot_est           | Same bootstrapping function used everywhere else in the package      |
+|  Section 8.3, p. 153  | frontdoor    | frontdr_np         | Front-door method non-parametric                                     |
+|  Section 9.3, p. 164  | iv           | instr_vars         | ITT, CACE and ATT from instrument variables                          |
+|  Section 9.3, p. 167  | ividentity   | instr_linear       | Estimate effect using instrument variables                           |
+|  Section 9.3, p. 167  | ivlog        | instr_loglinear    | Estimate effect using instrument variables via logarithmic fit       |
+|  Section 9.3, p. 168  | ivlog        | instr_logistic     | Estimate effect using instrument variables via logistic fit          |
 
 ## Packages
 
@@ -83,12 +88,14 @@ The packages used by `fciR` include the usual great ones
 
 and several packages used for more specialized tasks
 
-|  Package   | Reference                                                           | Description                                    |
-|:----------:|:--------------------------------------------------------------------|:-----------------------------------------------|
-|    boot    | [boot](https://cran.rstudio.com/web/packages/boot/index.html)       | Boostrapping                                   |
-|  rsample   | [rsample](https://rsample.tidymodels.org)                           | Boostrapping and jackknife                     |
-|   broom    | [broom](https://broom.tidymodels.org)                               | Extract information from models                |
-| MonteCarlo | [MonteCarlo](https://github.com/FunWithR/MonteCarlo)                | Monte Carlo simulations                        |
-| formulaic  | [formulaic](https://dachosen1.github.io/formulaic/index.html)       | Dynamic creation and quality checks of formula |
-|    gee     | [gee](https://cran.rstudio.com/web/packages/gee/index.html)         | Generalized estimation equation solver         |
-|  geepack   | [geepack](https://cran.rstudio.com/web/packages/geepack/index.html) | Generalized estimation equation package        |
+|  Package   | Reference                                                               | Description                                    |
+|:----------:|:------------------------------------------------------------------------|:-----------------------------------------------|
+|    boot    | [boot](https://cran.rstudio.com/web/packages/boot/index.html)           | Boostrapping                                   |
+|  rsample   | [rsample](https://rsample.tidymodels.org)                               | Boostrapping and jackknife                     |
+|   broom    | [broom](https://broom.tidymodels.org)                                   | Extract information from models                |
+| MonteCarlo | [MonteCarlo](https://github.com/FunWithR/MonteCarlo)                    | Monte Carlo simulations                        |
+| formulaic  | [formulaic](https://dachosen1.github.io/formulaic/index.html)           | Dynamic creation and quality checks of formula |
+|    gee     | [gee](https://cran.rstudio.com/web/packages/gee/index.html)             | Generalized estimation equation solver         |
+|  geepack   | [geepack](https://cran.rstudio.com/web/packages/geepack/index.html)     | Generalized estimation equation package        |
+|    AER     | [AER](https://cran.r-project.org/web/packages/AER/index.html)           | Applied econometrics with R                    |
+|  Matching  | [Matching](https://cran.r-project.org/web/packages/Matching/index.html) | Multivariate and propensity score matching     |
