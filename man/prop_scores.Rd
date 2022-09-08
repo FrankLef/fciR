@@ -5,7 +5,7 @@
 \alias{prop.r}
 \title{Fit the Propensity Score Model}
 \source{
-Section 6.2.2, p. 120-121.
+Section 6.2.2, p. 120-121. Used throughout chapter 10.
 }
 \usage{
 prop_scores(data, formula)
@@ -18,7 +18,11 @@ prop.r(data, formula)
 \item{formula}{Formula used to fit the propensity score.}
 }
 \value{
-List with fitted values and the fit object.
+List with
+\describe{
+\item{scores}{Vector of propensity scores.}
+\item{fit}{The object of class glm returned by glm().}
+}
 }
 \description{
 Fit the propensity score model.

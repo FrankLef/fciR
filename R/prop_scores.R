@@ -7,16 +7,21 @@
 #' @param data Data.frame.
 #' @param formula Formula used to fit the propensity score.
 #'
-#' @source Section 6.2.2, p. 120-121.
+#' @source Section 6.2.2, p. 120-121. Used throughout chapter 10.
 #'
-#' @return List with fitted values and the fit object.
+#' @return List with
+#' \describe{
+#'   \item{scores}{Vector of propensity scores.}
+#'   \item{fit}{The object of class glm returned by glm().}
+#' }
 #' @export
 prop_scores <- function(data, formula) {
   checkmate::assertDataFrame(data)
   checkmate::assertFormula(formula)
 
   fit <- glm(formula = formula, family = "binomial", data = data)
-  list(fitted = fitted(fit), fit = fit)
+  scores <- fitted(fit)
+  list("scores" = scores, "fit" = fit)
 }
 
 #' @rdname prop_scores
