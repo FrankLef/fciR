@@ -15,7 +15,7 @@
 #' @importFrom rlang .data
 #' @importFrom dplyr %>% count group_by mutate summarize filter pull relocate
 #' ungroup pull near
-#' @importFrom stats lm glm fitted predict
+#' @importFrom stats lm glm fitted predict formula quantile
 #' @importFrom gee gee
 #' @importFrom geepack geeglm
 #' @importFrom broom tidy
