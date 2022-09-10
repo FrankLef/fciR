@@ -9,7 +9,7 @@ Section 10.3. p. 180.
 \usage{
 prop_quant(
   data,
-  outcome.name,
+  formula,
   exposure.name,
   confound.names,
   probs = 0:4/4,
@@ -19,7 +19,7 @@ prop_quant(
 \arguments{
 \item{data}{Dataframe of raw data.}
 
-\item{outcome.name}{Name of the outcome variable.}
+\item{formula}{Formula representing the model.}
 
 \item{exposure.name}{Name of exposure variable.}
 

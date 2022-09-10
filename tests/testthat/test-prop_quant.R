@@ -3,7 +3,9 @@ test_that("prop_quant", {
   gssrcc <- gss[, c("trump", "gthsedu", "magthsedu", "white", "female", "gt65")]
   gssrcc <- gssrcc[complete.cases(gssrcc), ]
 
-  out <- prop_quant(gssrcc, outcome.name = "trump", exposure.name = "gthsedu",
+  a_formula <- trump ~ gthsedu + magthsedu + white + female + gt65
+  out <- prop_quant(gssrcc, formula = a_formula,
+                    exposure.name = "gthsedu",
                     confound.names = c("magthsedu", "white", "female", "gt65"),
                     probs = 0:4/4) |>
     mutate(estimate = round(estimate, 6))

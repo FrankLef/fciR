@@ -6,7 +6,7 @@
 #' between the propensity scores and the exposure.
 #'
 #' @param data Dataframe of raw data.
-#' @param outcome.name Name of the outcome variable.
+#' @param formula Formula representing the model.
 #' @param exposure.name Name of exposure variable.
 #' @param confound.names Names of the confound variables.
 #' @param probs Vector of probability for the quantiles.
@@ -16,8 +16,13 @@
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
-prop_quant <- function(data, outcome.name, exposure.name, confound.names,
+prop_quant <- function(data, formula, exposure.name, confound.names,
                            probs = 0:4/4, quant_var = "pquants") {
+  # audit the variables
+  var_names <- audit_formula(data, formula, exposure.name, confound.names)
+  outcome.name <- var_names$outcome.name
+
+
   # fit the propensity score model using the prop.r, alias fciR::prop_scores,
   #  from chapter 6
   eformula <- paste(exposure.name, paste(confound.names, collapse = "+"),
@@ -28,11 +33,11 @@ prop_quant <- function(data, outcome.name, exposure.name, confound.names,
   # add the quantiles to the data
   data <- data |>
     mutate(!!quant_var := pquants)
+
   # estimate the average potential outcome within each quartile
   oformula <- paste(outcome.name, paste(exposure.name, quant_var, sep = "*"),
                     sep = "~")
   oformula <- paste(c(oformula, "1", exposure.name), collapse = "-")
-  # print(oformula)
   fit <- glm(oformula, data = data)
   coefs <- coef(fit)
   ncoefs <- length(coefs)
