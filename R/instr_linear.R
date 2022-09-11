@@ -2,7 +2,8 @@
 #'
 #' Estimate effect using instrument variables.
 #'
-#' See section 9.3 p. 167 for details.
+#' See section 9.3 p. 167 for details. \bold{It is important to note that the
+#' formula must specify a saturated model, e.g. Y ~ T * A}.
 #'
 #' @inheritParams instr_vars
 #'
@@ -12,6 +13,10 @@
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
+#' @examples
+#' # An example can be found in the location identified in the
+#' # source section above at the github site
+#' # https://github.com/FrankLef/FundamentalsCausalInference.
 instr_linear <- function(data, formula, exposure.name, instrument.name,
                          tol = .Machine$double.eps^0.5) {
   checkmate::assertDataFrame(data)
