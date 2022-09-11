@@ -31,18 +31,16 @@ instr_vars <- function(data, formula, exposure.name, instrument.name,
 
   # estimate the denominator of the CAE and ATT with equation (9.5)
   denom <- mean(data[dat1, exposure.name]) - mean(data[dat0, exposure.name])
-  # denominator should not be near zero to avoid numerical problems
-  check <- abs(denom) >= tol
-  if(check) {
-    IV <- ITT / denom
-  } else {
-    IV <- NA_real_
-  }
+  denom <- mean(data[dat1, exposure.name]) - mean(data[dat0, exposure.name])
+  msg <- sprintf("The variable \'%s\' is a weak instrument. Typically, no analysis
+  should done with a weak instrument.", instrument.name)
+  assertthat::assert_that(abs(denom) >= tol, msg = msg)
+  IV <- ITT / denom
 
   out <- c("ITT" = ITT, "IV" = IV)
   data.frame(
     term = names(out),
-    estimate = unname(out),
+    estimate = out,
     std.err = NA_real_
   )
 }

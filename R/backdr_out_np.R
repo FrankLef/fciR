@@ -17,6 +17,10 @@
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
+#' @examples
+#' # An example can be found in the location identified in the
+#' # source section above at the github site
+#' # https://github.com/FrankLef/FundamentalsCausalInference.
 backdr_out_np <- function(data, formula, exposure.name, confound.names,
                           att = FALSE) {
   checkmate::assertDataFrame(data)

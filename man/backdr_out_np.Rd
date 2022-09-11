@@ -32,3 +32,8 @@ Standardized estimates via outcome modeling, non-parametric.
 The standardized estimates are computed using the non-parametric outcome
 model. The calculations are performed without regression.
 }
+\examples{
+# An example can be found in the location identified in the
+# source section above at the github site
+# https://github.com/FrankLef/FundamentalsCausalInference.
+}

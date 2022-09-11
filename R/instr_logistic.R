@@ -63,6 +63,12 @@ instr_logistic <- function(data, formula, exposure.name, instrument.name,
   # cat("\n")
 
   out <- effect_measures(val0 = EY0, val1 = EY1)
+  # change the names to reflect their true definition
+  the_terms <- c("RD" = r"(E(Y-Y(0)|A=1))",
+                 "logRR" = r"(log(E(Y|A=1))-log(E(Y(0)|A=1)))",
+                 "logOR" = r"(logit(E(Y|A=1))-logit(E(Y(0)|A=1)))")
+  out <- out[names(out) %in% names(the_terms)]
+  names(out) <- the_terms
   # add beta to the results
   out <- c("beta" = unname(beta), out)
   data.frame(
