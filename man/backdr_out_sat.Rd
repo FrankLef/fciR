@@ -37,3 +37,8 @@ That is all variables and their interactions are used. \emph{make sure all
 variables and their interactions are included in the formula}.
 See p. 101.
 }
+\examples{
+# An example can be found in the location identified in the
+# source section above at the github site
+# https://github.com/FrankLef/FundamentalsCausalInference.
+}

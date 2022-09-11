@@ -30,3 +30,8 @@ Fit the propensity score model.
 \details{
 Fit the propensity score model to obtain the score for a given data set.
 }
+\examples{
+# An example can be found in the location identified in the
+# source section above at the github site
+# https://github.com/FrankLef/FundamentalsCausalInference.
+}

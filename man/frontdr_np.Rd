@@ -31,3 +31,8 @@ Estimate the effect using Front-door method.
 Estimate the effect using Front-door method. The exposure variable is used
 as a confounder in the front-door method.
 }
+\examples{
+# An example can be found in the location identified in the
+# source section above at the github site
+# https://github.com/FrankLef/FundamentalsCausalInference.
+}

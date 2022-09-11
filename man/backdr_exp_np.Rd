@@ -38,3 +38,8 @@ Compute standardized averages using exposure modeling, non-parametric.
 Compute standardized averages using exposure modeling. See introduction of
 section 6.2 and section 6.2.1.
 }
+\examples{
+# An example can be found in the location identified in the
+# source section above at the github site
+# https://github.com/FrankLef/FundamentalsCausalInference.
+}

@@ -15,6 +15,10 @@
 #'   \item{fit}{The object of class glm returned by glm().}
 #' }
 #' @export
+#' @examples
+#' # An example can be found in the location identified in the
+#' # source section above at the github site
+#' # https://github.com/FrankLef/FundamentalsCausalInference.
 prop_scores <- function(data, formula) {
   checkmate::assertDataFrame(data)
   checkmate::assertFormula(formula)

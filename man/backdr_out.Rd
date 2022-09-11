@@ -46,6 +46,11 @@ Compute standardized estimates with parametric outcome model.
 The standardized estimates are computed using the outcome model. See chapter
 6, section 6.1.2, for details.
 }
+\examples{
+# An example can be found in the location identified in the
+# source section above at the github site
+# https://github.com/FrankLef/FundamentalsCausalInference.
+}
 \seealso{
 effect_measures
 }

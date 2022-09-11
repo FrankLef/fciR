@@ -39,3 +39,8 @@ Stratifying on the quantiles of the propensity score.
 Stratifying on the quantiles is useful to identify the possible interactions
 between the propensity scores and the exposure.
 }
+\examples{
+# An example can be found in the location identified in the
+# source section above at the github site
+# https://github.com/FrankLef/FundamentalsCausalInference.
+}

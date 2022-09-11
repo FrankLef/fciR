@@ -31,6 +31,11 @@ This method requires 2 different formulas which are created from the
 arguments \code{formula}. The 2 formulas created are for the exposure model
 and another one for the weighted linear model.
 }
+\examples{
+# An example can be found in the location identified in the
+# source section above at the github site
+# https://github.com/FrankLef/FundamentalsCausalInference.
+}
 \seealso{
 backdr_exp
 }

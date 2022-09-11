@@ -12,6 +12,10 @@
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @source Section 6.3.
 #' @export
+#' @examples
+#' # An example can be found in the location identified in the
+#' # source section above at the github site
+#' # https://github.com/FrankLef/FundamentalsCausalInference.
 backdr_dr <- function(data, formula, exposure.name, confound.names,
                       family = c("binomial", "poisson", "gaussian")) {
   checkmate::assertDataFrame(data)

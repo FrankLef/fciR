@@ -46,3 +46,8 @@ Compute the doubly robust standardized estimates.
 Compute the doubly robust standardized estimates using the code from section
 6.3.
 }
+\examples{
+# An example can be found in the location identified in the
+# source section above at the github site
+# https://github.com/FrankLef/FundamentalsCausalInference.
+}

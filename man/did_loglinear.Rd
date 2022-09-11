@@ -48,6 +48,11 @@ Compute the DiD Estimator with a loglinear model.
 \details{
 the DiD Estimator using the scripts from section 7.2, p. 141-142.
 }
+\examples{
+# An example can be found in the location identified in the
+# source section above at the github site
+# https://github.com/FrankLef/FundamentalsCausalInference.
+}
 \seealso{
 did_longer
 }

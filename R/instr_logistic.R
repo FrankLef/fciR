@@ -6,6 +6,8 @@
 #' formula must specify a saturated model, e.g. Y ~ T * A}.
 #'
 #' @inheritParams instr_vars
+#' @param formula Formula representing the model. It must be a saturated model,
+#' e.g. \code{Y ~ T * A}.
 #' @param niter Number of iterations
 #'
 #' @importFrom AER ivreg
@@ -69,11 +71,15 @@ instr_logistic <- function(data, formula, exposure.name, instrument.name,
 
   out <- effect_measures(val0 = EY0, val1 = EY1)
   # change the names to reflect their true definition
-  the_terms <- c("RD" = r"(E(Y-Y(0)|A=1))",
+  the_terms <- c("EY0" = r"(E(Y(0)|A=1))",
+                 "EY1" = r"(E(Y|A=1))",
+                 "RD" = r"(E(Y-Y(0)|A=1))",
                  "logRR" = r"(log(E(Y|A=1))-log(E(Y(0)|A=1)))",
                  "logOR" = r"(logit(E(Y|A=1))-logit(E(Y(0)|A=1)))")
-  out <- out[names(out) %in% names(the_terms)]
-  names(out) <- the_terms
+  pos <- match(names(the_terms), names(out), nomatch = 0L)
+  assertthat::assert_that(any(pos != 0))
+  out <- out[pos]
+  names(out) <- the_terms[pos != 0]
   # add beta to the results
   out <- c("beta" = unname(beta), out)
   data.frame(

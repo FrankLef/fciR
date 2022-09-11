@@ -3,6 +3,9 @@
 \name{backdr_twoparts}
 \alias{backdr_twoparts}
 \title{Compute standardized estimates with the 2-parts model}
+\source{
+Exercise 4 of chapter 6.
+}
 \usage{
 backdr_twoparts(data, formula, exposure.name, confound.names, condition.name)
 }
@@ -27,4 +30,9 @@ Compute standardized estimates with the 2-parts model.
 This method is detailed in exercise 4 of chapter 6. It is useful when there
 are many zeros.  Note that the results don't match exactly those obtained
 with outcome-mode or exposure-model standardization.
+}
+\examples{
+# An example can be found in the location identified in the
+# source section above at the github site
+# https://github.com/FrankLef/FundamentalsCausalInference.
 }

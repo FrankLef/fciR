@@ -40,3 +40,8 @@ exposure, must always be binary, if not it can be made binary
 "one can first recode the data so that T = 1 when it is previously equaled,
 and T = 0 when it previously equaled any value other than t", p. 113.
 }
+\examples{
+# An example can be found in the location identified in the
+# source section above at the github site
+# https://github.com/FrankLef/FundamentalsCausalInference.
+}

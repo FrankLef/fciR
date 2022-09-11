@@ -31,3 +31,8 @@ Doubly robust standardized estimates with misspecified outcome model.
 Compute the doubly robust standardized estimates with erros in the outcome
 model.
 }
+\examples{
+# An example can be found in the location identified in the
+# source section above at the github site
+# https://github.com/FrankLef/FundamentalsCausalInference.
+}

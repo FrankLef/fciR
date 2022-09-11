@@ -29,7 +29,8 @@ ivlog.r(
 \arguments{
 \item{data}{Dataframe of raw data.}
 
-\item{formula}{Formula representing the model.}
+\item{formula}{Formula representing the model. It must be a saturated model,
+e.g. \code{Y ~ T * A}.}
 
 \item{exposure.name}{Name of exposure variable.}
 
@@ -47,5 +48,11 @@ Dataframe in a useable format for \code{rsample::bootstraps}.
 Estimate effect using instrument variables via logarithmic fit.
 }
 \details{
-See section 9.3 p. 167-168 for details.
+See section 9.3 p. 167-168 for details. \bold{It is important to note that the
+formula must specify a saturated model, e.g. Y ~ T * A}.
+}
+\examples{
+# An example can be found in the location identified in the
+# source section above at the github site
+# https://github.com/FrankLef/FundamentalsCausalInference.
 }
