@@ -14,8 +14,8 @@
 #'
 #' @importFrom rlang .data
 #' @importFrom dplyr %>% count group_by mutate summarize filter pull relocate
-#' ungroup pull near
-#' @importFrom stats lm glm fitted predict formula quantile
+#' ungroup pull near across slice bind_cols bind_rows
+#' @importFrom stats lm glm fitted predict formula quantile cov
 #' @importFrom gee gee
 #' @importFrom geepack geeglm
 #' @importFrom broom tidy
