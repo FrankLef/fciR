@@ -49,8 +49,8 @@ precision_stats <- function(data, models, times = 1000, seed = NULL, none.name =
   out.conso <- lapply(seq_along(models), FUN = function(i) {
     models[[i]]$out
   })
-  out.conso <- do.call(rbind, out.conso) |>
-    as.data.frame() |>
+  out.conso <- out.conso |>
+    bind_rows() |>
     # remove duplicate terms ("None")
     dplyr::slice(match(unique(.data$term), .data$term))
 
