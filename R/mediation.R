@@ -100,11 +100,7 @@ mediation_np <- function(data, formula, exposure.name, mediator.name,
 #' Estimate mediation effect with parametric assumptions using the
 #' \code{tidyverse} way of coding.
 #'
-#' @param data Dataframe of raw data.
-#' @param formula Formula representing the model.
-#' @param exposure.name Name of exposure variable.
-#' @param mediator.name Name of mediator variable.
-#' @param confound.names Names of the confound variables.
+#' @inheritParams mediation_np
 #'
 #' @source section 12.3
 #'

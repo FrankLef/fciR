@@ -16,7 +16,8 @@
 #' @importFrom dplyr %>% count group_by mutate summarize filter pull relocate
 #' ungroup pull near across slice bind_cols bind_rows inner_join
 #' @importFrom tidyr pivot_wider
-#' @importFrom stats lm glm fitted predict formula quantile cov
+#' @importFrom stats lm glm fitted predict formula quantile cov as.formula
+#' setNames
 #' @importFrom gee gee
 #' @importFrom geepack geeglm
 #' @importFrom broom tidy
