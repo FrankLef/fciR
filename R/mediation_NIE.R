@@ -16,21 +16,22 @@
 #' # An example can be found in the location identified in the
 #' # source section above at the github site
 #' # https://github.com/FrankLef/FundamentalsCausalInference.
-mediation_NIE <- function(data, formula, exposure.name, mediator.name) {
+mediation_NIE <- function(data, formula, exposure.name, mediator.name,
+                          confound.names) {
   checkmate::assertDataFrame(data)
   checkmate::assertFormula(formula)
 
   outcome.name <- all.vars(formula[[2]])
-  input.names <- all.vars(formula[[3]])
 
-  # reduced formula, without mediator
-  input.names.reduced <- input.names[input.names != mediator.name]
+  # reduced formula, without exposure in input
+  exposure.confound.names <- c(exposure.name, confound.names)
   formula_red <- as.formula(paste(outcome.name,
-                                  paste(input.names.reduced, sep = "+"),
+                                  paste(exposure.confound.names, collapse = "+"),
                                   sep = "~"))
   # mediator formula
-  input.names.mediator <- input.names[input.names != mediator.name]
-  formula_med <- as.formula(paste(mediator.name, exposure.name, sep = "~"))
+  formula_med <- as.formula(paste(mediator.name,
+                                  paste(exposure.confound.names, collapse = "+"),
+                                  sep = "~"))
 
   # the models
   the_models <- list(
@@ -51,7 +52,7 @@ mediation_NIE <- function(data, formula, exposure.name, mediator.name) {
   NIE_diff <- the_coefs$reduced[exposure.name] - the_coefs$full[exposure.name]
 
   msg <- sprintf("NIE_prod of %f != NIE_diff of %f", NIE_prod, NIE_diff)
-  assertthat::assert_that(dplyr::near(NIE_prod, NIE_diff), msg = msg)
+  # assertthat::assert_that(dplyr::near(NIE_prod, NIE_diff), msg = msg)
 
   # output compatible with boostrap function
   data.frame(

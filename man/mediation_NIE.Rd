@@ -7,7 +7,7 @@
 section 12.3
 }
 \usage{
-mediation_NIE(data, formula, exposure.name, mediator.name)
+mediation_NIE(data, formula, exposure.name, mediator.name, confound.names)
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
@@ -17,6 +17,8 @@ mediation_NIE(data, formula, exposure.name, mediator.name)
 \item{exposure.name}{Name of exposure variable.}
 
 \item{mediator.name}{Name of mediator variable.}
+
+\item{confound.names}{Names of the confound variables.}
 }
 \value{
 Dataframe in a useable format for \code{rsample::bootstraps}.

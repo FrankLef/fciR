@@ -10,7 +10,8 @@ test_that("mediation_NIE", {
   out <- mediation_NIE(gssmed,
                        formula = trump ~ magthsedu + conservative,
                        exposure.name = "magthsedu",
-                       mediator.name = "conservative") |>
+                       mediator.name = "conservative",
+                       confound.names = NULL) |>
     mutate(across(.cols = where(is.numeric), .fns = round, digits = 6))
 
   target <- data.frame(
