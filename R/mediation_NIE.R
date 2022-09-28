@@ -52,7 +52,7 @@ mediation_NIE <- function(data, formula, exposure.name, mediator.name,
   NIE_diff <- the_coefs$reduced[exposure.name] - the_coefs$full[exposure.name]
 
   msg <- sprintf("NIE_prod of %f != NIE_diff of %f", NIE_prod, NIE_diff)
-  # assertthat::assert_that(dplyr::near(NIE_prod, NIE_diff), msg = msg)
+  assertthat::assert_that(dplyr::near(NIE_prod, NIE_diff), msg = msg)
 
   # output compatible with boostrap function
   data.frame(

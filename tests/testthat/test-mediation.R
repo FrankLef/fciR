@@ -7,6 +7,10 @@ test_that("mediation_np", {
                       confound.names = c("AD0")) |>
     mutate(across(.cols = where(is.numeric), .fns = round, digits = 5))
   row.names(out) <- seq_len(nrow(out))
+  # cat("\n", "out", "\n")
+  # print(out)
+  # cat("\n")
+
 
   the_results <- c(
     "TE" = -0.15147635,
