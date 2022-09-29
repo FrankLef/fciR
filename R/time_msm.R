@@ -52,7 +52,8 @@ time_msm <- function(data, outcome.name, exposure.names, confound.names) {
   data.frame(
     term = names(out),
     estimate = unname(out),
-    std.err = NA_real_)}
+    std.err = NA_real_)
+  }
 
 #' @rdname time_msm
 #' @export

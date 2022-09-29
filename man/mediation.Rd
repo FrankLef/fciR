@@ -35,3 +35,6 @@ Estimate mediation effect with parametric assumptions using the
 # source section above at the github site
 # https://github.com/FrankLef/FundamentalsCausalInference.
 }
+\seealso{
+mediation_calc
+}

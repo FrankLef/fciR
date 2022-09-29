@@ -78,7 +78,20 @@ by `fciR::boot_est`**.
 |Section 9.3, p. 164|iv|instr_vars|ITT, CACE and ATT from instrument variables|
 |Section 9.3, p. 167|ividentity|instr_linear|Estimate effect using instrument variables|
 |Section 9.3, p. 167|ivlog|instr_loglinear|Estimate effect using instrument variables via logarithmic fit|
-|Section 9.3, p. 168|ivlog|instr_logistic|Estimate effect using instrument variables via logistic fit|
+|Section 9.3, p. 168|ivlogit|instr_logistic|Estimate effect using instrument variables via logistic fit|
+|Section 10.2, p. 179|estand|backdr_out|Outcome-model standardization compared to propensity score|
+|Section 10.3, p. 181|equartiles|prop_quant|Stratifying on the quantiles of the propensity score|
+|Section 11.2, p. 190|precision|precision_eff|Compute precision efficiency.|
+|Section 11.2, p. 190|bootprecision|precision_stats|Compute stats on precision efficiency.|
+|Section 12.3, p. 201|mediation|mediation_np|Estimate non-parametric mediation effect.|
+|Section 12.3, p. 202|nonparamediation|mediation|Estimate mediation effect with parametric assumptions.|
+|Section 13.1, p. 211|msm|time_msm|Estimate using marginal structural models.|
+|Section 13.2, p. 214|snmm|time_snmm|Estimate using structural mested mean models.|
+|Section 13.3, p. 216|mkcogtab.r|time_odtr_prop|Optimal dynamic treatment regimes, step 1.|
+|Section 13.3, p. 217|A2opt.r|time_odtr_optA2|Optimal dynamic treatment regimes, step 2.|
+|Section 13.3, p. 217|A2opt.r|time_odtr_optA2|Optimal dynamic treatment regimes, step 3.|
+|Section 13.3, p. 218|A1opt.r|time_odtr_optA1A2|Optimal dynamic treatment regimes, step 4.|
+|Section 13.3, p. 219|optimal.r|time_odtr_optimal|Optimal dynamic treatment regimes, step 4.|
 
 ## Packages
 

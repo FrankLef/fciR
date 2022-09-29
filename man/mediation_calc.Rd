@@ -29,3 +29,6 @@ used with bootstrapping.
 mediation_calc(NDE = -0.03552486, NIE = -0.11595150,
   CDE0 = 0.04240090, CDE1 = 0.04705889)
 }
+\seealso{
+mediation
+}

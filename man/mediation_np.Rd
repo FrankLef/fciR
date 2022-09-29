@@ -2,12 +2,18 @@
 % Please edit documentation in R/mediation.R
 \name{mediation_np}
 \alias{mediation_np}
+\alias{mediation.r}
+\alias{nonparamediation.r}
 \title{Estimate Non-parametric Mediation Effect}
 \source{
 section 12.3
 }
 \usage{
 mediation_np(data, formula, exposure.name, mediator.name, confound.names)
+
+mediation.r(data, formula, exposure.name, mediator.name, confound.names)
+
+nonparamediation.r(data, formula, exposure.name, mediator.name, confound.names)
 }
 \arguments{
 \item{data}{Dataframe of raw data.}
@@ -34,4 +40,7 @@ of coding.
 # An example can be found in the location identified in the
 # source section above at the github site
 # https://github.com/FrankLef/FundamentalsCausalInference.
+}
+\seealso{
+mediation_calc
 }

@@ -10,6 +10,8 @@
 #' @param CDE0 Number. Controlled direct effect setting M=0.
 #' @param CDE1 Number. Controlled direct effect setting M=1.
 #'
+#' @seealso mediation
+#'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 #'

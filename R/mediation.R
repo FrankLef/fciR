@@ -13,6 +13,8 @@
 #'
 #' @source section 12.3
 #'
+#' @seealso mediation_calc
+#'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
 #'
@@ -93,6 +95,10 @@ mediation_np <- function(data, formula, exposure.name, mediator.name,
   out
 }
 
+#' @rdname mediation_np
+#' @export
+mediation.r <- mediation_np
+
 #' Estimate Mediation Effect with Parametric Assumptions
 #'
 #' Estimate mediation effect with parametric assumptions.
@@ -103,6 +109,8 @@ mediation_np <- function(data, formula, exposure.name, mediator.name,
 #' @inheritParams mediation_np
 #'
 #' @source section 12.3
+#'
+#' @seealso mediation_calc
 #'
 #' @return Dataframe in a useable format for \code{rsample::bootstraps}.
 #' @export
@@ -201,3 +209,7 @@ mediation <- function(data, formula, exposure.name, mediator.name,
   out <- out[pos, ]
   out
 }
+
+#' @rdname mediation_np
+#' @export
+nonparamediation.r <- mediation
