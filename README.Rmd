@@ -100,25 +100,25 @@ by `fciR::boot_est`**.
 The packages used by `fciR` include the usual great ones
 
 
-|Package|Reference|Description|
-|:---:|:---|:---|
-|rlang|[rlang](https://rlang.r-lib.org)|Core R functions with tidyverse|
-|dplyr|[dplyr](https://dplyr.tidyverse.org)|Data wrangling|
-|tidyr|[tidyr](https://tidyr.tidyverse.org)|Create tidy data|
-|tidyselect|[tidyselect](https://tidyselect.r-lib.org)|Select from a set of string|
-|purrr|[purrr](https://purrr.tidyverse.org)|Functional programming toolkit|
-|ggplot2|[ggplot2](https://ggplot2.tidyverse.org)|Nice plots|
+|Package|Description|
+|---|---|
+|[rlang](https://rlang.r-lib.org)|Core R functions with tidyverse|
+|[dplyr](https://dplyr.tidyverse.org)|Data wrangling|
+|[tidyr](https://tidyr.tidyverse.org)|Create tidy data|
+|[tidyselect](https://tidyselect.r-lib.org)|Select from a set of string|
+|[purrr](https://purrr.tidyverse.org)|Functional programming toolkit|
+|[ggplot2](https://ggplot2.tidyverse.org)|Nice plots|
 
 and several packages used for more specialized tasks
 
-|Package|Reference|Description|
-|:---:|:---|:---|
-|boot|[boot](https://cran.rstudio.com/web/packages/boot/index.html)|Boostrapping|
-|rsample|[rsample](https://rsample.tidymodels.org)|Boostrapping and jackknife|
-|broom|[broom](https://broom.tidymodels.org)|Extract information from models|
-|MonteCarlo|[MonteCarlo](https://github.com/FunWithR/MonteCarlo)|Monte Carlo simulations|
-|formulaic|[formulaic](https://dachosen1.github.io/formulaic/index.html)|Dynamic creation and quality checks of formula|
-|gee|[gee](https://cran.rstudio.com/web/packages/gee/index.html)|Generalized estimation equation solver|
-|geepack|[geepack](https://cran.rstudio.com/web/packages/geepack/index.html)|Generalized estimation equation package|
-|AER|[AER](https://cran.r-project.org/web/packages/AER/index.html)|Applied econometrics with R|
-|Matching|[Matching](https://cran.r-project.org/web/packages/Matching/index.html)|Multivariate and propensity score matching|
+|Package|Description|
+|---|---|
+|[boot](https://cran.rstudio.com/web/packages/boot/index.html)|Boostrapping|
+|[rsample](https://rsample.tidymodels.org)|Boostrapping and jackknife|
+|[broom](https://broom.tidymodels.org)|Extract information from models|
+|[MonteCarlo](https://github.com/FunWithR/MonteCarlo)|Monte Carlo simulations|
+|[formulaic](https://dachosen1.github.io/formulaic/index.html)|Dynamic creation and quality checks of formula|
+|[gee](https://cran.rstudio.com/web/packages/gee/index.html)|Generalized estimation equation solver|
+|[geepack](https://cran.rstudio.com/web/packages/geepack/index.html)|Generalized estimation equation package|
+|[AER](https://cran.r-project.org/web/packages/AER/index.html)|Applied econometrics with R|
+|[Matching](https://cran.r-project.org/web/packages/Matching/index.html)|Multivariate and propensity score matching|
