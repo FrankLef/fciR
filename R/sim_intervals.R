@@ -6,6 +6,7 @@
 #'
 #' @param nsim Nb of replicates.
 #' @param n Nb of observations.
+#' @param seed Integer, the seed used for random numbers.
 #'
 #' @importFrom stats rnorm var
 #'

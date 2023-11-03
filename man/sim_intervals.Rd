@@ -13,6 +13,8 @@ sim(nsim = 10000, n = 10000, seed = 1009)
 \item{nsim}{Nb of replicates.}
 
 \item{n}{Nb of observations.}
+
+\item{seed}{Integer, the seed used for random numbers.}
 }
 \value{
 List with percentage of bad and good.

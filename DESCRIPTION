@@ -15,7 +15,9 @@ Suggests:
     testthat (>= 3.0.0),
     ggthemes,
     here,
-    cli
+    cli,
+    MonteCarlo,
+    boot
 Config/testthat/edition: 3
 Imports: 
     tidyr,
@@ -26,6 +28,15 @@ Imports:
     gt,
     tidyselect,
     rlang,
-    formula.tools
+    AER,
+    broom,
+    dagitty,
+    gee,
+    geepack,
+    ggdag,
+    ggrepel,
+    magick,
+    purrr,
+    rsample
 Depends:
     R (>= 2.10)
