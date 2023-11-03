@@ -5,9 +5,9 @@
 \alias{sim}
 \title{Simulate a sampling distribution}
 \usage{
-sim_intervals(nsim = 10000, n = 10000)
+sim_intervals(nsim = 10000, n = 10000, seed = 1009)
 
-sim(nsim = 10000, n = 10000)
+sim(nsim = 10000, n = 10000, seed = 1009)
 }
 \arguments{
 \item{nsim}{Nb of replicates.}

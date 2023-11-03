@@ -10,7 +10,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: True
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.1
+RoxygenNote: 7.2.3
 Suggests: 
     testthat (>= 3.0.0),
     ggthemes,
@@ -22,21 +22,10 @@ Imports:
     dplyr,
     assertthat,
     checkmate,
-    boot,
     ggplot2,
     gt,
-    gee,
-    geepack,
     tidyselect,
     rlang,
-    MonteCarlo,
-    ggdag,
-    dagitty,
-    ggrepel,
-    magick,
-    AER,
-    rsample,
-    purrr,
-    broom
+    formula.tools
 Depends:
     R (>= 2.10)

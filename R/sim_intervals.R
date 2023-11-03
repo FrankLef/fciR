@@ -16,8 +16,9 @@
 #' sim_intervals()
 #' }
 #' @export
-sim_intervals <- function(nsim = 1e4, n = 1e4) {
+sim_intervals <- function(nsim = 1e4, n = 1e4, seed = 1009) {
   # get the statistics from the 2 samplings
+  set.seed(seed)
   out <- replicate(n = nsim, expr = {
     y <- rnorm(n)
     x <- rnorm(n)
