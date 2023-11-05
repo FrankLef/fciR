@@ -26,7 +26,7 @@ ggp_measures_modif <- function(df, title = "Change in effect measures",
          aes(x = .data[["group"]], y = .data$.estimate,
              color = .data$term, linetype = .data$term,
              group = .data$term)) +
-    geom_line(size = 1) +
+    geom_line(linewidth = 1) +
     geom_point(mapping = aes(fill = .data$term), size = 3, shape = 21) +
     geom_text(mapping = aes(label = round(.data$.estimate, 1)),
               nudge_x = 0.05, nudge_y = 0.05) +

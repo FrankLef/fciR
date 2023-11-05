@@ -40,7 +40,7 @@ ggp_measures <- function(data, title = "Title", subtitle = "Subtitle",
                   xmax = .data$.upper, y = .data$term ,
                   color = .data[["group"]])) +
     ggplot2::geom_vline(xintercept = c(0, 1), color = vline$colors,
-                        linetype = vline$linetype, size = vline$size, alpha = vline$alpha) +
+                        linetype = vline$linetype, linewidth = vline$size, alpha = vline$alpha) +
     ggplot2::geom_pointrange(aes(color = .data[["group"]]),
                              size = pointrange$size, fatten = pointrange$fatten) +
     ggrepel::geom_text_repel(aes(x = .data$.estimate, y = .data$term,

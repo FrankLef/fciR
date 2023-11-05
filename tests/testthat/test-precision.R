@@ -3,7 +3,7 @@ test_that("precision_eff", {
   out <- doublewhatifdat.prec1.fit <- precision_eff(
     doublewhatifdat, formula = VL1 ~ `T` + AD0,
     exposure.name = "T", precision.name = "AD0") |>
-    mutate(dplyr::across(.cols = where(is.numeric), .fns = round, digits = 6))
+    mutate(dplyr::across(.cols = where(is.numeric), .fns = \(x) round(x, digits = 6)))
   # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")
@@ -12,7 +12,7 @@ test_that("precision_eff", {
     term = c("None", "AD0"),
     estimate = c(-0.1473304, -0.1514711),
     std.err = c(0.03085432, 0.02617973)) |>
-    mutate(dplyr::across(.cols = where(is.numeric), .fns = round, digits = 6))
+    mutate(dplyr::across(.cols = where(is.numeric), .fns = \(x) round(x, digits = 6)))
   # cat("\n", "target", "\n")
   # print(target)
   # cat("\n")
@@ -37,8 +37,7 @@ test_that("precision_stats", {
   expect_identical(names(out), c("stats", "models"))
 
   out <- out$stats |>
-    mutate(across(.cols = where(is.numeric), .fns = round, digits = 3)) |>
-    identity()
+    mutate(dplyr::across(.cols = where(is.numeric), .fns = \(x) round(x, digits = 3)))
   # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")
@@ -49,7 +48,7 @@ test_that("precision_stats", {
     std.err = c(0.03085432, 0.03026407, 0.02617973),
     .lower = c(-0.2116576, -0.2069009, -0.2116576),
     .upper = c(-0.09010154, -0.08695798, -0.09010154)) |>
-    mutate(across(.cols = where(is.numeric), .fns = round, digits = 3))
+    mutate(dplyr::across(.cols = where(is.numeric), .fns = \(x) round(x, digits = 3)))
 
   expect_identical(out, target)
 })

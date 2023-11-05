@@ -42,7 +42,7 @@ mediation_np <- function(data, formula, exposure.name, mediator.name,
     fciR::calc_prob_cond(condition.names = exposure.confound.names,
                          var.name = mediator.name,
                          prob.name = "probM") |>
-    tidyr::pivot_wider(names_from = exposure.name, values_from = "probM",
+    tidyr::pivot_wider(names_from = all_of(exposure.name), values_from = "probM",
                        names_prefix = "probMA") |>
     # add P(H) to th data, it will be used later for standardization by H
     dplyr::inner_join(y = probH, by = confound.names)
@@ -51,7 +51,7 @@ mediation_np <- function(data, formula, exposure.name, mediator.name,
   expYcondAMH <- data |>
     group_by(across(all_of(input.names))) |>
     summarize(expYcondAMH = mean(.data[[outcome.name]])) |>
-    tidyr::pivot_wider(names_from = exposure.name, values_from = expYcondAMH,
+    tidyr::pivot_wider(names_from = all_of(exposure.name), values_from = expYcondAMH,
                        names_prefix = "EYA")
 
   # NOTE: This is the final dataframe used to make all computations

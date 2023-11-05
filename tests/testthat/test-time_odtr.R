@@ -77,7 +77,7 @@ test_that("time_odtr_optimal", {
   df <- time_odtr_optA1A2(df, A1 = "A1", A2 = "A2", H2 = "H2")
 
   out <- time_odtr_optimal(df, A1 = "A1", A2 = "A2", H2 = "H2") |>
-    mutate(across(.cols = where(is.numeric), .fns = round, digits = 6))
+    mutate(across(.cols = where(is.numeric), .fns = \(x) round(x, digits = 6)))
   # cat("\n", "out", "\n")
   # print(out)
   # cat("\n")
@@ -93,7 +93,7 @@ test_that("time_odtr_optimal", {
     term = names(the_results),
     estimate = unname(the_results),
     std.err = NA_real_) |>
-    mutate(across(.cols = where(is.numeric), .fns = round, digits = 6))
+    mutate(across(.cols = where(is.numeric), .fns = \(x) round(x, digits = 6)))
   # cat("\n", "target", "\n")
   # print(target)
   # cat("\n")

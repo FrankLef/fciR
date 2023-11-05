@@ -5,7 +5,7 @@ test_that("mediation_np", {
                       exposure.name = "T",
                       mediator.name = "A",
                       confound.names = c("AD0")) |>
-    mutate(across(.cols = where(is.numeric), .fns = round, digits = 5))
+    mutate(across(.cols = where(is.numeric), .fns = \(x) round(x, digits = 5)))
   row.names(out) <- seq_len(nrow(out))
   # cat("\n", "out", "\n")
   # print(out)
@@ -25,7 +25,7 @@ test_that("mediation_np", {
     term = names(the_results),
     estimate = unname(the_results),
     std.err = NA_real_) |>
-    mutate(across(.cols = where(is.numeric), .fns = round, digits = 5))
+    mutate(across(.cols = where(is.numeric), .fns = \(x) round(x, digits = 5)))
 
   expect_identical(out, target)
 })
@@ -38,7 +38,7 @@ test_that("mediation", {
                       exposure.name = "T",
                       mediator.name = "A",
                       confound.names = c("AD0")) |>
-    mutate(across(.cols = where(is.numeric), .fns = round, digits = 5))
+    mutate(across(.cols = where(is.numeric), .fns = \(x) round(x, digits = 5)))
   row.names(out) <- seq_len(nrow(out))
 
   the_results <- c(
@@ -54,7 +54,7 @@ test_that("mediation", {
     term = names(the_results),
     estimate = unname(the_results),
     std.err = NA_real_) |>
-    mutate(across(.cols = where(is.numeric), .fns = round, digits = 5))
+    mutate(across(.cols = where(is.numeric), .fns = \(x) round(x, digits = 5)))
 
   expect_identical(out, target)
 })

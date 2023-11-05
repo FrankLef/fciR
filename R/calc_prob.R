@@ -51,5 +51,5 @@ calc_prob_cond <- function(data, condition.names, var.name,
     dplyr::mutate(!!prob.name := list(fciR::calc_prob(.data$df, var.name = var.name,
                                                      prob.name = prob.name))) |>
     dplyr::select(all_of(c(condition.names, prob.name))) |>
-    tidyr::unnest(.data[[prob.name]])
+    tidyr::unnest(all_of(prob.name))
 }

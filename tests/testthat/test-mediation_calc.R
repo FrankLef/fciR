@@ -3,7 +3,7 @@ test_that("mediation_calc", {
                         NIE = -0.11595150,
                         CDE0 = -0.04240090,
                         CDE1 = 0.04705889) |>
-    mutate(across(.cols = where(is.numeric), .fns = round, digits = 6))
+    mutate(across(.cols = where(is.numeric), \(x) round(x, digits = 6)))
 
 
   the_results <- c("TE" = -0.15147635,
@@ -14,7 +14,7 @@ test_that("mediation_calc", {
     term = names(the_results),
     estimate = unname(the_results),
     std.err = NA_real_) |>
-    mutate(across(.cols = where(is.numeric), .fns = round, digits = 6))
+    mutate(across(.cols = where(is.numeric), .fns = \(x) round(x, digits = 6)))
 
   expect_identical(out, target)
 })

@@ -57,8 +57,8 @@ time_odtr_optA2 <- function(data, A1, A2, H2) {
   data |>
     group_by(across(all_of(input.names))) |>
     mutate(propA2opt = max(.data$prop),
-           A2opt = .data[[A2]][match(.data$propA2opt, .data$prop)]) |>
-    dplyr::relocate(.data$propA2opt, .after = tidyselect::last_col())
+           A2opt = .data[[A2]][match(propA2opt, .data$prop)]) |>
+    dplyr::relocate(propA2opt, .after = tidyselect::last_col())
 }
 #' @rdname time_odtr_optA2
 #' @export
@@ -90,15 +90,14 @@ time_odtr_optA1A2 <- function(data, A1, A2, H2) {
     group_by(across(all_of(c(A1, H2)))) |>
     mutate(nA1H2 = sum(.data$freq),
            propA1H2 = .data$nA1H2 / .data$nA1,
-           margA1H2 = .data$propA2opt * .data$propA1H2) |>
+           margA1H2 = propA2opt * .data$propA1H2) |>
     group_by(across(all_of(c(A1, A2)))) |>
     summarize(probA1A2 = sum(.data$margA1H2)) |>
     distinct(.data[[A1]], .data$probA1A2) |>
     ungroup() |>
     filter(.data$probA1A2 == max(.data$probA1A2)) |>
-    rename(A1opt = A1,
-           propA1opt = .data$probA1A2) |>
-    identity()
+    dplyr::rename(A1opt = A1,
+           propA1opt = probA1A2)
   # optA1A2
 
   optA1A2_repeat <-

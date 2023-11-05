@@ -29,36 +29,36 @@ gt_measures_colgrp <- function(df, var_grp = "group",
   ci_label <- sprintf("%.0f%% confidence interval", 100 * (1 - df$.alpha[1]))
 
   # prepare the dataframe to create the table
-  df <- df %>%
-    select(!matches("alpha|method")) %>%
-    # mutate(across(.cols = where(is.numeric), .fns = round, digits)) %>%
-    dplyr::mutate_if(.predicate = is.numeric, .funs = round, digits = digits) %>%
-    # mutate(across(.cols = c(".estimate", ".lower", ".upper"), .fns = format)) %>%
-    mutate_at(.vars = c(".estimate", ".lower", ".upper"), .funs = format) %>%
-    # mutate(across(.cols = c(".estimate", ".lower", ".upper"), .fns = trimws)) %>%
-    mutate_at(.vars = c(".estimate", ".lower", ".upper"), .funs = trimws) %>%
-    rename(Estimator = .data[["term"]],
-           Estimate = .data[[".estimate"]]) %>%
-    unite(col = "CI", .data[[".lower"]], .data[[".upper"]], sep = ", ") %>%
-    mutate(CI = paste0("(", .data$CI, ")")) %>%
-    mutate(Estimate = as.character(.data[["Estimate"]])) %>%
-    pivot_longer(cols = c("Estimate", "CI"), names_to = "meas", values_to = "value") %>%
-    unite(col = "heading", all_of(var_grp), .data[["meas"]], sep = "_") %>%
+  df <- df |>
+    select(!matches("alpha|method")) |>
+    # mutate(across(.cols = where(is.numeric), .fns = round, digits)) |>
+    dplyr::mutate_if(.predicate = is.numeric, .funs = \(x) round(x, digits = digits)) |>
+    # mutate(across(.cols = c(".estimate", ".lower", ".upper"), .fns = format)) |>
+    mutate_at(.vars = c(".estimate", ".lower", ".upper"), .funs = format) |>
+    # mutate(across(.cols = c(".estimate", ".lower", ".upper"), .fns = trimws)) |>
+    mutate_at(.vars = c(".estimate", ".lower", ".upper"), .funs = trimws) |>
+    dplyr::rename(Estimator = all_of("term"),
+           Estimate = all_of(".estimate")) |>
+    tidyr::unite(col = "CI", all_of(".lower"), all_of(".upper"), sep = ", ") |>
+    mutate(CI = paste0("(", .data$CI, ")")) |>
+    mutate(Estimate = as.character(.data[["Estimate"]])) |>
+    pivot_longer(cols = c("Estimate", "CI"), names_to = "meas", values_to = "value") |>
+    tidyr::unite(col = "heading", all_of(var_grp), all_of("meas"), sep = "_") |>
     pivot_wider(names_from = "heading", values_from = "value")
 
-  gt::gt(df) %>%
-    gt_basic(title = title, subtitle = subtitle) %>%
-    tab_spanner_delim(delim = "_", columns = everything()) %>%
+  gt::gt(df) |>
+    gt_basic(title = title, subtitle = subtitle) |>
+    tab_spanner_delim(delim = "_", columns = everything()) |>
     tab_style(
       style = cell_borders(sides = "left", color = "grey60",
                            weight = px(1.5), style = "solid"),
       locations = cells_body(columns = matches("Estimate$"))
-    ) %>%
+    ) |>
     tab_style(
       style = cell_borders(sides = "left", color = "grey60",
                            weight = px(1.5), style = "solid"),
       locations = cells_column_labels(columns = matches("Estimate$"))
-    ) %>%
+    ) |>
     tab_footnote(
       footnote = ci_label,
       locations = cells_column_labels(columns = matches("CI$"))

@@ -34,7 +34,7 @@ backdr_out_np <- function(data, formula, exposure.name, confound.names,
 
   # compute the frequencies, this table is then used for all computations
   summ <- data |>
-    count(.data[[outcome.name]], .data[[exposure.name]], .data[[confound.names]]) |>
+    dplyr::count(.data[[outcome.name]], .data[[exposure.name]], .data[[confound.names]]) |>
     mutate(freq = n / sum(n))
   assertthat::assert_that(dplyr::near(abs(sum(summ$freq)), 1),
                           msg = "total freq must equal 1")
@@ -42,26 +42,26 @@ backdr_out_np <- function(data, formula, exposure.name, confound.names,
   # the expected value of the outcome given the exposure and confounds
   out_cond_mean <- summ |>
     group_by(.data[[exposure.name]], .data[[confound.names]]) |>
-    summarize(EY = weighted.mean(.data[[outcome.name]], w = n)) |>
+    dplyr::summarize(EY = weighted.mean(.data[[outcome.name]], w = n)) |>
     # add and id column to be able to join the confounds variables later
-    unite(col = "id", .data[[confound.names]], remove = FALSE)
+    tidyr::unite(col = "id", all_of(confound.names), remove = FALSE)
 
 
   # the confound distribution
   if (!att) {
     confound_dist <- summ |>
       group_by(.data[[confound.names]]) |>
-      summarize(prob = sum(.data$freq))
+      dplyr::summarize(prob = sum(.data$freq))
   } else {
     confound_dist <- summ |>
       filter(.data[[exposure.name]] == 1) |>
       group_by(.data[[confound.names]]) |>
-      summarize(n = sum(n)) |>
+      dplyr::summarize(n = sum(n)) |>
       mutate(prob = .data$n / sum(.data$n))
   }
   # add and id column to be able to join the confounds variables later
   confound_dist <- confound_dist |>
-    unite(col = "id", .data[[confound.names]], remove = FALSE)
+    tidyr::unite(col = "id", all_of(confound.names), remove = FALSE)
 
 
   # multiply the conditional expectation by the confound probabilities
