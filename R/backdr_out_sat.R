@@ -20,15 +20,20 @@
 #' # https://github.com/FrankLef/FundamentalsCausalInference.
 backdr_out_sat <- function(data, formula, exposure.name,
                            confound.names, att = FALSE) {
-  checkmate::assertDataFrame(data)
+  checkmate::assertDataFrame(data)  # will fail to exclude tibble!
   checkmate::assertFormula(formula)
   checkmate::assert_string(confound.names, min.chars = 1)
   checkmate::assertFlag(att)
+
+  # must absolutely be a data.frame
+  data <- as.data.frame(data)
 
   # this function works when there is only one confound
   # audit and extract the variables
   var_names <- audit_formula(data, formula, exposure.name, confound.names)
   confound.names <- var_names$extra.names
+
+
 
   x0 <- "(Intercept)"  # name of intercept used by lm, glm, etc.
 
@@ -46,7 +51,7 @@ backdr_out_sat <- function(data, formula, exposure.name,
     broom::tidy()
 
   # add distribution marginal expected potential outcomes
-  # marginal computaiton only for terms including the confound
+  # marginal computation only for terms including the confound
   fit <- fit |>
     mutate(
       # find the terms that includes the confound
